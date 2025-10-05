@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export interface MiddlewareType {
-  middleware: () => Promise<NextResponse | null>;
+  // eslint-disable-next-line no-unused-vars
+  middleware: (req: NextRequest) => Promise<NextResponse | null>;
   matcher?: string;
   priority?: number; 
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
 import '@/styles/globals.css';
+import BaseLayout from './base';
 
 function _Home() {
   return (<div className={styles.page}>
@@ -100,6 +101,8 @@ const HomeMemo = React.memo(_Home);
 
 export default function Home() {
 	return (
-		<HomeMemo />
+    <BaseLayout>
+      <HomeMemo />
+    </BaseLayout>
 	);
 }

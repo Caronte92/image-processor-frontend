@@ -1,47 +1,41 @@
+import { Typography } from '@/theme';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-type ThemeSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl' | 'xxxxl';
-type WeightSize = 'regular' | 'medium' | 'semibold' | 'bold';
+type TextType = 'h1' | 'p' | 'label';
 
-const IText = css<{ size: ThemeSize, weight: WeightSize, color: string }>`
-    font-size: ${({ theme, size }) => theme[size].fontSize};
-    line-height: ${({ theme, size }) => theme[size].lineHeight};
+const IText = css<{ size: Typography, weight: string, color: string }>`
+    font-size: ${props => props.size.fontSize};
+    line-height: ${props => props.size.lineHeight};
     font-weight: ${props => props.weight};
     color: ${props => props.color};
 `;
 
-const Paragraph = styled.p<{ size: ThemeSize, weight: WeightSize, color: string }>`
+const Paragraph = styled.p<{ size: Typography, weight: string, color: string }>`
     ${IText}
 `;
 
-const Title = styled.h1<{ size: ThemeSize, weight: WeightSize, color: string }>`
+const Title = styled.h1<{ size: Typography, weight: string, color: string }>`
     ${IText}
 `;
 
-const Label = styled.label<{ size: ThemeSize, weight: WeightSize, color: string }>`
-    ${IText}
+const Label = styled.label<{ size: Typography, weight: string, color: string }>`
+   ${IText}
 `;
 
-export enum TextType {
-    // h1,
-    // p,
-    // label
-}
-
-type TextProps = {
+interface TextProps {
     type: TextType
     text: string;
-    size: ThemeSize;
-    fontWeight: WeightSize;
+    size: Typography;
+    fontWeight: string;
     color: string;
 };
 
-function _Text({ type = TextType.p, text, size, fontWeight, color }: TextProps) {
+function _Text({ type = 'p', text, size, fontWeight, color }: TextProps) {
     switch (type){
         default: return <Paragraph size={size} weight={fontWeight} color={color}> {text} </Paragraph>;
-        case TextType.h1: return <Title size={size} weight={fontWeight} color={color}> {text} </Title>;
-        case TextType.label: return <Label size={size} weight={fontWeight} color={color}> {text} </Label>;
+        case 'h1': return <Title size={size} weight={fontWeight} color={color}> {text} </Title>;
+        case 'label': return <Label size={size} weight={fontWeight} color={color}> {text} </Label>;
     }
 }
 
