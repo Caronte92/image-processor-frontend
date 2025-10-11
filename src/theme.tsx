@@ -214,7 +214,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
             },
             selected: {
                 content: palette.foreground,
-                background: palette.primary,
+                background: palette.accent,
                 border: palette.ring,
             },
         },
@@ -245,6 +245,7 @@ export interface ITheme {
 }
 
 export interface IActiveTheme extends Omit<ITheme, 'colors' | 'buttonColors'> {
+    widthPage: string;
     mode: 'light' | 'dark';
     colors: MainColors;
     buttonColors: ButtonColors;

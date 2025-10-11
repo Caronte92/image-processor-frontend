@@ -8,10 +8,12 @@ const getBorder = (enabled: boolean, enabledBorder: string, disabledBorder: stri
     return disabledBorder !== '' ? `${borderBase} ${disabledBorder}` : 'transparent';
 };
 
-const Container = styled.button<{ $color: ButtonColorState; $size: ButtonSize; $enabled: boolean }>`
+const Container = styled.button<{ $color: ButtonColorState; $size: ButtonSize; $enabled: boolean, $selected?: boolean }>`
     padding: ${props => props.$size.padding};
-    color: ${props => (props.$enabled ? props.$color.default.content : props.$color.disabled.content)};
-    background-color: ${props => (props.$enabled ? props.$color.default.background : props.$color.disabled.background)};
+    color: ${props => (props.$enabled ? props.$selected ? props.$color.selected :
+        props.$color.default.content : props.$color.disabled.content)};
+    background-color: ${props => (props.$enabled ? props.$selected ? props.$color.selected :
+        props.$color.default.background : props.$color.disabled.background)};
     cursor: ${props => (props.$enabled ? 'pointer' : 'inherit')};
     border: ${props => getBorder(props.$enabled, props.$color.default.border, props.$color.disabled.border)};
     border-radius: 0.25em;
@@ -31,16 +33,17 @@ interface ButtonProps {
     size: ButtonSize;
     color: ButtonColorState;
     disabled?: boolean;
+    selected?: boolean;
     onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function _Button({ children, size, color, disabled, onClickCallback }: ButtonProps) {
+function _Button({ children, size, color, disabled, selected, onClickCallback }: ButtonProps) {
     const _handleOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onClickCallback(event);
     };
 
     return (
-        <Container $color={color} $size={size} $enabled={!disabled} onClick={_handleOnclick}>
+        <Container $color={color} $size={size} $enabled={!disabled} $selected={selected} onClick={_handleOnclick}>
             {children}
         </Container>
     );

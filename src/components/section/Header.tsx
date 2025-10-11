@@ -4,12 +4,12 @@ import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
+import { i18n } from '../../../i18n-config';
 import Button from '../atoms/Button';
 import IconChevronDown from '../atoms/icons/IconChebronDown';
 import IconMoon from '../atoms/icons/IconMoon';
 import IconSun from '../atoms/icons/IconSun';
 import IconWorld from '../atoms/icons/IconWorld';
-import { i18n } from './../../../i18n-config';
 
 const HeaderWrapper = styled.header`
     display: flex;
@@ -22,7 +22,7 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: ${props => props.theme.widthPage};
+    max-width: 99rem;
     margin: 0 auto;
 `;
 

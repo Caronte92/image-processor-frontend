@@ -2,5 +2,10 @@
     "Navbar": {
         "title": "DevTools Images",
         "subtitle": "Eines per a desenvolupadors"
+    },
+    "SubMenu": {
+        "option_1": "SVG a React",
+        "option_2": "Conversor d'imatges",
+        "option_3": "Generador de favicons"
     }
 }
