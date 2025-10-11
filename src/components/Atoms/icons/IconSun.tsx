@@ -1,11 +1,10 @@
+import { IIconParams } from '@/lib/types/IIconParams';
 import React from 'react';
-import { IIconParams } from '@/types/IIconParams';
 
 function _SvgComponent(props: IIconParams) {
     const {
         size = '100%',
         color = null,
-        disableFill = true,
         removeInlineStyle = false,
         transform,
         style = {

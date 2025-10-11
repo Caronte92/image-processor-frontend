@@ -5,11 +5,12 @@ export default getRequestConfig(async ({ locale }) => {
   let validatedLocale: Locale = i18n.defaultLocale;
   
   if (locale && i18n.locales.includes(locale as Locale)) {
-    validatedLocale = locale as Locale; // ← Type assertion aquí
+    validatedLocale = locale as Locale;
   }
 
   return {
     locale: validatedLocale,
     messages: (await import(`../locales/${validatedLocale}.json`)).default,
+    timeZone: 'Europe/Madrid'
   };
 });

@@ -1,4 +1,4 @@
-import { NextIntlClientProvider } from 'next-intl';
+import ClientLayout from '@/app/ClientLayout';
 import { getMessages } from 'next-intl/server';
 
 interface ILayoutProps {
@@ -8,14 +8,14 @@ interface ILayoutProps {
 
 export default async function RootLayout({ children, params }: ILayoutProps) {
   const { lang } = await params;
-  const messages = await getMessages({ locale:lang });
+  const messages = await getMessages({ locale: lang });
 
   return (
     <html lang={lang}>
       <body>
-        <NextIntlClientProvider messages={messages}>
-            {children}
-        </NextIntlClientProvider>
+        <ClientLayout messages={messages} locale={lang}>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

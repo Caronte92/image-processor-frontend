@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { GlobalStyle } from '@/styles/global';
-import { ThemeProvider } from 'styled-components';
-import { theme } from '@/theme';
 import Header from '@/components/organism/Header';
 
 interface IBaseProps {
@@ -13,10 +11,10 @@ interface IBaseProps {
 
 export default function BaseLayout({ children, hideHeader }:IBaseProps) {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <GlobalStyle />
       {!hideHeader && <Header />}
       {children}
-    </ThemeProvider>
+    </>
   );
 }
