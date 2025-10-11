@@ -1,15 +1,15 @@
-'use client';
-
+import Texts from '@/components/atoms/Texts';
+import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import Texts from '@/components/atoms/Texts';
-import { useTranslations } from 'next-intl';
 import Button from '../atoms/Button';
-import IconWorld from '../atoms/icons/IconWorld';
-import IconChebronDown from '../atoms/icons/IconChebronDown';
-import IconSun from '../atoms/icons/IconSun';
-import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
+import IconChevronDown from '../atoms/icons/IconChebronDown';
 import IconMoon from '../atoms/icons/IconMoon';
+import IconSun from '../atoms/icons/IconSun';
+import IconWorld from '../atoms/icons/IconWorld';
+import { i18n } from './../../../i18n-config';
+import { useLanguage } from '@/lib/hooks/useLocales';
 
 const HeaderWrapper = styled.header`
     display: flex;
@@ -58,54 +58,94 @@ const ButtonWrapper = styled.div`
     gap: .5rem;
 `;
 
+const DropdownWrapper = styled.div`
+    background-color: ${props => props.theme.colors?.background || props.theme.background};
+    border: 1px solid ${props => props.theme.colors?.border};
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    cursor: pointer;
+    border-radius: .5rem;
+    margin: 1rem 0 0 -.875rem;
+    width: 6.5625rem;
+    gap: .5rem;
+`;
+
 function _Header() {
     const t = useTranslations('Navbar');
     const { toggleTheme } = useThemeToggle();
     const theme = useTheme();
-    console.log(theme);
+    const { currentLocale, changeLanguage } = useLanguage();
+    const locales = i18n.locales;
+    const currentLanguage = locales.find(lang => lang === currentLocale) || 'en';
+    const [isLocalesDropdownVisible, setIsLocalesDropdownVisible] = React.useState(false);
+
+    const handleLanguageChange = (newLocale: string) => {
+        changeLanguage(newLocale);
+        setIsLocalesDropdownVisible(false);
+    };
+
     return (
         <HeaderWrapper>
             <Container>
                 <LogoWrapper>
-                    <Logo /> 
+                    <Logo />
                     <TextWrapper>
-                        <Texts 
-                            text={t('title')} 
-                            type='h1' 
-                            size={theme.fonts?.base} 
-                            fontWeight={theme.weights?.bold} 
+                        <Texts
+                            text={t('title')}
+                            type='h1'
+                            size={theme.fonts?.base}
+                            fontWeight={theme.weights?.bold}
                             color={theme.colors.foreground}
                         />
                         <Texts 
-                            text={t('subtitle')} 
-                            type='p' 
-                            size={theme.fonts?.sm} 
-                            fontWeight={theme.weights?.bold} 
+                            text={t('subtitle')}
+                            type='p'
+                            size={theme.fonts?.sm}
+                            fontWeight={theme.weights?.bold}
                             color={theme.colors.mutedForeground}
                         />
                     </TextWrapper>
                 </LogoWrapper>
                 <SettingsWrapper>
-                    <Button color={theme.buttonColors.primary} size={theme.buttonSizes?.md} onClickCallback={() => console.log('choose language')}>
+                    <Button color={theme.buttonColors.primary} size={theme.buttonSizes?.md}
+                            onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}>
                         <ButtonWrapper>
                             <IconWorld size={theme.icons.xs}/>
-                            <Texts 
-                                text='Language' 
-                                type='p' 
-                                size={theme.fonts?.sm} 
-                                fontWeight={theme.weights?.bold} 
+                            <Texts
+                                text={currentLanguage}
+                                type='p'
+                                size={theme.fonts?.sm}
+                                fontWeight={theme.weights?.bold}
                                 color={theme.colors?.foreground}
                             />
-                            <IconChebronDown size={theme.icons.xs}/>
+                            <IconChevronDown size={theme.icons.xs}/>
                         </ButtonWrapper>
+                        { isLocalesDropdownVisible &&
+                            <DropdownWrapper>
+                                { locales.map(locale => (
+                                    <Button color={theme.buttonColors.option} size={theme.buttonSizes?.md} key={locale}
+                                            onClickCallback={() => handleLanguageChange(locale)}>
+                                        <ButtonWrapper>
+                                            <Texts
+                                                text={locale}
+                                                type='p'
+                                                size={theme.fonts?.sm}
+                                                fontWeight={theme.weights?.bold}
+                                                color={theme.colors?.foreground}
+                                            />
+                                        </ButtonWrapper>
+                                    </Button>
+                                ))}
+                            </DropdownWrapper>
+                        }
                     </Button>
                     <Button color={theme.buttonColors.primary} size={theme.buttonSizes?.md} onClickCallback={toggleTheme}>
                         <ButtonWrapper>
-                            { theme.mode == 'light' ? 
+                            { theme.mode == 'light' ?
                                 <IconSun size={theme.icons.xs}/> :
                                 <IconMoon size={theme.icons.xs}/>
                             }
-                            
                         </ButtonWrapper>
                     </Button>
                 </SettingsWrapper>

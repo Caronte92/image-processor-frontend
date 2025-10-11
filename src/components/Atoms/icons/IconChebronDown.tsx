@@ -47,5 +47,5 @@ function _SvgComponent(props: IIconParams) {
     </svg>);
 }
 
-const __ChebronDown = React.memo(_SvgComponent);
-export default __ChebronDown;
+const __ChevronDown = React.memo(_SvgComponent);
+export default __ChevronDown;

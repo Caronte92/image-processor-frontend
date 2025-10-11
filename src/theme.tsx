@@ -167,6 +167,7 @@ export type ButtonColorState = {
 
 export type ButtonColors = {
   primary: ButtonColorState;
+  option: ButtonColorState;
 };
 
 export const getButtonColors = (
@@ -186,6 +187,28 @@ export const getButtonColors = (
         content: palette.foreground,
         background: palette.accent,
         border: palette.primary,
+      },
+      disabled: {
+        content: palette.mutedForeground,
+        background: palette.muted,
+        border: palette.border,
+      },
+      selected: {
+        content: palette.foreground,
+        background: palette.primary,
+        border: palette.ring,
+      },
+    },
+    option: {
+      default: {
+        content: palette.foreground,
+        background: 'transparent',
+        border: 'transparent',
+      },
+      hover: {
+        content: palette.foreground,
+        background: palette.accent,
+        border: 'transparent',
       },
       disabled: {
         content: palette.mutedForeground,

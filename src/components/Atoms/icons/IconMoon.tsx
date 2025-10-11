@@ -5,7 +5,6 @@ function _SvgComponent(props: IIconParams) {
     const {
         size = '100%',
         color = null,
-        disableFill = true,
         removeInlineStyle = false,
         transform,
         style = {
