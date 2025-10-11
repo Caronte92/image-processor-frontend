@@ -1,6 +1,6 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { MiddlewareType } from './middlewares/config';
 import { translationsMiddleware } from './middlewares/translations';
-import { NextResponse, NextRequest } from 'next/server';
 
 const activatedMiddleware: MiddlewareType[] = [
   translationsMiddleware

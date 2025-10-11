@@ -1,4 +1,5 @@
 import Texts from '@/components/atoms/Texts';
+import { useLanguage } from '@/lib/hooks/useLocales';
 import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -9,7 +10,6 @@ import IconMoon from '../atoms/icons/IconMoon';
 import IconSun from '../atoms/icons/IconSun';
 import IconWorld from '../atoms/icons/IconWorld';
 import { i18n } from './../../../i18n-config';
-import { useLanguage } from '@/lib/hooks/useLocales';
 
 const HeaderWrapper = styled.header`
     display: flex;
@@ -22,14 +22,14 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    max-width: 99rem;
+    max-width: ${props => props.theme.widthPage};
     margin: 0 auto;
 `;
 
 const LogoWrapper = styled.div`
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
 `;
 
 const TextWrapper = styled.div`
@@ -41,7 +41,7 @@ const Logo = styled.div`
     width: 2rem;
     height: 2rem;
     background-color: tomato;
-    border-radius: .625rem;
+    border-radius: 0.625rem;
 `;
 
 const SettingsWrapper = styled.div`
@@ -55,7 +55,7 @@ const ButtonWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
+    gap: 0.5rem;
 `;
 
 const DropdownWrapper = styled.div`
@@ -65,10 +65,10 @@ const DropdownWrapper = styled.div`
     flex-direction: column;
     position: absolute;
     cursor: pointer;
-    border-radius: .5rem;
-    margin: 1rem 0 0 -.875rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0 0 -0.875rem;
     width: 6.5625rem;
-    gap: .5rem;
+    gap: 0.5rem;
 `;
 
 function _Header() {
@@ -93,14 +93,14 @@ function _Header() {
                     <TextWrapper>
                         <Texts
                             text={t('title')}
-                            type='h1'
+                            type="h1"
                             size={theme.fonts?.base}
                             fontWeight={theme.weights?.bold}
                             color={theme.colors.foreground}
                         />
-                        <Texts 
+                        <Texts
                             text={t('subtitle')}
-                            type='p'
+                            type="p"
                             size={theme.fonts?.sm}
                             fontWeight={theme.weights?.bold}
                             color={theme.colors.mutedForeground}
@@ -108,28 +108,35 @@ function _Header() {
                     </TextWrapper>
                 </LogoWrapper>
                 <SettingsWrapper>
-                    <Button color={theme.buttonColors.primary} size={theme.buttonSizes?.md}
-                            onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}>
+                    <Button
+                        color={theme.buttonColors.primary}
+                        size={theme.buttonSizes?.md}
+                        onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}
+                    >
                         <ButtonWrapper>
-                            <IconWorld size={theme.icons.xs}/>
+                            <IconWorld size={theme.icons.xs} />
                             <Texts
-                                text={currentLanguage}
-                                type='p'
+                                text={currentLanguage.toUpperCase()}
+                                type="p"
                                 size={theme.fonts?.sm}
                                 fontWeight={theme.weights?.bold}
                                 color={theme.colors?.foreground}
                             />
-                            <IconChevronDown size={theme.icons.xs}/>
+                            <IconChevronDown size={theme.icons.xs} />
                         </ButtonWrapper>
-                        { isLocalesDropdownVisible &&
+                        {isLocalesDropdownVisible && (
                             <DropdownWrapper>
-                                { locales.map(locale => (
-                                    <Button color={theme.buttonColors.option} size={theme.buttonSizes?.md} key={locale}
-                                            onClickCallback={() => handleLanguageChange(locale)}>
+                                {locales.map(locale => (
+                                    <Button
+                                        color={theme.buttonColors.option}
+                                        size={theme.buttonSizes?.md}
+                                        key={locale}
+                                        onClickCallback={() => handleLanguageChange(locale)}
+                                    >
                                         <ButtonWrapper>
                                             <Texts
-                                                text={locale}
-                                                type='p'
+                                                text={locale.toUpperCase()}
+                                                type="p"
                                                 size={theme.fonts?.sm}
                                                 fontWeight={theme.weights?.bold}
                                                 color={theme.colors?.foreground}
@@ -138,14 +145,19 @@ function _Header() {
                                     </Button>
                                 ))}
                             </DropdownWrapper>
-                        }
+                        )}
                     </Button>
-                    <Button color={theme.buttonColors.primary} size={theme.buttonSizes?.md} onClickCallback={toggleTheme}>
+                    <Button
+                        color={theme.buttonColors.primary}
+                        size={theme.buttonSizes?.md}
+                        onClickCallback={toggleTheme}
+                    >
                         <ButtonWrapper>
-                            { theme.mode == 'light' ?
-                                <IconSun size={theme.icons.xs}/> :
-                                <IconMoon size={theme.icons.xs}/>
-                            }
+                            {theme.mode == 'light' ? (
+                                <IconSun size={theme.icons.xs} />
+                            ) : (
+                                <IconMoon size={theme.icons.xs} />
+                            )}
                         </ButtonWrapper>
                     </Button>
                 </SettingsWrapper>

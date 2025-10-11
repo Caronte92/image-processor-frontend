@@ -1,7 +1,7 @@
 import createIntlMiddleware from 'next-intl/middleware';
-import { MiddlewareType } from './config';
 import { NextRequest, NextResponse } from 'next/server';
 import { i18n } from '../../i18n-config';
+import { MiddlewareType } from './config';
 
 const intlMiddleware = createIntlMiddleware({
   locales: i18n.locales,
