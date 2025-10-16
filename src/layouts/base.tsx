@@ -6,6 +6,13 @@ import { SubMenuItems } from '@/lib/enums/subMenu';
 import { SubmenuProvider } from '@/lib/providers/SubmenuProvider';
 import { GlobalStyle } from '@/styles/global';
 import React, { useState } from 'react';
+import { styled } from 'styled-components';
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+`;
 
 interface IBaseProps {
     children: React.ReactNode;
@@ -24,7 +31,7 @@ export default function BaseLayout({ children, hideHeader, hideSubmenu }: IBaseP
     return (
         <>
             <GlobalStyle />
-            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+            <Container>
                 {!hideHeader && <Header />}
                 <SubmenuProvider
                     items={submenuItems}
@@ -40,7 +47,7 @@ export default function BaseLayout({ children, hideHeader, hideSubmenu }: IBaseP
                     )}
                     {children}
                 </SubmenuProvider>
-            </div>
+            </Container>
         </>
     );
 }
