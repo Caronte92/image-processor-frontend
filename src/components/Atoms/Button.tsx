@@ -3,19 +3,34 @@ import React from 'react';
 import styled from 'styled-components';
 
 const getBorder = (enabled: boolean, enabledBorder: string, disabledBorder: string) => {
-    let borderBase = '0.125em solid';
+    let borderBase = '0.0625em solid';
     if (enabled) return enabledBorder !== '' ? `${borderBase} ${enabledBorder}` : 'transparent';
     return disabledBorder !== '' ? `${borderBase} ${disabledBorder}` : 'transparent';
 };
 
-const Container = styled.button<{ $color: ButtonColorState; $size: ButtonSize; $enabled: boolean, $selected?: boolean }>`
+const Container = styled.button<{
+    $color: ButtonColorState;
+    $size: ButtonSize;
+    $enabled: boolean;
+    $selected?: boolean;
+    $hideBorder: boolean;
+}>`
     padding: ${props => props.$size.padding};
-    color: ${props => (props.$enabled ? props.$selected ? props.$color.selected :
-        props.$color.default.content : props.$color.disabled.content)};
-    background-color: ${props => (props.$enabled ? props.$selected ? props.$color.selected :
-        props.$color.default.background : props.$color.disabled.background)};
+    color: ${props =>
+        props.$enabled
+            ? props.$selected
+                ? props.$color.selected
+                : props.$color.default.content
+            : props.$color.disabled.content};
+    background-color: ${props =>
+        props.$enabled
+            ? props.$selected
+                ? props.$color.selected
+                : props.$color.default.background
+            : props.$color.disabled.background};
     cursor: ${props => (props.$enabled ? 'pointer' : 'inherit')};
-    border: ${props => getBorder(props.$enabled, props.$color.default.border, props.$color.disabled.border)};
+    border: ${({ $enabled, $color, $hideBorder }) =>
+        $hideBorder ? 'transparent' : getBorder($enabled, $color.default.border, $color.disabled.border)};
     border-radius: 0.25em;
     opacity: ${props => (props.$enabled ? 'unset' : '0.4')};
     gap: 0.5em;
@@ -24,7 +39,8 @@ const Container = styled.button<{ $color: ButtonColorState; $size: ButtonSize; $
         color: ${props => (props.$enabled ? props.$color.hover.content : props.$color.disabled.content)};
         background-color: ${props =>
             props.$enabled ? props.$color.hover.background : props.$color.disabled.background};
-        border: ${props => getBorder(props.$enabled, props.$color.hover.border, props.$color.disabled.border)};
+        border: ${({ $enabled, $color, $hideBorder }) =>
+            $hideBorder ? 'transparent' : getBorder($enabled, $color.default.border, $color.disabled.border)};
     }
 `;
 
@@ -34,16 +50,24 @@ interface ButtonProps {
     color: ButtonColorState;
     disabled?: boolean;
     selected?: boolean;
+    hideBorder?: boolean;
     onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function _Button({ children, size, color, disabled, selected, onClickCallback }: ButtonProps) {
+function _Button({ children, size, color, disabled, selected, hideBorder = false, onClickCallback }: ButtonProps) {
     const _handleOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onClickCallback(event);
     };
 
     return (
-        <Container $color={color} $size={size} $enabled={!disabled} $selected={selected} onClick={_handleOnclick}>
+        <Container
+            $color={color}
+            $size={size}
+            $enabled={!disabled}
+            $selected={selected}
+            $hideBorder={hideBorder}
+            onClick={_handleOnclick}
+        >
             {children}
         </Container>
     );

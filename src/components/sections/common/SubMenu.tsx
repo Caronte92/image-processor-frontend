@@ -6,7 +6,7 @@ import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
     width: 100%;
-    background-color: ${props => props.theme.colors?.background};
+    background-color: ${props => props.theme.colors?.muted};
     border-block: 1px solid ${props => props.theme.colors?.border};
 `;
 
@@ -35,9 +35,10 @@ function _SubMenu({ items, selected, onClickCallback }: SubMenuProps) {
                 {items.map((item, index) => (
                     <Button
                         key={`option_${index + 1}`}
-                        color={theme.buttonColors.option}
+                        color={theme.buttonColors.primary}
                         size={theme.buttonSizes.md}
                         selected={selected === item}
+                        hideBorder={true}
                         onClickCallback={() => onClickCallback(item)}
                         data-item={item}
                     >

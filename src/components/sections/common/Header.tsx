@@ -14,8 +14,8 @@ import styled, { useTheme } from 'styled-components';
 const HeaderWrapper = styled.header`
     display: flex;
     padding: 1rem;
-    background-color: ${props => props.theme.colors?.background || props.theme.background};
-    color: ${props => props.theme.colors.foreground};
+    background-color: ${({ theme }) => theme.colors?.card};
+    color: ${({ theme }) => theme.colors.foreground};
 `;
 
 const Container = styled.div`
@@ -113,7 +113,7 @@ function _Header() {
                             text={t('subtitle')}
                             type="p"
                             size={theme.fonts?.sm}
-                            fontWeight={theme.weights?.bold}
+                            fontWeight={theme.weights?.regular}
                             color={theme.colors.mutedForeground}
                         />
                     </TextWrapper>
@@ -160,9 +160,9 @@ function _Header() {
                     >
                         <ButtonWrapper>
                             {theme.mode == 'light' ? (
-                                <IconSun size={theme.icons.xs} />
-                            ) : (
                                 <IconMoon size={theme.icons.xs} />
+                            ) : (
+                                <IconSun size={theme.icons.xs} />
                             )}
                         </ButtonWrapper>
                     </Button>

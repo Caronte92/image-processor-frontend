@@ -167,7 +167,6 @@ export type ButtonColorState = {
 
 export type ButtonColors = {
     primary: ButtonColorState;
-    option: ButtonColorState;
 };
 
 export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): ButtonColors => {
@@ -177,7 +176,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
         primary: {
             default: {
                 content: palette.foreground,
-                background: palette.card,
+                background: palette.input,
                 border: palette.sidebarBorder,
             },
             hover: {
@@ -195,29 +194,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
                 background: palette.primary,
                 border: palette.ring,
             },
-        },
-        option: {
-            default: {
-                content: palette.foreground,
-                background: 'transparent',
-                border: 'transparent',
-            },
-            hover: {
-                content: palette.foreground,
-                background: palette.accent,
-                border: 'transparent',
-            },
-            disabled: {
-                content: palette.mutedForeground,
-                background: palette.muted,
-                border: palette.border,
-            },
-            selected: {
-                content: palette.foreground,
-                background: palette.accent,
-                border: palette.ring,
-            },
-        },
+        }
     };
 };
 
@@ -235,7 +212,7 @@ export type IconSize = {
 // =======================
 
 export interface ITheme {
-    widthPage: string;
+    // widthPage: string;
     colors: ThemeColors;
     fonts: Fonts;
     weights: FontWeight;
@@ -245,7 +222,7 @@ export interface ITheme {
 }
 
 export interface IActiveTheme extends Omit<ITheme, 'colors' | 'buttonColors'> {
-    widthPage: string;
+    // widthPage: string;
     mode: 'light' | 'dark';
     colors: MainColors;
     buttonColors: ButtonColors;
@@ -257,7 +234,7 @@ export interface IActiveTheme extends Omit<ITheme, 'colors' | 'buttonColors'> {
 // =======================
 
 export const theme: ITheme = {
-    widthPage: '99rem',
+    // widthPage: '99rem',
     colors: {
         darkTheme,
         lightTheme,
