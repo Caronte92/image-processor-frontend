@@ -1,15 +1,15 @@
+import { i18n } from '@/../i18n-config';
+import Button from '@/components/atoms/Button';
+import IconChevronDown from '@/components/atoms/icons/IconChebronDown';
+import IconMoon from '@/components/atoms/icons/IconMoon';
+import IconSun from '@/components/atoms/icons/IconSun';
+import IconWorld from '@/components/atoms/icons/IconWorld';
 import Texts from '@/components/atoms/Texts';
 import { useLanguage } from '@/lib/hooks/useLocales';
 import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { i18n } from '../../../i18n-config';
-import Button from '../atoms/Button';
-import IconChevronDown from '../atoms/icons/IconChebronDown';
-import IconMoon from '../atoms/icons/IconMoon';
-import IconSun from '../atoms/icons/IconSun';
-import IconWorld from '../atoms/icons/IconWorld';
 
 const HeaderWrapper = styled.header`
     display: flex;
@@ -71,6 +71,17 @@ const DropdownWrapper = styled.div`
     gap: 0.5rem;
 `;
 
+const OptionWrapper = styled.div`
+    color: ${({ theme }) => theme.colors.foreground};
+    background: 'transparent'
+    border: 'transparent';
+    padding: .5rem .75rem;
+
+    &:hover {
+        background: ${({ theme }) => theme.colors.accent};
+    }
+`;
+
 function _Header() {
     const t = useTranslations('Navbar');
     const { toggleTheme } = useThemeToggle();
@@ -127,12 +138,7 @@ function _Header() {
                         {isLocalesDropdownVisible && (
                             <DropdownWrapper>
                                 {locales.map(locale => (
-                                    <Button
-                                        color={theme.buttonColors.option}
-                                        size={theme.buttonSizes?.md}
-                                        key={locale}
-                                        onClickCallback={() => handleLanguageChange(locale)}
-                                    >
+                                    <OptionWrapper key={locale} onClick={() => handleLanguageChange(locale)}>
                                         <ButtonWrapper>
                                             <Texts
                                                 text={locale.toUpperCase()}
@@ -142,7 +148,7 @@ function _Header() {
                                                 color={theme.colors?.foreground}
                                             />
                                         </ButtonWrapper>
-                                    </Button>
+                                    </OptionWrapper>
                                 ))}
                             </DropdownWrapper>
                         )}

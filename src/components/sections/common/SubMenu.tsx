@@ -1,8 +1,8 @@
+import Button from '@/components/atoms/Button';
+import Texts from '@/components/atoms/Texts';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import Button from '../atoms/Button';
-import Texts from '../atoms/Texts';
 
 const Container = styled.div`
     width: 100%;
@@ -32,26 +32,25 @@ function _SubMenu({ items, selected, onClickCallback }: SubMenuProps) {
     return (
         <Container>
             <SubMenuWrapper>
-                {items.map((item, index ) => (
-                <Button
-                    key={index}
-                    color={theme.buttonColors.option}
-                    size={theme.buttonSizes.md}
-                    selected={selected === item}
-                    onClickCallback={() => onClickCallback(item)}
-                    data-item={item}
-                >
-                    <Texts
-                        type={'p'}
-                        text={t(`option_${index+1}`)}
-                        size={theme.fonts.sm}
-                        fontWeight={theme.weights.medium}
-                        color={theme.colors.foreground}
-                    />
-                </Button>
-            ))}
+                {items.map((item, index) => (
+                    <Button
+                        key={`option_${index + 1}`}
+                        color={theme.buttonColors.option}
+                        size={theme.buttonSizes.md}
+                        selected={selected === item}
+                        onClickCallback={() => onClickCallback(item)}
+                        data-item={item}
+                    >
+                        <Texts
+                            type={'p'}
+                            text={t(`option_${index + 1}`)}
+                            size={theme.fonts.sm}
+                            fontWeight={theme.weights.medium}
+                            color={theme.colors.foreground}
+                        />
+                    </Button>
+                ))}
             </SubMenuWrapper>
-            
         </Container>
     );
 }

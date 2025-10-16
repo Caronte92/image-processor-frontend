@@ -29,21 +29,18 @@ export const useAppTheme = () => {
 };
 
 export default function StyledThemeProvider({ children }: { children: React.ReactNode }) {
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-    const [dynamicTheme, setDynamicTheme] = useState<IActiveTheme>(() => createDynamicTheme('light'));
-
-    useEffect(() => {
-        const storedTheme = localStorage.getItem('theme') as ThemeMode | null;
-        if (storedTheme) {
-            setThemeMode(storedTheme);
-            setDynamicTheme(createDynamicTheme(storedTheme));
-        } else {
+    const getInitialTheme = (): ThemeMode => {
+        if (typeof window !== 'undefined') {
+            const storedTheme = (localStorage.getItem('theme') as ThemeMode | null) ?? null;
+            if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const initialTheme = prefersDark ? 'dark' : 'light';
-            setThemeMode(initialTheme);
-            setDynamicTheme(createDynamicTheme(initialTheme));
+            return prefersDark ? 'dark' : 'light';
         }
-    }, []);
+        return 'light';
+    };
+
+    const [themeMode, setThemeMode] = useState<ThemeMode>(() => getInitialTheme());
+    const [dynamicTheme, setDynamicTheme] = useState<IActiveTheme>(() => createDynamicTheme(getInitialTheme()));
 
     useEffect(() => {
         localStorage.setItem('theme', themeMode);
@@ -57,7 +54,7 @@ export default function StyledThemeProvider({ children }: { children: React.Reac
 
     const toggleTheme = useCallback(() => {
         setThemeMode(prev => (prev === 'light' ? 'dark' : 'light'));
-    }, [themeMode]);
+    }, []);
 
     return (
         <ThemeToggleContext.Provider value={{ themeMode, toggleTheme }}>

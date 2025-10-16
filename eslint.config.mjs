@@ -8,7 +8,7 @@ export default [
     js.configs.recommended,
 
     {
-        files: ['**/*.{js,jsx,ts,tsx}'],
+        files: ['**/*.{js,jsx,ts,tsx, json}'],
         languageOptions: {
             parser: typescriptParser,
             ecmaVersion: 2022,
@@ -24,6 +24,8 @@ export default [
             '@typescript-eslint': typescriptPlugin,
         },
         rules: {
+            // 'no-unused-vars': 'off',
+
             // 👇 REGLAS BÁSICAS Y SEGURAS
             'no-console': ['warn', { allow: ['warn', 'error'] }],
             'no-debugger': 'error',

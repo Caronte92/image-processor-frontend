@@ -11,7 +11,7 @@ export default async function RootLayout({ children, params }: ILayoutProps) {
     const messages = await getMessages({ locale: lang });
 
     return (
-        <html lang={lang}>
+        <html lang={lang} suppressHydrationWarning>
             <body>
                 <ClientLayout messages={messages} locale={lang}>
                     {children}
