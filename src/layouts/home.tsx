@@ -1,5 +1,6 @@
 'use client';
 
+import ReactToSvg from '@/components/pages/ReactToSvg';
 import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useSubmenu } from '@/lib/providers/SubmenuProvider';
 import '@/styles/globals.css';
@@ -13,7 +14,13 @@ const Container = styled.div`
     flex-direction: column;
     flex: 1;
     min-height: 0;
+`;
+
+const Wrapper = styled.div`
     padding: 1.5rem 1rem;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 72rem;
 `;
 
 function _Home() {
@@ -23,7 +30,7 @@ function _Home() {
 
     switch (selected) {
         case SubMenuItems.SVG_REACT:
-            content = <p>SVG React</p>;
+            content = <ReactToSvg />;
             break;
         case SubMenuItems.IMAGE_CONVERTER:
             content = <p>Image Converter</p>;
@@ -36,7 +43,11 @@ function _Home() {
             break;
     }
 
-    return <Container>{content}</Container>;
+    return <Container>
+        <Wrapper>
+            {content}
+        </Wrapper>
+    </Container>;
 }
 
 const HomeMemo = React.memo(_Home);

@@ -7,5 +7,15 @@
         "option_1": "SVG a React",
         "option_2": "Conversor d'imatges",
         "option_3": "Generador de favicons"
+    },
+    "SvgToReact": {
+        "file_section_title": "Generador de Components React desde SVG",
+        "file_section_subtitle": "Converteix els teus arxius SVG en components de React reutilitzables",
+        "file_section_placeholder": "Inserta l'arxiu SVG",
+        "file_section_span_info_extension": "Formats: .svg",
+        "file_section_span_name_input": "Nom del component",
+        "file_section_span_name_placeholder_input": "ElMeuIcona",
+        "file_section_span_template_selector": "Plantilla",
+        "file_section_btn_generate": "Generar Component"
     }
 }

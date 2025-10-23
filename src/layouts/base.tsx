@@ -1,7 +1,7 @@
 'use client';
 
-import Header from '@/components/sections/common/Header';
-import SubMenu from '@/components/sections/common/SubMenu';
+import Header from '@/components/template/common/Header';
+import SubMenu from '@/components/template/common/SubMenu';
 import { SubMenuItems } from '@/lib/enums/subMenu';
 import { SubmenuProvider } from '@/lib/providers/SubmenuProvider';
 import { GlobalStyle } from '@/styles/global';

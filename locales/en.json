@@ -7,5 +7,15 @@
         "option_1": "SVG to React",
         "option_2": "Image Converter",
         "option_3": "Favicon Generator"
+    },
+    "SvgToReact": {
+        "file_section_title": "SVG to React Component Generator",
+        "file_section_subtitle": "Convert your SVG files into reusable React components",
+        "file_section_placeholder": "Upload SVG file",
+        "file_section_span_info_extension": "Formats: .svg",
+        "file_section_span_name_input": "Component name",
+        "file_section_span_name_placeholder_input": "MyIcon",
+        "file_section_span_template_selector": "Template",
+        "file_section_btn_generate": "Generate Component"
     }
 }
