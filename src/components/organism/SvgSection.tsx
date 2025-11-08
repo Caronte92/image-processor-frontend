@@ -1,6 +1,6 @@
 import Wrapper from '@/components/atoms/Wrapper';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
-import React, { use, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import InputFile, { InputFileHandle } from '@/components/atoms/InputFile';
 import { styled, useTheme } from 'styled-components';
@@ -56,7 +56,7 @@ interface SvgSectionProps {
     onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function _SvgSection({ isGenerateComponentAvailable, ...props}: SvgSectionProps) {
+function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps) {
     const t = useTranslations('SvgToReact');
     const theme = useTheme();
     const inputFileRef = useRef<InputFileHandle>(null);
@@ -64,10 +64,6 @@ function _SvgSection({ isGenerateComponentAvailable, ...props}: SvgSectionProps)
     const handleOpenFileDialog = () => {
         inputFileRef.current?.open();
     };
-
-    useEffect(() => {
-        console.log(props.file);
-    }, []);
 
     return (
         <Wrapper>
@@ -89,15 +85,11 @@ function _SvgSection({ isGenerateComponentAvailable, ...props}: SvgSectionProps)
                     </TextWrapper>
                     <InputFile ref={inputFileRef} onFileSelect={props.onFileSelect} />
                 </FakeInput>
-                {props.file &&
+                {props.file && (
                     <>
-                        <Texts
-                            text={props.file.name}
-                            size={theme.fonts.xs}
-                            color={theme.colors.mutedForeground}
-                        />
+                        <Texts text={props.file.name} size={theme.fonts.xs} color={theme.colors.mutedForeground} />
                     </>
-                }
+                )}
                 <InputLabel
                     label={t('file_section_span_name_input')}
                     placeholder={t('file_section_span_name_placeholder_input')}
