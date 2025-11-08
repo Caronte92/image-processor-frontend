@@ -1,6 +1,6 @@
 import { i18n } from '@/../i18n-config';
 import Button from '@/components/atoms/Button';
-import IconChevronDown from '@/components/atoms/icons/IconChebronDown';
+import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
 import IconMoon from '@/components/atoms/icons/IconMoon';
 import IconSun from '@/components/atoms/icons/IconSun';
 import IconWorld from '@/components/atoms/icons/IconWorld';
@@ -120,7 +120,7 @@ function _Header() {
                 </LogoWrapper>
                 <SettingsWrapper>
                     <Button
-                        color={theme.buttonColors.primary}
+                        color={theme.buttonColors.ghost}
                         size={theme.buttonSizes?.md}
                         onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}
                     >
@@ -154,7 +154,7 @@ function _Header() {
                         )}
                     </Button>
                     <Button
-                        color={theme.buttonColors.primary}
+                        color={theme.buttonColors.ghost}
                         size={theme.buttonSizes?.md}
                         onClickCallback={toggleTheme}
                     >

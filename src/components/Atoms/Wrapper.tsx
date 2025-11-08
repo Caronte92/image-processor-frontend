@@ -8,6 +8,7 @@ const Container = styled.div`
     padding: 1.5rem;
     border-radius: 0.5rem;
     border: 0.0625rem solid ${({ theme }) => theme.colors?.border};
+    gap: 1.5rem;
 `;
 
 interface WrapperProps {

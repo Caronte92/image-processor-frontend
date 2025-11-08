@@ -166,6 +166,7 @@ export type ButtonColorState = {
 };
 
 export type ButtonColors = {
+    ghost: ButtonColorState;
     primary: ButtonColorState;
 };
 
@@ -173,7 +174,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
     const palette = mode === 'light' ? colors.lightTheme : colors.darkTheme;
 
     return {
-        primary: {
+        ghost: {
             default: {
                 content: palette.foreground,
                 background: palette.input,
@@ -187,6 +188,28 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
             disabled: {
                 content: palette.mutedForeground,
                 background: palette.muted,
+                border: palette.border,
+            },
+            selected: {
+                content: palette.foreground,
+                background: palette.primary,
+                border: palette.ring,
+            },
+        },
+        primary: {
+            default: {
+                content: palette.foreground,
+                background: palette.primary,
+                border: palette.sidebarBorder,
+            },
+            hover: {
+                content: palette.foreground,
+                background: palette.secondary,
+                border: palette.primary,
+            },
+            disabled: {
+                content: palette.primaryForeground,
+                background: palette.primary,
                 border: palette.border,
             },
             selected: {

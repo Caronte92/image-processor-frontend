@@ -1,4 +1,4 @@
-import { Typography } from '@/theme';
+import { theme, Typography } from '@/theme';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -24,34 +24,34 @@ const Label = styled.label<{ $size: Typography; $weight: string; $color: string 
 `;
 
 interface TextProps {
-    type: TextType;
+    type?: TextType;
     text: string;
-    size: Typography;
-    fontWeight: string;
+    size?: Typography;
+    fontWeight?: string;
     color: string;
 }
 
-function _Text({ type = 'p', text, size, fontWeight, color }: TextProps) {
+function _Text({ type = 'p', size = theme.fonts.base, fontWeight = theme.weights.regular, ...props }: TextProps) {
     switch (type) {
         default:
             return (
-                <Paragraph $size={size} $weight={fontWeight} $color={color}>
+                <Paragraph $size={size} $weight={fontWeight} $color={props.color}>
                     {' '}
-                    {text}{' '}
+                    {props.text}{' '}
                 </Paragraph>
             );
         case 'h1':
             return (
-                <Title $size={size} $weight={fontWeight} $color={color}>
+                <Title $size={size} $weight={fontWeight} $color={props.color}>
                     {' '}
-                    {text}{' '}
+                    {props.text}{' '}
                 </Title>
             );
         case 'label':
             return (
-                <Label $size={size} $weight={fontWeight} $color={color}>
+                <Label $size={size} $weight={fontWeight} $color={props.color}>
                     {' '}
-                    {text}{' '}
+                    {props.text}{' '}
                 </Label>
             );
     }

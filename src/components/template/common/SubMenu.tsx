@@ -35,7 +35,7 @@ function _SubMenu({ items, selected, onClickCallback }: SubMenuProps) {
                 {items.map((item, index) => (
                     <Button
                         key={`option_${index + 1}`}
-                        color={theme.buttonColors.primary}
+                        color={theme.buttonColors.ghost}
                         size={theme.buttonSizes.md}
                         selected={selected === item}
                         hideBorder={true}

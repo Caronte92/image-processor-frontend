@@ -28,7 +28,7 @@ const Container = styled.button<{
                 ? props.$color.selected
                 : props.$color.default.background
             : props.$color.disabled.background};
-    cursor: ${props => (props.$enabled ? 'pointer' : 'inherit')};
+    cursor: ${props => (props.$enabled ? 'pointer' : 'not-allowed')};
     border: ${({ $enabled, $color, $hideBorder }) =>
         $hideBorder ? 'transparent' : getBorder($enabled, $color.default.border, $color.disabled.border)};
     border-radius: 0.25em;
