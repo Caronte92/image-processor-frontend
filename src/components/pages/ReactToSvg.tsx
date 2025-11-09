@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SvgSection from '../organism/SvgSection';
 import { template } from '@/components/template/reactToSvg/template';
-import { cleanSvg } from '@/lib/services/utils/svg';
+import { cleanSvg, CleanSvgResult } from '@/lib/services/utils/svg';
 
 const Container = styled.div`
     display: flex;
@@ -25,13 +25,11 @@ function _ReactToSvg() {
         setSvgName(value);
     };
 
-    const generateComponent = async () => {
-        if (selectedFile === null) return;
-
-        const svgContent = await selectedFile.text();
-        const svgNormalized = cleanSvg(svgContent);
-
-        const code = template(svgName, svgNormalized);
+    const generateComponent = async (file: File | Blob, svgName: string ) => {
+        if (!file) return;
+        const svgContent = await file.text();
+        const { children, viewBox, width, height }: CleanSvgResult = cleanSvg(svgContent);
+        const code = template(svgName, children, viewBox, width, height);
         setGeneratedCode(code);
     };
 
@@ -43,12 +41,14 @@ function _ReactToSvg() {
                     file={selectedFile ?? null}
                     onFileSelect={setSelectedFile}
                     onChangeCallback={e => handleSvgName(e.target.value)}
-                    onClickCallback={generateComponent}
+                    onClickCallback={async () => {
+                        if (selectedFile && svgName) {
+                            await generateComponent(selectedFile, svgName);
+                        }
+                    }}
                 />
             </WrapperSpace>
-            <WrapperSpace>
-                {generatedCode}
-            </WrapperSpace>
+            <WrapperSpace>{generatedCode}</WrapperSpace>
         </Container>
     );
 }

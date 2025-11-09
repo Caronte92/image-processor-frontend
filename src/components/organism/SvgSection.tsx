@@ -7,6 +7,9 @@ import { styled, useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import InputLabel from '@/components/molecules/InputLabel';
 import Button from '@/components/atoms/Button';
+import { IFileSelected } from '@/lib/types/IFiles';
+import SvgFileSelected from '@/components/molecules/SvgFileSelected';
+import IconUpload from '@/components/atoms/icons/IconUpload';
 
 const FileContainer = styled.div`
     display: flex;
@@ -31,12 +34,6 @@ const FakeInput = styled.button`
     }
 `;
 
-const FakeSVG = styled.div`
-    background: red;
-    width: 2rem;
-    height: 2rem;
-`;
-
 const TextWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -47,10 +44,7 @@ const TextWrapper = styled.div`
 
 interface SvgSectionProps {
     isGenerateComponentAvailable: boolean;
-    file: {
-        name: string;
-        size: number;
-    } | null;
+    file: IFileSelected | null;
     onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
     onChangeCallback: React.ChangeEventHandler<HTMLInputElement>;
     onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
@@ -70,7 +64,10 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
             <TitleSubtitle title={t('file_section_title')} subtitle={t('file_section_subtitle')} />
             <FileContainer>
                 <FakeInput tabIndex={0} onClick={handleOpenFileDialog}>
-                    <FakeSVG />
+                    <IconUpload
+                        size={theme.icons.lg}
+                        stroke={theme.colors.mutedForeground}
+                    />
                     <TextWrapper>
                         <Texts
                             text={t('file_section_placeholder')}
@@ -86,9 +83,12 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
                     <InputFile ref={inputFileRef} onFileSelect={props.onFileSelect} />
                 </FakeInput>
                 {props.file && (
-                    <>
-                        <Texts text={props.file.name} size={theme.fonts.xs} color={theme.colors.mutedForeground} />
-                    </>
+                    <SvgFileSelected
+                        file={{
+                            name: props.file.name,
+                            size: props.file.size,
+                        }}
+                    />
                 )}
                 <InputLabel
                     label={t('file_section_span_name_input')}
