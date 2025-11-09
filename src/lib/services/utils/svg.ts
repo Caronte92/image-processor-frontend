@@ -81,11 +81,15 @@ export function generateJSX(elements: SVGElementData[]): string {
                 .map(([k, v]) => {
                     const reactKey = k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 
-                    if (reactKey === 'stroke' && v === 'currentColor') {
+                    // SOLUCIÓN: Reemplazar colores dinámicos problemáticos
+                    if ((reactKey === 'stroke' || reactKey === 'fill') && v.startsWith('oklch')) {
+                        return `${reactKey}={${reactKey} || 'currentColor'}`;
+                    }
+                    if (reactKey === 'stroke' && v !== 'none') {
                         return `${reactKey}={stroke}`;
                     }
                     if (reactKey === 'fill' && v === 'none') {
-                        return `${reactKey}="none"`; // Mantener fill="none" explícito
+                        return `${reactKey}="none"`;
                     }
 
                     return `${reactKey}="${v}"`;

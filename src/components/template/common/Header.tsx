@@ -125,7 +125,7 @@ function _Header() {
                         onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}
                     >
                         <ButtonWrapper>
-                            <IconWorld size={theme.icons.xs} />
+                            <IconWorld size={theme.icons.xs} stroke={theme.colors.mutedForeground} />
                             <Texts
                                 text={currentLanguage.toUpperCase()}
                                 type="p"
@@ -133,7 +133,11 @@ function _Header() {
                                 fontWeight={theme.weights?.bold}
                                 color={theme.colors?.foreground}
                             />
-                            <IconChevronDown size={theme.icons.xs} />
+                            <IconChevronDown
+                                size={theme.icons.xs}
+                                stroke={theme.colors.mutedForeground}
+                                transform={isLocalesDropdownVisible ? 'rotate(180deg)' : 'none'}
+                            />
                         </ButtonWrapper>
                         {isLocalesDropdownVisible && (
                             <DropdownWrapper>
@@ -153,16 +157,12 @@ function _Header() {
                             </DropdownWrapper>
                         )}
                     </Button>
-                    <Button
-                        color={theme.buttonColors.ghost}
-                        size={theme.buttonSizes?.md}
-                        onClickCallback={toggleTheme}
-                    >
+                    <Button color={theme.buttonColors.ghost} size={theme.buttonSizes?.md} onClickCallback={toggleTheme}>
                         <ButtonWrapper>
                             {theme.mode == 'light' ? (
-                                <IconMoon size={theme.icons.xs} />
+                                <IconMoon size={theme.icons.xs} stroke={theme.colors.foreground} />
                             ) : (
-                                <IconSun size={theme.icons.xs} />
+                                <IconSun size={theme.icons.xs} stroke={theme.colors.foreground} />
                             )}
                         </ButtonWrapper>
                     </Button>

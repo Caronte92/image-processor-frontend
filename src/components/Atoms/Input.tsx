@@ -7,6 +7,7 @@ const InputStyled = styled.input`
     padding: 0.25rem 0.75rem;
     border-radius: 0.625rem;
     border: 0.0625rem solid ${props => props.theme.colors?.border};
+    color: ${props => props.theme.colors?.cardForeground};
 `;
 
 interface InputProps {
