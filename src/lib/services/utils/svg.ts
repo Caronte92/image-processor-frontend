@@ -81,7 +81,6 @@ export function generateJSX(elements: SVGElementData[]): string {
                 .map(([k, v]) => {
                     const reactKey = k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 
-                    // SOLUCIÓN: Reemplazar colores dinámicos problemáticos
                     if ((reactKey === 'stroke' || reactKey === 'fill') && v.startsWith('oklch')) {
                         return `${reactKey}={${reactKey} || 'currentColor'}`;
                     }

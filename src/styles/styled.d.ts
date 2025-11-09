@@ -1,4 +1,3 @@
-// styled.d.ts
 import type { IActiveTheme } from '@/theme';
 import 'styled-components';
 

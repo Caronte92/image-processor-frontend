@@ -29,11 +29,9 @@ export const useAppTheme = () => {
 };
 
 export default function StyledThemeProvider({ children, initialThemeMode }: { children: React.ReactNode; initialThemeMode: ThemeMode }) {
-    // Use the server-provided theme to avoid hydration mismatches
     const [themeMode, setThemeMode] = useState<ThemeMode>(initialThemeMode);
     const [dynamicTheme, setDynamicTheme] = useState<IActiveTheme>(() => createDynamicTheme(initialThemeMode));
 
-    // On mount, reconcile with localStorage or prefers-color-scheme if no stored value
     useEffect(() => {
         const storedTheme = (localStorage.getItem('theme') as ThemeMode | null) ?? null;
         let next: ThemeMode | null = null;
@@ -47,7 +45,6 @@ export default function StyledThemeProvider({ children, initialThemeMode }: { ch
         }
     }, []);
 
-    // Persist to localStorage and cookie, and update dynamic theme
     useEffect(() => {
         try {
             localStorage.setItem('theme', themeMode);
@@ -55,7 +52,6 @@ export default function StyledThemeProvider({ children, initialThemeMode }: { ch
             void 0;
         }
         try {
-            // Set a cookie so the server can read the preferred theme for SSR
             document.cookie = `theme=${themeMode}; path=/; max-age=31536000; samesite=lax`;
         } catch {
             void 0;
