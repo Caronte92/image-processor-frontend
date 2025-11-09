@@ -20,31 +20,27 @@ export function cleanSvg(svgContent: string): CleanSvgResult {
     const width = svg.getAttribute('width') || undefined;
     const height = svg.getAttribute('height') || undefined;
 
-    // Capturar atributos del SVG que pueden heredarse
     const inheritedAttrs = {
         stroke: svg.getAttribute('stroke'),
         'stroke-width': svg.getAttribute('stroke-width'),
         'stroke-linecap': svg.getAttribute('stroke-linecap'),
         'stroke-linejoin': svg.getAttribute('stroke-linejoin'),
-        fill: svg.getAttribute('fill')
+        fill: svg.getAttribute('fill'),
     };
 
     function parseElement(el: Element): SVGElementData {
         const attrs: Record<string, string> = {};
-        
-        // Primero agregar atributos específicos del elemento
+
         Array.from(el.attributes).forEach(a => {
             attrs[a.name] = a.value;
         });
 
-        // Luego complementar con atributos heredados (si no existen en el elemento)
         Object.entries(inheritedAttrs).forEach(([key, value]) => {
             if (value && !attrs[key]) {
                 attrs[key] = value;
             }
         });
 
-        // Asegurar atributos mínimos para paths
         if (el.tagName === 'path') {
             if (!attrs.stroke) attrs.stroke = 'currentColor';
             if (!attrs['stroke-width']) attrs['stroke-width'] = '2';
@@ -54,10 +50,10 @@ export function cleanSvg(svgContent: string): CleanSvgResult {
         }
 
         const children = Array.from(el.children).map(parseElement);
-        return { 
-            tag: el.tagName, 
-            attrs, 
-            children: children.length ? children : undefined 
+        return {
+            tag: el.tagName,
+            attrs,
+            children: children.length ? children : undefined,
         };
     }
 
@@ -83,11 +79,8 @@ export function generateJSX(elements: SVGElementData[]): string {
         .map(el => {
             const attrPairs = Object.entries(el.attrs)
                 .map(([k, v]) => {
-                    // Convertir kebab-case a camelCase para React
                     const reactKey = k.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 
-                    // Preservar todos los atributos importantes
-                    // Solo manejar stroke y fill específicamente si es necesario
                     if (reactKey === 'stroke' && v === 'currentColor') {
                         return `${reactKey}={stroke}`;
                     }
@@ -102,5 +95,5 @@ export function generateJSX(elements: SVGElementData[]): string {
             const childrenJSX = el.children ? generateJSX(el.children) : '';
             return childrenJSX ? `<${el.tag} ${attrPairs}>${childrenJSX}</${el.tag}>` : `<${el.tag} ${attrPairs} />`;
         })
-        .join(''); // Eliminar saltos de línea que crean espacios
+        .join('');
 }

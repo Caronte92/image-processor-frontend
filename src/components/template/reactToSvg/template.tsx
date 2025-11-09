@@ -7,7 +7,6 @@ export function template(
     width?: string,
     height?: string
 ) {
-    // VERIFICACIÓN CRÍTICA - asegurar que svgName tenga valor
     const componentName = svgName || 'SvgIcon';
     const jsxContent = generateJSX(children);
 
@@ -58,27 +57,23 @@ export default React.memo(${componentName});
 `;
 }
 
-// Función más robusta para el tamaño
 function getSafeSize(width?: string, height?: string): string {
     if (!width && !height) return '100%';
-    
-    // Si ambos existen y son iguales, usar ese valor
+
     if (width && height && width === height) {
         const numValue = parseInt(width);
         return isNaN(numValue) ? '100%' : `${numValue}px`;
     }
-    
-    // Preferir width si existe y es numérico
+
     if (width) {
         const numValue = parseInt(width);
         if (!isNaN(numValue)) return `${numValue}px`;
     }
-    
-    // O height si es numérico
+
     if (height) {
         const numValue = parseInt(height);
         if (!isNaN(numValue)) return `${numValue}px`;
     }
-    
+
     return '100%';
 }

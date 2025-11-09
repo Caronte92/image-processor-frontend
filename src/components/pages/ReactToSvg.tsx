@@ -25,7 +25,7 @@ function _ReactToSvg() {
         setSvgName(value);
     };
 
-    const generateComponent = async (file: File | Blob, svgName: string ) => {
+    const generateComponent = async (file: File | Blob, svgName: string) => {
         if (!file) return;
         const svgContent = await file.text();
         const { children, viewBox, width, height }: CleanSvgResult = cleanSvg(svgContent);
