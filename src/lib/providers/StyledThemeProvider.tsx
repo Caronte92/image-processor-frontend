@@ -28,28 +28,39 @@ export const useAppTheme = () => {
     };
 };
 
-export default function StyledThemeProvider({ children }: { children: React.ReactNode }) {
-    const getInitialTheme = (): ThemeMode => {
-        if (typeof window !== 'undefined') {
-            const storedTheme = (localStorage.getItem('theme') as ThemeMode | null) ?? null;
-            if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            return prefersDark ? 'dark' : 'light';
+export default function StyledThemeProvider({ children, initialThemeMode }: { children: React.ReactNode; initialThemeMode: ThemeMode }) {
+    // Use the server-provided theme to avoid hydration mismatches
+    const [themeMode, setThemeMode] = useState<ThemeMode>(initialThemeMode);
+    const [dynamicTheme, setDynamicTheme] = useState<IActiveTheme>(() => createDynamicTheme(initialThemeMode));
+
+    // On mount, reconcile with localStorage or prefers-color-scheme if no stored value
+    useEffect(() => {
+        const storedTheme = (localStorage.getItem('theme') as ThemeMode | null) ?? null;
+        let next: ThemeMode | null = null;
+        if (storedTheme === 'light' || storedTheme === 'dark') {
+            next = storedTheme;
+        } else if (window.matchMedia) {
+            next = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
-        return 'light';
-    };
+        if (next && next !== themeMode) {
+            setThemeMode(next);
+        }
+    }, []);
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>(() => getInitialTheme());
-    const [dynamicTheme, setDynamicTheme] = useState<IActiveTheme>(() => createDynamicTheme(getInitialTheme()));
-
+    // Persist to localStorage and cookie, and update dynamic theme
     useEffect(() => {
-        localStorage.setItem('theme', themeMode);
-    }, [themeMode]);
-
-    // Actualizar el tema dinámico cuando cambia el themeMode
-    useEffect(() => {
-        const newDynamicTheme = createDynamicTheme(themeMode);
-        setDynamicTheme(newDynamicTheme);
+        try {
+            localStorage.setItem('theme', themeMode);
+        } catch {
+            void 0;
+        }
+        try {
+            // Set a cookie so the server can read the preferred theme for SSR
+            document.cookie = `theme=${themeMode}; path=/; max-age=31536000; samesite=lax`;
+        } catch {
+            void 0;
+        }
+        setDynamicTheme(createDynamicTheme(themeMode));
     }, [themeMode]);
 
     const toggleTheme = useCallback(() => {

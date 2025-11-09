@@ -178,7 +178,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
             default: {
                 content: palette.foreground,
                 background: palette.input,
-                border: palette.sidebarBorder,
+                border: 'transparent',
             },
             hover: {
                 content: palette.foreground,

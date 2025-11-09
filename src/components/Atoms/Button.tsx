@@ -34,6 +34,9 @@ const Container = styled.button<{
     border-radius: 0.25em;
     opacity: ${props => (props.$enabled ? 'unset' : '0.4')};
     gap: 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
         color: ${props => (props.$enabled ? props.$color.hover.content : props.$color.disabled.content)};

@@ -8,12 +8,13 @@ interface ClientLayoutProps {
     children: React.ReactNode;
     messages: Record<string, string>;
     locale: string;
+    initialThemeMode: 'light' | 'dark';
 }
 
-export default function ClientLayout({ children, messages, locale }: ClientLayoutProps) {
+export default function ClientLayout({ children, messages, locale, initialThemeMode }: ClientLayoutProps) {
     return (
         <NextIntlClientProvider messages={messages} locale={locale} timeZone="Europe/Madrid">
-            <StyledThemeProvider>{children}</StyledThemeProvider>
+            <StyledThemeProvider initialThemeMode={initialThemeMode}>{children}</StyledThemeProvider>
         </NextIntlClientProvider>
     );
 }

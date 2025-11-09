@@ -1,12 +1,15 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
+import { Typography } from '@/theme';
 
 const Container = styled.div``;
 
 interface TitleSubtitleProps {
     title: string;
     subtitle: string;
+    titleSize?: Typography;
+    subtitleSize?: Typography;
 }
 
 function _TitleSubtitle(props: TitleSubtitleProps) {
@@ -16,14 +19,14 @@ function _TitleSubtitle(props: TitleSubtitleProps) {
             <Texts
                 type={'p'}
                 text={props.title}
-                size={theme.fonts.base}
+                size={props.titleSize}
                 fontWeight={theme.weights.medium}
                 color={theme.colors.foreground}
             />
             <Texts
                 type={'p'}
                 text={props.subtitle}
-                size={theme.fonts.base}
+                size={props.subtitleSize}
                 fontWeight={theme.weights.regular}
                 color={theme.colors.mutedForeground}
             />

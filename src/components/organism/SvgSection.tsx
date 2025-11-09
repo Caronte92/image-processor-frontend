@@ -59,6 +59,11 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
         inputFileRef.current?.open();
     };
 
+    const handleClearFile = () => {
+        inputFileRef.current?.reset();
+        props.onFileSelect?.(null);
+    };
+
     return (
         <Wrapper>
             <TitleSubtitle title={t('file_section_title')} subtitle={t('file_section_subtitle')} />
@@ -88,6 +93,7 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
                             name: props.file.name,
                             size: props.file.size,
                         }}
+                        onClickCallback={handleClearFile}
                     />
                 )}
                 <InputLabel
