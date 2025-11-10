@@ -16,6 +16,9 @@
         "file_section_span_name_input": "Nom del component",
         "file_section_span_name_placeholder_input": "ElMeuIcona",
         "file_section_span_template_selector": "Plantilla",
-        "file_section_btn_generate": "Generar Component"
+        "file_section_btn_generate": "Generar Component",
+        "component_section_title": "Vista previa",
+        "component_section_button_copy": "Copiar",
+        "component_section_button_download": "Descarregar"
     }
 }

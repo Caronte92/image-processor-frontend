@@ -8,14 +8,17 @@
         "option_2": "Conversor de imagenes",
         "option_3": "Generador de favicons"
     },
-  "SvgToReact": {
-    "file_section_title": "Generador de Componentes React desde SVG",
-    "file_section_subtitle": "Convierte tus archivos SVG en componentes React reutilizables",
-    "file_section_placeholder": "Subir archivos SVG",
-    "file_section_span_info_extension": "Formatos: .svg",
-    "file_section_span_name_input": "Nombre del componente",
-    "file_section_span_name_placeholder_input": "MiComponente",
-    "file_section_span_template_selector": "Plantilla",
-    "file_section_btn_generate": "Generar Componente"
-  }
+    "SvgToReact": {
+        "file_section_title": "Generador de Componentes React desde SVG",
+        "file_section_subtitle": "Convierte tus archivos SVG en componentes React reutilizables",
+        "file_section_placeholder": "Subir archivos SVG",
+        "file_section_span_info_extension": "Formatos: .svg",
+        "file_section_span_name_input": "Nombre del componente",
+        "file_section_span_name_placeholder_input": "MiComponente",
+        "file_section_span_template_selector": "Plantilla",
+        "file_section_btn_generate": "Generar Componente",
+        "component_section_title": "Vista previa",
+        "component_section_button_copy": "Copiar",
+        "component_section_button_download": "Descargar"
+    }
 }

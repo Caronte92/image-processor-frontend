@@ -16,6 +16,9 @@
         "file_section_span_name_input": "Component name",
         "file_section_span_name_placeholder_input": "MyIcon",
         "file_section_span_template_selector": "Template",
-        "file_section_btn_generate": "Generate Component"
+        "file_section_btn_generate": "Generate Component",
+        "component_section_title": "Preview",
+        "component_section_button_copy": "Copy",
+        "component_section_button_download": "Download"
     }
 }
