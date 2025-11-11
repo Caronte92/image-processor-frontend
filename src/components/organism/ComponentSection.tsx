@@ -20,6 +20,7 @@ const ButtonsWrapper = styled.div`
 `;
 
 const CodeContainer = styled.pre`
+    overflow: scroll;
 `;
 
 interface ComponentNameProps {
@@ -27,7 +28,7 @@ interface ComponentNameProps {
 }
 
 function _ComponentName(props: ComponentNameProps) {
-    const t = useTranslations("SvgToReact");
+    const t = useTranslations('SvgToReact');
     const theme = useTheme();
     const [, setCopied] = useState(false);
 

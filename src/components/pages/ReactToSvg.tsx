@@ -14,7 +14,8 @@ const WrapperSpace = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 100%;
+    flex: 1 1 0;
+    min-width: 0;
 `;
 
 function _ReactToSvg() {
