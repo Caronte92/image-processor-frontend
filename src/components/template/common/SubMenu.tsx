@@ -1,5 +1,6 @@
 import Button from '@/components/atoms/Button';
-import Texts from '@/components/atoms/Texts';
+import IconAndText from '@/components/molecules/IconAndText';
+import { subHeaderIcon } from '@/lib/services/utils/subHeader';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
@@ -42,12 +43,12 @@ function _SubMenu({ items, selected, onClickCallback }: SubMenuProps) {
                         onClickCallback={() => onClickCallback(item)}
                         data-item={item}
                     >
-                        <Texts
-                            type={'p'}
+                        <IconAndText
+                            icon={subHeaderIcon(index, theme.icons.xs)}
                             text={t(`option_${index + 1}`)}
                             size={theme.fonts.sm}
-                            fontWeight={theme.weights.medium}
                             color={theme.colors.foreground}
+                            fontWeight={theme.weights.medium}
                         />
                     </Button>
                 ))}

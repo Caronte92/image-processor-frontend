@@ -1,6 +1,9 @@
 import Button from '@/components/atoms/Button';
+import IconCopy from '@/components/atoms/icons/IconCopy';
+import IconDownload from '@/components/atoms/icons/IconDownload';
 import Texts from '@/components/atoms/Texts';
 import Wrapper from '@/components/atoms/Wrapper';
+import IconAndText from '@/components/molecules/IconAndText';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { styled, useTheme } from 'styled-components';
@@ -21,10 +24,15 @@ const ButtonsWrapper = styled.div`
 
 const CodeContainer = styled.pre`
     overflow: scroll;
+    background: ${({ theme }) => `color-mix(in oklch, ${theme.colors.input} 30%)`};
+    border: 0.0625rem solid ${props => props.theme.colors.input};
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
 `;
 
 interface ComponentNameProps {
     svgComponent: string;
+    svgName: string;
 }
 
 function _ComponentName(props: ComponentNameProps) {
@@ -49,7 +57,7 @@ function _ComponentName(props: ComponentNameProps) {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'Test.tsx';
+        link.download = `${props.svgName}.tsx`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -70,7 +78,8 @@ function _ComponentName(props: ComponentNameProps) {
                         color={theme.buttonColors.primary}
                         onClickCallback={copyToClipboard}
                     >
-                        <Texts
+                        <IconAndText
+                            icon={<IconCopy size={theme.icons.xs} />}
                             text={t('component_section_button_copy')}
                             size={theme.fonts.sm}
                             color={theme.colors.cardForeground}
@@ -81,7 +90,8 @@ function _ComponentName(props: ComponentNameProps) {
                         color={theme.buttonColors.primary}
                         onClickCallback={downloadAsTSX}
                     >
-                        <Texts
+                        <IconAndText
+                            icon={<IconDownload size={theme.icons.xs} />}
                             text={t('component_section_button_download')}
                             size={theme.fonts.sm}
                             color={theme.colors.cardForeground}

@@ -66,7 +66,7 @@ function _ReactToSvg() {
             </WrapperSpace>
             <WrapperSpace>
                 { generatedCode &&
-                    <ComponentSection svgComponent={ generatedCode } />
+                    <ComponentSection svgComponent={ generatedCode } svgName={ svgName }/>
                 }
             </WrapperSpace>
         </Container>
