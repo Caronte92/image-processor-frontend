@@ -1,9 +1,53 @@
 import React, { useState } from 'react';
 import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
 import styled, { useTheme } from 'styled-components';
-import Button from '@/components/atoms/Button';
 import Texts from '@/components/atoms/Texts';
 import { IOptionsSelect } from '@/lib/types/IOptions';
+import { ButtonColorState, ButtonSize } from '@/theme';
+
+const getBorder = (enabled: boolean, enabledBorder: string, disabledBorder: string) => {
+    let borderBase = '0.0625em solid';
+    if (enabled) return enabledBorder !== '' ? `${borderBase} ${enabledBorder}` : 'transparent';
+    return disabledBorder !== '' ? `${borderBase} ${disabledBorder}` : 'transparent';
+};
+
+const ButtonSelect = styled.button<{
+    $color: ButtonColorState;
+    $size: ButtonSize;
+    $enabled: boolean;
+    $selected?: boolean;
+    $hideBorder: boolean;
+}>`
+    padding: ${props => props.$size.padding};
+    color: ${props =>
+        props.$enabled
+            ? props.$selected
+                ? props.$color.selected
+                : props.$color.default.content
+            : props.$color.disabled.content};
+    background-color: ${props =>
+        props.$enabled
+            ? props.$selected
+                ? props.$color.selected
+                : props.$color.default.background
+            : props.$color.disabled.background};
+    cursor: ${props => (props.$enabled ? 'pointer' : 'not-allowed')};
+    border: ${({ $enabled, $color, $hideBorder }) =>
+        $hideBorder ? 'transparent' : getBorder($enabled, $color.default.border, $color.disabled.border)};
+    border-radius: 0.25em;
+    opacity: ${props => (props.$enabled ? 'unset' : '0.4')};
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        color: ${props => (props.$enabled ? props.$color.hover.content : props.$color.disabled.content)};
+        background-color: ${props =>
+            props.$enabled ? props.$color.hover.background : props.$color.disabled.background};
+        border: ${({ $enabled, $color, $hideBorder }) =>
+            $hideBorder ? 'transparent' : getBorder($enabled, $color.default.border, $color.disabled.border)};
+    }
+`;
 
 const Container = styled.div`
     display: flex;
@@ -47,21 +91,31 @@ interface SelectProps {
     text: string;
     icon?: React.ReactNode;
     options: IOptionsSelect[];
-    onclickCallback: React.MouseEventHandler<HTMLButtonElement>;
+    onclickCallback: React.MouseEventHandler<HTMLElement>;
+    children: React.ReactNode;
+    size: ButtonSize;
+    color: ButtonColorState;
+    disabled?: boolean;
+    selected?: boolean;
+    hideBorder?: boolean;
 }
 
-function _Select(props: SelectProps) {
+function _Select({ hideBorder = false, ...props }: SelectProps) {
     const theme = useTheme();
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+    const _handleOnclick = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+    };
+
     return (
-        <Button
-            color={theme.buttonColors.ghost}
-            size={theme.buttonSizes?.md}
-            onClickCallback={(e) => {
-                setIsDropdownVisible(!isDropdownVisible);
-                props.onclickCallback(e);
-            }}
+        <ButtonSelect
+            $color={props.color}
+            $size={props.size}
+            $enabled={!props.disabled}
+            $selected={props.selected}
+            $hideBorder={hideBorder}
+            onClick={_handleOnclick}
         >
             <Container>
                 {props.icon && props.icon}
@@ -74,10 +128,14 @@ function _Select(props: SelectProps) {
                 />
                 <IconChevronDown size={theme.icons.xs} />
             </Container>
-            {isDropdownVisible &&
+            {isDropdownVisible && (
                 <DropdownContainer>
                     {props.options.map(option => (
-                        <OptionContainer>
+                        <OptionContainer
+                            key={option.value}
+                            data-value={option.value}
+                            onClick={props.onclickCallback}
+                        >
                             <OptionWrapper>
                                 <Texts
                                     type={'p'}
@@ -86,13 +144,12 @@ function _Select(props: SelectProps) {
                                     fontWeight={theme.weights.regular}
                                     color={theme.colors?.foreground}
                                 />
-                                {option.selected && <p>✅</p>}
                             </OptionWrapper>
                         </OptionContainer>
                     ))}
                 </DropdownContainer>
-            }
-        </Button>
+            )}
+        </ButtonSelect>
     );
 }
 

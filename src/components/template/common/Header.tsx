@@ -5,6 +5,7 @@ import IconMoon from '@/components/atoms/icons/IconMoon';
 import IconSun from '@/components/atoms/icons/IconSun';
 import IconWorld from '@/components/atoms/icons/IconWorld';
 import Texts from '@/components/atoms/Texts';
+import Select from '@/components/molecules/Select';
 import { useLanguage } from '@/lib/hooks/useLocales';
 import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
 import { useTranslations } from 'next-intl';
@@ -119,44 +120,23 @@ function _Header() {
                     </TextWrapper>
                 </LogoWrapper>
                 <SettingsWrapper>
-                    <Button
-                        color={theme.buttonColors.ghost}
+                    <Select
+                        text={currentLanguage.toUpperCase()}
+                        icon={<IconWorld size={theme.icons.xs} stroke={theme.colors.mutedForeground} />}
+                        options={locales.map(locale => ({
+                            text: locale.toUpperCase(),
+                            value: locale,
+                            selected: locale === currentLocale,
+                        }))}
+                        onclickCallback={event => {
+                            const value = event.currentTarget.dataset.value;
+                            if (value) handleLanguageChange(value);
+                        }}
+                        hideBorder
+                        children={undefined}
                         size={theme.buttonSizes?.md}
-                        onClickCallback={() => setIsLocalesDropdownVisible(!isLocalesDropdownVisible)}
-                    >
-                        <ButtonWrapper>
-                            <IconWorld size={theme.icons.xs} stroke={theme.colors.mutedForeground} />
-                            <Texts
-                                text={currentLanguage.toUpperCase()}
-                                type="p"
-                                size={theme.fonts?.sm}
-                                fontWeight={theme.weights?.bold}
-                                color={theme.colors?.foreground}
-                            />
-                            <IconChevronDown
-                                size={theme.icons.xs}
-                                stroke={theme.colors.mutedForeground}
-                                transform={isLocalesDropdownVisible ? 'rotate(180deg)' : 'none'}
-                            />
-                        </ButtonWrapper>
-                        {isLocalesDropdownVisible && (
-                            <DropdownWrapper>
-                                {locales.map(locale => (
-                                    <OptionWrapper key={locale} onClick={() => handleLanguageChange(locale)}>
-                                        <ButtonWrapper>
-                                            <Texts
-                                                text={locale.toUpperCase()}
-                                                type="p"
-                                                size={theme.fonts?.sm}
-                                                fontWeight={theme.weights?.bold}
-                                                color={theme.colors?.foreground}
-                                            />
-                                        </ButtonWrapper>
-                                    </OptionWrapper>
-                                ))}
-                            </DropdownWrapper>
-                        )}
-                    </Button>
+                        color={theme.buttonColors.ghost}
+                    />
                     <Button color={theme.buttonColors.ghost} size={theme.buttonSizes?.md} onClickCallback={toggleTheme}>
                         <ButtonWrapper>
                             {theme.mode == 'light' ? (
