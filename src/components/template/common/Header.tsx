@@ -1,6 +1,5 @@
 import { i18n } from '@/../i18n-config';
 import Button from '@/components/atoms/Button';
-import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
 import IconMoon from '@/components/atoms/icons/IconMoon';
 import IconSun from '@/components/atoms/icons/IconSun';
 import IconWorld from '@/components/atoms/icons/IconWorld';
@@ -59,30 +58,6 @@ const ButtonWrapper = styled.div`
     gap: 0.5rem;
 `;
 
-const DropdownWrapper = styled.div`
-    background-color: ${props => props.theme.colors?.background || props.theme.background};
-    border: 1px solid ${props => props.theme.colors?.border};
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    margin: 1rem 0 0 -0.875rem;
-    width: 6.5625rem;
-    gap: 0.5rem;
-`;
-
-const OptionWrapper = styled.div`
-    color: ${({ theme }) => theme.colors.foreground};
-    background: 'transparent'
-    border: 'transparent';
-    padding: .5rem .75rem;
-
-    &:hover {
-        background: ${({ theme }) => theme.colors.accent};
-    }
-`;
-
 function _Header() {
     const t = useTranslations('Navbar');
     const { toggleTheme } = useThemeToggle();
@@ -90,11 +65,9 @@ function _Header() {
     const { currentLocale, changeLanguage } = useLanguage();
     const locales = i18n.locales;
     const currentLanguage = locales.find(lang => lang === currentLocale) || 'en';
-    const [isLocalesDropdownVisible, setIsLocalesDropdownVisible] = React.useState(false);
 
     const handleLanguageChange = (newLocale: string) => {
         changeLanguage(newLocale);
-        setIsLocalesDropdownVisible(false);
     };
 
     return (
