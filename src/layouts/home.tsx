@@ -7,6 +7,7 @@ import '@/styles/globals.css';
 import React from 'react';
 import { styled } from 'styled-components';
 import BaseLayout from './base';
+import ImageConverter from '@/components/pages/ImageConverter';
 
 const Container = styled.div`
     background: ${props => props.theme.colors?.background};
@@ -33,7 +34,7 @@ function _Home() {
             content = <ReactToSvg />;
             break;
         case SubMenuItems.IMAGE_CONVERTER:
-            content = <p>Image Converter</p>;
+            content = <ImageConverter />;
             break;
         case SubMenuItems.FAVICON_GENERATOR:
             content = <p>Favicon Generator</p>;

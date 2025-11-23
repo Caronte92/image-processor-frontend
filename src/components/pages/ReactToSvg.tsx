@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SvgSection from '../organism/SvgSection';
+import SvgSection from '../organism/svgToReact/SvgSection';
 import { template } from '@/components/template/reactToSvg/template';
 import { cleanSvg, CleanSvgResult } from '@/lib/services/utils/svg';
-import ComponentSection from '@/components/organism/ComponentSection';
+import ComponentSection from '@/components/organism/svgToReact/ComponentSection';
 
 const Container = styled.div`
     display: flex;
