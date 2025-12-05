@@ -85,7 +85,7 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
                             color={theme.colors.mutedForeground}
                         />
                     </TextWrapper>
-                    <InputFile ref={inputFileRef} onFileSelect={props.onFileSelect} />
+                    <InputFile ref={inputFileRef} typesAccepted='.svg' onFileSelect={props.onFileSelect} />
                 </FakeInput>
                 {props.file && (
                     <SvgFileSelected

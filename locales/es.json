@@ -20,5 +20,12 @@
         "component_section_title": "Vista previa",
         "component_section_button_copy": "Copiar",
         "component_section_button_download": "Descargar"
+    },
+    "ImageConverter": {
+        "file_section_title": "Conversor y Redimensionador de Imágenes",
+        "file_section_subtitle": "Convierte entre formatos y redimensiona tus imágenes",
+        "file_section_placeholder": "Subir imágenes",
+        "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
+        "configuration_section_title": "Configuración"
     }
 }

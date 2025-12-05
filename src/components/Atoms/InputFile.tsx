@@ -12,6 +12,7 @@ export interface InputFileHandle {
 }
 
 interface InputFileProps {
+    typesAccepted: string;
     onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
@@ -36,9 +37,15 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
             return;
         }
 
-        const isSvg = file.type === 'image/svg+xml' || file.name.toLowerCase().endsWith('.svg');
-        if (!isSvg) {
-            setError('Por favor selecciona un archivo .svg válido.');
+        // Validar el formato del archivo
+        const validImageTypes = ['image/svg+xml', 'image/png', 'image/webp', 'image/jpeg', 'image/jpg'];
+        const validExtensions = props.typesAccepted.split(',').map(type => type.trim());
+        const fileExtension = file.name.toLowerCase().match(/\.[^.]+$/)?.[0] || '';
+        const isValidType = validImageTypes.includes(file.type);
+        const isValidExtension = validExtensions.includes(fileExtension);
+
+        if (!isValidType && !isValidExtension) {
+            setError('Por favor selecciona un archivo de imagen válido (.svg, .png, .webp, .jpg).');
             inputRef.current!.value = '';
             props.onFileSelect?.(null);
             return;
@@ -47,7 +54,7 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
         props.onFileSelect?.(file);
     };
 
-    return <Input type="file" accept=".svg" ref={inputRef} onChange={handleChange} />;
+    return <Input type="file" accept={props.typesAccepted} ref={inputRef} onChange={handleChange} />;
 }
 
 const ForwardedInputFile = forwardRef<InputFileHandle, InputFileProps>(_InputFile);
