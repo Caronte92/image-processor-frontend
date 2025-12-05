@@ -41,7 +41,6 @@ export default function BaseLayout({ children, hideHeader, hideSubmenu }: IBaseP
                     {!hideSubmenu && (
                         <SubMenu
                             selected={subMenuItemSelected}
-                            items={submenuItems}
                             onClickCallback={_handleItemSelected}
                         />
                     )}

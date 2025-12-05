@@ -4,9 +4,9 @@
         "subtitle": "Herraminetas para desarrolladores"
     },
     "SubMenu": {
-        "option_1": "SVG a React",
-        "option_2": "Conversor de imagenes",
-        "option_3": "Generador de favicons"
+        "option_svg_react": "SVG a React",
+        "option_image_converter": "Conversor de imagenes",
+        "option_favicon_generator": "Generador de favicons"
     },
     "SvgToReact": {
         "file_section_title": "Generador de Componentes React desde SVG",

@@ -1,6 +1,8 @@
 import Button from '@/components/atoms/Button';
+import IconCode from '@/components/atoms/icons/IconCode';
+import IconPicture from '@/components/atoms/icons/IconPicture';
 import IconAndText from '@/components/molecules/IconAndText';
-import { subHeaderIcon } from '@/lib/services/utils/subHeader';
+import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
@@ -20,38 +22,50 @@ const SubMenuWrapper = styled.div`
 `;
 
 interface SubMenuProps {
-    items: string[];
     selected: string;
     // eslint-disable-next-line no-unused-vars
     onClickCallback: (item: string) => void;
 }
 
-function _SubMenu({ items, selected, onClickCallback }: SubMenuProps) {
+function _SubMenu({ ...props }: SubMenuProps) {
     const t = useTranslations('SubMenu');
     const theme = useTheme();
 
     return (
         <Container>
             <SubMenuWrapper>
-                {items.map((item, index) => (
-                    <Button
-                        key={`option_${index + 1}`}
-                        color={theme.buttonColors.ghost}
-                        size={theme.buttonSizes.md}
-                        selected={selected === item}
-                        hideBorder={true}
-                        onClickCallback={() => onClickCallback(item)}
-                        data-item={item}
-                    >
-                        <IconAndText
-                            icon={subHeaderIcon(index, theme.icons.xs)}
-                            text={t(`option_${index + 1}`)}
-                            size={theme.fonts.sm}
-                            color={theme.colors.foreground}
-                            fontWeight={theme.weights.medium}
-                        />
-                    </Button>
-                ))}
+                <Button
+                    color={theme.buttonColors.ghost}
+                    size={theme.buttonSizes.md}
+                    selected={props.selected === SubMenuItems.SVG_REACT}
+                    hideBorder={true}
+                    onClickCallback={() => props.onClickCallback(SubMenuItems.SVG_REACT)}
+                    data-item={SubMenuItems.SVG_REACT}
+                >
+                    <IconAndText
+                        icon={<IconCode size={theme.icons.xs} />}
+                        text={t(`option_${SubMenuItems.SVG_REACT}`)}
+                        size={theme.fonts.sm}
+                        color={theme.colors.foreground}
+                        fontWeight={theme.weights.medium}
+                    />
+                </Button>
+                <Button
+                    color={theme.buttonColors.ghost}
+                    size={theme.buttonSizes.md}
+                    selected={props.selected === SubMenuItems.IMAGE_CONVERTER}
+                    hideBorder={true}
+                    onClickCallback={() => props.onClickCallback(SubMenuItems.IMAGE_CONVERTER)}
+                    data-item={SubMenuItems.IMAGE_CONVERTER}
+                >
+                    <IconAndText
+                        icon={<IconPicture size={theme.icons.xs} />}
+                        text={t(`option_${SubMenuItems.IMAGE_CONVERTER}`)}
+                        size={theme.fonts.sm}
+                        color={theme.colors.foreground}
+                        fontWeight={theme.weights.medium}
+                    />
+                </Button>
             </SubMenuWrapper>
         </Container>
     );

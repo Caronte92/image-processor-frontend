@@ -4,9 +4,9 @@
         "subtitle": "Developer tools"
     },
     "SubMenu": {
-        "option_1": "SVG to React",
-        "option_2": "Image Converter",
-        "option_3": "Favicon Generator"
+        "option_svg_react": "SVG to React",
+        "option_image_converter": "Image Converter",
+        "option_favicon_generator": "Favicon Generator"
     },
     "SvgToReact": {
         "file_section_title": "SVG to React Component Generator",

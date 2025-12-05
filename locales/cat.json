@@ -4,9 +4,9 @@
         "subtitle": "Eines per a desenvolupadors"
     },
     "SubMenu": {
-        "option_1": "SVG a React",
-        "option_2": "Conversor d'imatges",
-        "option_3": "Generador de favicons"
+        "option_svg_react": "SVG a React",
+        "option_image_converter": "Conversor d'imatges",
+        "option_favicon_generator": "Generador de favicons"
     },
     "SvgToReact": {
         "file_section_title": "Generador de Components React desde SVG",
