@@ -52,7 +52,7 @@ const ButtonSelect = styled.button<{
 const Container = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0.5rem;
 `;
 
@@ -71,7 +71,7 @@ const DropdownContainer = styled.div`
 
 const OptionContainer = styled.div`
     color: ${({ theme }) => theme.colors.foreground};
-    background: 'transparent'
+    background: 'transparent';
     border: 'transparent';
     padding: .5rem .75rem;
 

@@ -44,7 +44,6 @@ interface ImageSectionProps {
     file: IFileSelected | null;
     onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
     onChangeCallback: React.ChangeEventHandler<HTMLInputElement>;
-    onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 function _ImageSection(props: ImageSectionProps) {

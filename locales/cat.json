@@ -26,6 +26,8 @@
         "file_section_subtitle": "Converteix els teus arxius SVG en components de React reutilitzables",
         "file_section_placeholder": "Pujar Imatges",
         "file_section_span_info_extension": "Formats: JPG, PNG, GIF, BMP, WebP",
-        "configuration_section_title": "Configuració"
+        "configuration_section_title": "Configuració",
+        "configuration_section_button": "Convertir imatges",
+        "download_section_title": "Descargar"
     }
 }

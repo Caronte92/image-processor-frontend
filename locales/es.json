@@ -26,6 +26,9 @@
         "file_section_subtitle": "Convierte entre formatos y redimensiona tus imágenes",
         "file_section_placeholder": "Subir imágenes",
         "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
-        "configuration_section_title": "Configuración"
+        "configuration_section_title": "Configuración",
+        "configuration_section_button": "Convertir imágenes",
+        "download_section_title": "Descargar"
+        
     }
 }

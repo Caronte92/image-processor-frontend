@@ -23,6 +23,7 @@ export type MainColors = {
     destructiveForeground: string;
     border: string;
     input: string;
+    inputBackground: string;
     ring: string;
     chart1: string;
     chart2: string;
@@ -58,6 +59,7 @@ const darkTheme: MainColors = {
     destructiveForeground: 'oklch(1 0 0)',
     border: 'oklch(0.3588 0.1354 278.7)',
     input: 'oklch(0.2748 0.0684 287.03)',
+    inputBackground: 'oklch(0.2748 0.0684 287.03)',
     ring: 'oklch(0.6056 0.2189 292.72)',
     chart1: 'oklch(0.5854 0.2041 277.12)',
     chart2: 'oklch(0.6056 0.2189 292.72)',
@@ -93,6 +95,7 @@ const lightTheme: MainColors = {
     destructiveForeground: 'oklch(1 0 0)',
     border: 'oklch(0.9288 0.0126 255.51)',
     input: 'transparent',
+    inputBackground: 'oklch(0.9842 0.0034 247.86)',
     ring: 'oklch(0.6056 0.2189 292.72)',
     chart1: 'oklch(0.5854 0.2041 277.12)',
     chart2: 'oklch(0.6056 0.2189 292.72)',
@@ -177,7 +180,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
         ghost: {
             default: {
                 content: palette.foreground,
-                background: palette.input,
+                background: palette.inputBackground,
                 border: 'transparent',
             },
             hover: {
@@ -217,7 +220,7 @@ export const getButtonColors = (mode: 'light' | 'dark', colors: ThemeColors): Bu
                 background: palette.primary,
                 border: palette.ring,
             },
-        }
+        },
     };
 };
 
@@ -287,11 +290,11 @@ export const theme: ITheme = {
     },
     buttonColors: getButtonColors('light', { darkTheme, lightTheme }),
     icons: {
-        xs: '1em',
-        sm: '1.25em',
-        md: '1.5em',
-        lg: '2em',
-        xl: '2.5em',
+        xs: '1rem',
+        sm: '1.25rem',
+        md: '1.5rem',
+        lg: '2rem',
+        xl: '2.5rem',
     },
 };
 

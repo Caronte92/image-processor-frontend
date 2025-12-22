@@ -3,11 +3,18 @@ import { Typography } from '@/theme';
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
+const Container = styled.div<{$gap: string}>`
     display: flex;
     align-items: center;
+    gap: ${(props) => props.$gap};
+`;
+
+const IconWrapper = styled.div`
+    align-items: center;
     justify-content: center;
-    gap: 1rem;
+    display: flex;
+    width: fit-content;
+    height: fit-content;
 `;
 
 interface IconAndTextProps {
@@ -16,12 +23,15 @@ interface IconAndTextProps {
     color: string;
     fontWeight?: string;
     icon: React.ReactNode;
+    gap?: string;
 }
 
-function _IconAndText(props: IconAndTextProps) {
+function _IconAndText({ gap = '1rem', ...props }: IconAndTextProps) {
     return (
-        <Container>
-            {props.icon}
+        <Container $gap={gap}>
+            <IconWrapper>
+                {props.icon}
+            </IconWrapper>
             <Texts text={props.text} size={props.size} color={props.color} fontWeight={props.fontWeight} />
         </Container>
     );
