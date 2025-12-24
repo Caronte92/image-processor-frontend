@@ -5,10 +5,8 @@ import Wrapper from '@/components/atoms/Wrapper';
 import IconAndText from '@/components/molecules/IconAndText';
 import InputLabel from '@/components/molecules/InputLabel';
 import Select from '@/components/molecules/Select';
-import { ImageFormats } from '@/lib/enums/imgFormats';
-import { IImageFormat } from '@/lib/types/IImageFormat';
-import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import { ImageFormats } from '@/lib/enums/imgFormats';import { useTranslations } from 'next-intl';
+import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
 const SizeWrapper = styled.div`
