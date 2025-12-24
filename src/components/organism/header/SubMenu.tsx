@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/atoms/Button';
 import IconCode from '@/components/atoms/icons/IconCode';
 import IconPicture from '@/components/atoms/icons/IconPicture';
