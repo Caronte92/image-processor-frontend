@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:local": "export REACT_APP_VERSION=local-local && next lint && next dev",
+    "start:local": "export REACT_APP_VERSION=local-local && npm run lint && next dev",
     "build:start": "export REACT_APP_VERSION=local-local && next build && next start",
     "build": "export REACT_APP_VERSION=pro-$REACT_APP_COMMIT_ID && next build",
-    "start:local:windows": "set REACT_APP_VERSION=local-local && next lint && next dev",
+    "start:local:windows": "set REACT_APP_VERSION=local-local && npm run lint && next dev",
     "build:start:windows": "set REACT_APP_VERSION=local-local && next build && next start",
     "build:windows": "set REACT_APP_VERSION=pro-$REACT_APP_COMMIT_ID && next build",
     "analyze": "ANALYZE=true next build",
     "analyze:windows": "set ANALYZE=true && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "extract:strings": "cp extractedTranslations/config.json babel.config.json && ./node_modules/.bin/babel -f babel.config.json 'src/**/*.{js,jsx,ts,tsx}' 'pages/**/*.{js,jsx,ts,tsx}' && rm babel.config.json"
   },
   "dependencies": {

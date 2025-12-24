@@ -9,7 +9,12 @@ import ComponentSection from '@/components/organism/svgToReact/ComponentSection'
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 const WrapperSpace = styled.div`

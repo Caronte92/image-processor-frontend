@@ -14,8 +14,13 @@ import styled, { useTheme } from 'styled-components';
 
 const SizeWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   width: 100%;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
 `;
 interface ConfigurationsSectionProps {
   formats: ImageFormats[];

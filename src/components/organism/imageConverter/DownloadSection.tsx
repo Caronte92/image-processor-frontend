@@ -76,7 +76,7 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
       </HeaderWrapper>
       <ImageWrapper>
         <WrapperTexts>
-          <TitleSubtitle title={props.file.file.name} subtitle={formatFileSize(props.file.file.size)} />
+          <TitleSubtitle title={props.file.file.name} subtitle={formatFileSize(props.file.file.size)} truncate={true} />
         </WrapperTexts>
         <PictureWrapper>
           <Picture src={props.file.url} alt="Converted image" fill />

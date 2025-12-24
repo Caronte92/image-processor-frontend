@@ -12,6 +12,10 @@ import { IImageFormat } from '@/lib/types/IImageFormat';
 const Container = styled.div`
   display: flex;
   gap: 1.5rem;
+  flex-direction: column;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
 `;
 
 const WrapperSpace = styled.div`
