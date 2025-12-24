@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export enum SubMenuItems {
     SVG_REACT = 'svg_react',
     IMAGE_CONVERTER = 'image_converter',

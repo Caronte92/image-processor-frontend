@@ -1,48 +1,47 @@
-import js from '@eslint/js';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import globals from 'globals';
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
-    js.configs.recommended,
-
-    {
-        files: ['**/*.{js,jsx,ts,tsx, json}'],
-        languageOptions: {
-            parser: typescriptParser,
-            ecmaVersion: 2022,
-            sourceType: 'module',
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-                ...globals.es2021,
-                React: 'readonly',
-            },
-        },
-        plugins: {
-            '@typescript-eslint': typescriptPlugin,
-        },
-        rules: {
-            // 'no-unused-vars': 'off',
-
-            // 👇 REGLAS BÁSICAS Y SEGURAS
-            'no-console': ['warn', { allow: ['warn', 'error'] }],
-            'no-debugger': 'error',
-
-            // Reglas de TypeScript (básicas y compatibles)
-            '@typescript-eslint/no-unused-vars': 'warn',
-            '@typescript-eslint/no-explicit-any': 'warn',
-
-            // Reglas de formato básicas
-            quotes: ['warn', 'single', { avoidEscape: true }],
-            semi: ['warn', 'always'],
-            'comma-spacing': ['warn', { before: false, after: true }],
-            'object-curly-spacing': ['warn', 'always'],
-        },
+  {
+    files: ["**/*.{ts,tsx,js,jsx}"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: { jsx: true }
+      }
     },
-
-    {
-        ignores: ['node_modules/', '.next/', 'dist/', 'build/', '*.config.js'],
+    plugins: {
+      "@typescript-eslint": tseslint,
+      "react": reactPlugin,
+      "react-hooks": reactHooksPlugin
     },
+    settings: {
+      react: { version: "detect" }
+    },
+    rules: {
+      // React rules
+      "react/jsx-filename-extension": [1, { extensions: [".ts", ".tsx"] }],
+      "react/display-name": "warn",
+      "react/react-in-jsx-scope": "off", // Not needed in Next.js
+      "react/prop-types": "off", // Using TypeScript for prop validation
+      
+      // TypeScript rules
+      "@typescript-eslint/no-unused-vars": "error",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-namespace": "off",
+      
+      // General rules
+      "prefer-const": "off",
+      "no-var": "warn",
+      "no-empty": "warn"
+    }
+  },
+  {
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
+  }
 ];

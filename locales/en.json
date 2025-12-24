@@ -1,33 +1,36 @@
 {
-    "Navbar": {
-        "title": "DevTools Images",
-        "subtitle": "Developer tools"
-    },
-    "SubMenu": {
-        "option_svg_react": "SVG to React",
-        "option_image_converter": "Image Converter",
-        "option_favicon_generator": "Favicon Generator"
-    },
-    "SvgToReact": {
-        "file_section_title": "SVG to React Component Generator",
-        "file_section_subtitle": "Convert your SVG files into reusable React components",
-        "file_section_placeholder": "Upload SVG file",
-        "file_section_span_info_extension": "Formats: .svg",
-        "file_section_span_name_input": "Component name",
-        "file_section_span_name_placeholder_input": "MyIcon",
-        "file_section_span_template_selector": "Template",
-        "file_section_btn_generate": "Generate Component",
-        "component_section_title": "Preview",
-        "component_section_button_copy": "Copy",
-        "component_section_button_download": "Download"
-    },
-    "ImageConverter": {
-        "file_section_title": "Image Converter and Resizer",
-        "file_section_subtitle": "Convert between formats and resize your images",
-        "file_section_placeholder": "Upload images",
-        "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
-        "configuration_section_title": "Configuration",
-        "configuration_section_button": "Convert images",
-        "download_section_title": "Descargar"
-    }
+  "Navbar": {
+    "title": "DevTools Images",
+    "subtitle": "Developer tools"
+  },
+  "SubMenu": {
+    "option_svg_react": "SVG to React",
+    "option_image_converter": "Image Converter",
+    "option_favicon_generator": "Favicon Generator"
+  },
+  "SvgToReact": {
+    "file_section_title": "SVG to React Component Generator",
+    "file_section_subtitle": "Convert your SVG files into reusable React components",
+    "file_section_placeholder": "Upload SVG file",
+    "file_section_span_info_extension": "Formats: .svg",
+    "file_section_span_name_input": "Component name",
+    "file_section_span_name_placeholder_input": "MyIcon",
+    "file_section_span_template_selector": "Template",
+    "file_section_btn_generate": "Generate Component",
+    "component_section_title": "Preview",
+    "component_section_button_copy": "Copy",
+    "component_section_button_download": "Download"
+  },
+  "ImageConverter": {
+    "file_section_title": "Image Converter and Resizer",
+    "file_section_subtitle": "Convert between formats and resize your images",
+    "file_section_placeholder": "Upload images",
+    "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
+    "configuration_section_title": "Configuration",
+    "configuration_section_button": "Convert images",
+    "configuration_section_width": "Width",
+    "configuration_section_height": "Height",
+    "configuration_section_quality": "Quality",
+    "download_section_title": "Descargar"
+  }
 }
