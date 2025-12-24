@@ -1,7 +1,9 @@
+'use client';
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ImageSection from '../organism/imageConverter/ImageSection';
-import ConfigurationsSection from '@/components/organism/imageConverter/CofigurationsSection';
+import ConfigurationsSection from '@/components/organism/imageConverter/ConfigurationsSection';
 import { ImageFormats } from '@/lib/enums/imgFormats';
 import { convertImages, ConvertedImage } from '@/lib/services/utils/images';
 import DownloadSection from '@/components/organism/imageConverter/DownloadSection';
@@ -25,13 +27,16 @@ function _ImageConverter() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const formats = [ImageFormats.WEBP, ImageFormats.JPEG, ImageFormats.PNG, ImageFormats.GIF];
   const [formattedImage, setFormattedImage] = useState<ConvertedImage | null>(null);
-  const [settings, setSettings] = useState<IImageFormat>({ width: 800, height: 600, extension: formats[0], quality: 100 });
+  const [settings, setSettings] = useState<IImageFormat>({
+    width: 800,
+    height: 600,
+    extension: formats[0],
+    quality: 100,
+  });
 
   const handleSvgName = (value: string) => {
     setSvgName(value);
   };
-
-
 
   return (
     <Container>
@@ -48,7 +53,7 @@ function _ImageConverter() {
           onclickFormatCallback={e => setSettings({ ...settings, extension: e })}
           onChangeWidthCallback={e => setSettings({ ...settings, width: parseInt(e.target.value) })}
           onChangeHeightCallback={e => setSettings({ ...settings, height: parseInt(e.target.value) })}
-          onChangeQualityCallback={e => setSettings({ ...settings, height: parseInt(e.target.value) })}
+          onChangeQualityCallback={e => setSettings({ ...settings, quality: parseInt(e.target.value) })}
           onClickCallback={async () => {
             if (selectedFile) {
               let result = await convertImages(

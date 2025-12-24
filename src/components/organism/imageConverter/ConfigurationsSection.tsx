@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/atoms/Button';
 import IconSettings from '@/components/atoms/icons/IconSettings';
 import Texts from '@/components/atoms/Texts';
@@ -5,7 +7,8 @@ import Wrapper from '@/components/atoms/Wrapper';
 import IconAndText from '@/components/molecules/IconAndText';
 import InputLabel from '@/components/molecules/InputLabel';
 import Select from '@/components/molecules/Select';
-import { ImageFormats } from '@/lib/enums/imgFormats';import { useTranslations } from 'next-intl';
+import { ImageFormats } from '@/lib/enums/imgFormats';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
@@ -66,10 +69,22 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
         color={theme.buttonColors.ghost}
       />
       <SizeWrapper>
-        <InputLabel label={t('configuration_section_width')} placeholder={'800'} onChangeCallback={props.onChangeWidthCallback} />
-        <InputLabel label={t('configuration_section_height')} placeholder={'600'} onChangeCallback={props.onChangeHeightCallback} />
+        <InputLabel
+          label={t('configuration_section_width')}
+          placeholder={'800'}
+          onChangeCallback={props.onChangeWidthCallback}
+        />
+        <InputLabel
+          label={t('configuration_section_height')}
+          placeholder={'600'}
+          onChangeCallback={props.onChangeHeightCallback}
+        />
       </SizeWrapper>
-      <InputLabel label={t('configuration_section_quality')} placeholder={'100'} onChangeCallback={e => handleQuality(e)} />
+      <InputLabel
+        label={t('configuration_section_quality')}
+        placeholder={'100'}
+        onChangeCallback={e => handleQuality(e)}
+      />
       <Button
         size={theme.buttonSizes.md}
         color={theme.buttonColors.primary}
