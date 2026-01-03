@@ -23,11 +23,6 @@ const Switcher = styled.span`
     theme.mode === 'light' ? 'translateX(2rem)' : 'translateX(0rem)'};
 `;
 
-const Input = styled.input`
-  opacity: 0;
-  display: none;
-`;
-
 const Span = styled.span`
   width: 4rem;
   height: 2rem;
