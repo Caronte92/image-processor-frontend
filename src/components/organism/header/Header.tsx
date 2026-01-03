@@ -1,7 +1,6 @@
 'use client';
 
 import { i18n } from '@/../i18n-config';
-import Button from '@/components/atoms/Button';
 import IconMoon from '@/components/atoms/icons/IconMoon';
 import IconSun from '@/components/atoms/icons/IconSun';
 import IconWorld from '@/components/atoms/icons/IconWorld';
@@ -52,13 +51,6 @@ const SettingsWrapper = styled.div`
   align-items: center;
   gap: 1rem;
   align-items: stretch;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 `;
 
 function _Header() {
