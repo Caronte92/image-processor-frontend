@@ -6,6 +6,7 @@ import IconMoon from '@/components/atoms/icons/IconMoon';
 import IconSun from '@/components/atoms/icons/IconSun';
 import IconWorld from '@/components/atoms/icons/IconWorld';
 import Texts from '@/components/atoms/Texts';
+import Toggle from '@/components/atoms/Toggle';
 import Select from '@/components/molecules/Select';
 import { useLanguage } from '@/lib/hooks/useLocales';
 import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
@@ -112,15 +113,11 @@ function _Header() {
             size={theme.buttonSizes?.md}
             color={theme.buttonColors.ghost}
           />
-          <Button color={theme.buttonColors.ghost} size={theme.buttonSizes?.md} onClickCallback={toggleTheme}>
-            <ButtonWrapper>
-              {theme.mode == 'light' ? (
+          <Toggle onToggle={toggleTheme} icon={theme.mode == 'light' ? (
                 <IconMoon size={theme.icons.xs} stroke={theme.colors.foreground} />
               ) : (
-                <IconSun size={theme.icons.xs} stroke={theme.colors.foreground} />
-              )}
-            </ButtonWrapper>
-          </Button>
+                <IconSun size={theme.icons.xs} stroke={theme.colors.primary} />
+              )} />
         </SettingsWrapper>
       </Container>
     </HeaderWrapper>
