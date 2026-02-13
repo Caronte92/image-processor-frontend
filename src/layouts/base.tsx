@@ -2,10 +2,8 @@
 
 import Header from '@/components/organism/header/Header';
 import SubMenu from '@/components/organism/header/SubMenu';
-import { SubMenuItems } from '@/lib/enums/subMenu';
-import { SubmenuProvider } from '@/lib/providers/SubmenuProvider';
 import { GlobalStyle } from '@/styles/global';
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
 
 const Container = styled.div`
@@ -28,25 +26,18 @@ interface IBaseProps {
   hideSubmenu?: boolean;
 }
 
-export default function BaseLayout({ children, hideHeader, hideSubmenu }: IBaseProps) {
-  const submenuItems = [SubMenuItems.SVG_REACT, SubMenuItems.IMAGE_CONVERTER, SubMenuItems.FAVICON_GENERATOR];
-  const [subMenuItemSelected, setSubMenuItemSelected] = useState<string>(submenuItems[0]);
-
-  const _handleItemSelected = (item: string) => {
-    setSubMenuItemSelected(item);
-  };
-
+export default function BaseLayout({
+  children,
+  hideHeader,
+  hideSubmenu,
+}: IBaseProps) {
   return (
     <>
       <GlobalStyle />
       <Container>
         {!hideHeader && <Header />}
-        <SubmenuProvider items={submenuItems} selected={subMenuItemSelected} setSelected={setSubMenuItemSelected}>
-          {!hideSubmenu && <SubMenu selected={subMenuItemSelected} onClickCallback={_handleItemSelected} />}
-          <Body>
-            {children}
-          </Body>
-        </SubmenuProvider>
+        {!hideSubmenu && <SubMenu />}
+        <Body>{children}</Body>
       </Container>
     </>
   );

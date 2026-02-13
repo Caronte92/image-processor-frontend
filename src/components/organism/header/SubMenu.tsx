@@ -24,24 +24,28 @@ const SubMenuWrapper = styled.div`
   max-width: 99rem;
 `;
 
-interface SubMenuProps {
-  selected: string;
-  onClickCallback: (item: string) => void;
-}
+const ROUTE_TO_SUBMENU: Record<string, SubMenuItems> = {
+  'svg-component': SubMenuItems.SVG_REACT,
+  'image-converter': SubMenuItems.IMAGE_CONVERTER,
+};
 
-function _SubMenu({ ...props }: SubMenuProps) {
+function _SubMenu() {
   const t = useTranslations('SubMenu');
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
 
+  const segments = pathname.split('/');
+  const routeSegment = segments[2] || '';
+  const selected = ROUTE_TO_SUBMENU[routeSegment] ?? SubMenuItems.SVG_REACT;
+
   const handleSvgReactClick = () => {
-    const locale = pathname.split('/')[1];
+    const locale = segments[1];
     router.push(`/${locale}/svg-component`);
   };
 
   const handleImageConverterClick = () => {
-    const locale = pathname.split('/')[1];
+    const locale = segments[1];
     router.push(`/${locale}/image-converter`);
   };
 
@@ -51,7 +55,7 @@ function _SubMenu({ ...props }: SubMenuProps) {
         <Button
           color={theme.buttonColors.ghost}
           size={theme.buttonSizes.md}
-          selected={props.selected === SubMenuItems.SVG_REACT}
+          selected={selected === SubMenuItems.SVG_REACT}
           hideBorder={true}
           onClickCallback={handleSvgReactClick}
           data-item={SubMenuItems.SVG_REACT}
@@ -67,7 +71,7 @@ function _SubMenu({ ...props }: SubMenuProps) {
         <Button
           color={theme.buttonColors.ghost}
           size={theme.buttonSizes.md}
-          selected={props.selected === SubMenuItems.IMAGE_CONVERTER}
+          selected={selected === SubMenuItems.IMAGE_CONVERTER}
           hideBorder={true}
           onClickCallback={handleImageConverterClick}
           data-item={SubMenuItems.IMAGE_CONVERTER}
@@ -87,6 +91,6 @@ function _SubMenu({ ...props }: SubMenuProps) {
 
 const SubMenuMemo = React.memo(_SubMenu);
 
-export default function SubMenu(props: SubMenuProps) {
-  return <SubMenuMemo {...props} />;
+export default function SubMenu() {
+  return <SubMenuMemo />;
 }
