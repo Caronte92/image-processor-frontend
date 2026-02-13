@@ -1,10 +1,12 @@
+import Button from '@/components/atoms/Button';
+import Texts from '@/components/atoms/Texts';
 import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
 import SvgFileSelected from '@/components/molecules/SvgFileSelected';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { IFileSelected } from '@/lib/types/IFiles';
 import { useTranslations } from 'next-intl';
 import React, { useRef } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
   display: flex;
@@ -21,22 +23,39 @@ const FileContainer = styled.div`
   align-items: center;
 `;
 
+const WrapperFiles = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: ${props => props.theme.colors?.card};
+  padding: 1.5625rem;
+  border-radius: 0.625rem;
+  border: 0.0625rem solid ${props => props.theme.colors?.border};
+  align-items: baseline;
+`;
+
 interface UploadImagesProps {
   title: string;
   subtitle: string;
-  file: IFileSelected | null;
+  files: IFileSelected[];
   index: number;
-  onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
-  onChangeCallback: React.ChangeEventHandler<HTMLInputElement>;
+  onFileAdd?: (file: File | null) => void;
+  onFileRemove?: (index: number) => void;
+  onContinue?: () => void;
 }
 
 function _UploadImages({ ...props }: UploadImagesProps) {
   const t = useTranslations('ImageConverter');
+  const theme = useTheme();
   const inputFileRef = useRef<FakeInputHandle>(null);
 
-  const handleClearFile = () => {
+  const handleFileAdd = (file: File | null) => {
+    props.onFileAdd?.(file);
     inputFileRef.current?.reset();
-    props.onFileSelect?.(null);
+  };
+
+  const handleClearFile = (index: number) => {
+    props.onFileRemove?.(index);
   };
 
   return (
@@ -52,22 +71,44 @@ function _UploadImages({ ...props }: UploadImagesProps) {
           placeholder={t('file_section_placeholder')}
           helperText={t('file_section_span_info_extension')}
           typesAccepted=".png, .jpg, .gif, .bmp, .webp"
-          onFileSelect={props.onFileSelect}
+          onFileSelect={handleFileAdd}
           variant="solid"
           minWidth="42rem"
           padding="3.125rem"
           spanButtonText={t('file_section_span_button_images')}
         />
-        {props.file && (
-          <SvgFileSelected
-            file={{
-              name: props.file.name,
-              size: props.file.size,
-            }}
-            onClickCallback={handleClearFile}
-          />
-        )}
       </FileContainer>
+      {props.files.length > 0 && (
+        <WrapperFiles>
+          <Texts
+            text={t('title_files_selected', { count: props.files.length })}
+            color={theme.colors.foreground}
+          />
+          {props.files.map((file, index) => (
+            <SvgFileSelected
+              key={`${file.name}-${index}`}
+              file={{
+                name: file.name,
+                size: file.size,
+              }}
+              onClickCallback={() => handleClearFile(index)}
+            />
+          ))}
+
+          <Button
+            size={theme.buttonSizes.md}
+            color={theme.buttonColors.primary}
+            width="100%"
+            onClickCallback={() => props.onContinue?.()}
+          >
+            <Texts
+              text={t('continue_button')}
+              size={theme.fonts.sm}
+              color={theme.colors.primaryForeground}
+            />
+          </Button>
+        </WrapperFiles>
+      )}
     </Container>
   );
 }

@@ -38,6 +38,9 @@
     "step_3_result": "Resultado",
     "step_step": "Paso {index}:",
     "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP (Max: 10Mb por archivo)",
-    "file_section_span_button_images": "Seleccionar imágenes"
+    "file_section_span_button_images": "Seleccionar imágenes",
+    "continue_button": "Continuar a configuración",
+    "title_files_selected": "Archivos seleccionados ({count})"
   }
 }
+  

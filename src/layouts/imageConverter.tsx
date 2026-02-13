@@ -31,7 +31,7 @@ function _ImageConverter() {
   const t = useTranslations('ImageConverter');
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [convertedImage, setConvertedImage] = useState<
     ConvertedImage | ConvertedImages | null
   >(null);
@@ -41,37 +41,42 @@ function _ImageConverter() {
   const [height, setHeight] = useState<number>(0);
   const [quality, setQuality] = useState<number>(100);
 
-  const fileSelected: IFileSelected | null = useMemo(() => {
-    if (!selectedFile) return null;
-    return {
-      name: selectedFile.name,
-      size: selectedFile.size,
-    };
-  }, [selectedFile]);
+  const filesSelected: IFileSelected[] = useMemo(() => {
+    return selectedFiles.map(file => ({
+      name: file.name,
+      size: file.size,
+    }));
+  }, [selectedFiles]);
 
-  const handleFileSelect = (
-    file: File | null | ((prev: File | null) => File | null)
-  ) => {
-    const newFile = typeof file === 'function' ? file(selectedFile) : file;
-    setSelectedFile(newFile);
-    if (newFile) {
-      setStep(2);
-      const img = new Image();
-      img.onload = () => {
-        setWidth(img.width);
-        setHeight(img.height);
-      };
-      img.src = URL.createObjectURL(newFile);
-    } else {
-      setStep(1);
+  const handleFileAdd = (file: File | null) => {
+    if (file) {
+      setSelectedFiles(prev => [...prev, file]);
     }
   };
 
+  const handleFileRemove = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleContinue = () => {
+    if (selectedFiles.length === 0) return;
+    const img = new Image();
+    img.onload = () => {
+      setWidth(img.width);
+      setHeight(img.height);
+    };
+    img.src = URL.createObjectURL(selectedFiles[0]);
+    setStep(2);
+  };
+
   const handleConvert = async () => {
-    if (!selectedFile) return;
+    if (selectedFiles.length === 0) return;
+
+    const filesToConvert =
+      selectedFiles.length === 1 ? selectedFiles[0] : selectedFiles;
 
     const result = await convertImages(
-      selectedFile,
+      filesToConvert,
       width,
       height,
       true,
@@ -100,13 +105,14 @@ function _ImageConverter() {
           title={t('step_1_upload_image')}
           index={1}
           subtitle={t('step_1_select_images')}
-          file={fileSelected}
-          onFileSelect={handleFileSelect}
-          onChangeCallback={() => {}}
+          files={filesSelected}
+          onFileAdd={handleFileAdd}
+          onFileRemove={handleFileRemove}
+          onContinue={handleContinue}
         />
       )}
 
-      {step === 2 && selectedFile && (
+      {step === 2 && selectedFiles.length > 0 && (
         <ConfigurationsSection
           formats={Object.values(ImageFormats)}
           currentFormat={format}
