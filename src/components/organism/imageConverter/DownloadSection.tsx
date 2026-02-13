@@ -2,7 +2,7 @@
 
 import Wrapper from '@/components/atoms/Wrapper';
 import React from 'react';
-import { ConvertedImage } from '@/lib/services/utils/images';
+import { ConvertedImage, ConvertedImages } from '@/lib/services/utils/images';
 import Texts from '@/components/atoms/Texts';
 import { useTranslations } from 'next-intl';
 import styled, { useTheme } from 'styled-components';
@@ -28,10 +28,6 @@ const ImageWrapper = styled.div`
   border-radius: 0.625rem;
 `;
 
-const WrapperTexts = styled.div`
-  display: flex;
-`;
-
 const PictureWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -45,43 +41,90 @@ const Picture = styled(Image)`
 `;
 
 interface DownloadSectionProps {
-  file: ConvertedImage;
+  file: ConvertedImage | ConvertedImages;
 }
 
 function _DownloadSection({ ...props }: DownloadSectionProps) {
   const t = useTranslations('ImageConverter');
   const theme = useTheme();
+  const isMultiple = 'files' in props.file;
+  const files = isMultiple ? props.file.files : [props.file as ConvertedImage];
 
-  const downloadAsTSX = () => {
+  const downloadFile = (file: ConvertedImage) => {
     const link = document.createElement('a');
-    link.href = props.file.url;
-    link.download = props.file.file.name;
+    link.href = file.url;
+    link.download = file.file.name;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  const downloadAllAsZip = async () => {
+    // Aquí puedes implementar la descarga como ZIP si es necesario
+    // Por ahora, descargamos cada archivo uno a uno
+    files.forEach(file => downloadFile(file));
+  };
+
   return (
     <Wrapper>
       <HeaderWrapper>
-        <Texts text={t('download_section_title')} size={theme.fonts.base} color={theme.colors.cardForeground} />
-        <Button size={theme.buttonSizes.md} color={theme.buttonColors.ghost} onClickCallback={downloadAsTSX}>
+        <Texts
+          text={t('download_section_title')}
+          size={theme.fonts.base}
+          color={theme.colors.cardForeground}
+        />
+        <Button
+          size={theme.buttonSizes.md}
+          color={theme.buttonColors.ghost}
+          onClickCallback={downloadAllAsZip}
+        >
           <IconAndText
             icon={<IconDownload size={theme.icons.xs} />}
-            text={t('download_section_title')}
+            text={
+              isMultiple
+                ? `${t('download_section_title')} (${files.length})`
+                : t('download_section_title')
+            }
             size={theme.fonts.sm}
             color={theme.colors.cardForeground}
           />
         </Button>
       </HeaderWrapper>
-      <ImageWrapper>
-        <WrapperTexts>
-          <TitleSubtitle title={props.file.file.name} subtitle={formatFileSize(props.file.file.size)} truncate={true} />
-        </WrapperTexts>
-        <PictureWrapper>
-          <Picture src={props.file.url} alt="Converted image" fill />
-        </PictureWrapper>
-      </ImageWrapper>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {files.map((file, index) => (
+          <div key={`${file.file.name}-${index}`}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: '0.5rem',
+              }}
+            >
+              <TitleSubtitle
+                title={file.file.name}
+                subtitle={formatFileSize(file.file.size)}
+                truncate={true}
+              />
+              <Button
+                size={theme.buttonSizes.sm}
+                color={theme.buttonColors.ghost}
+                onClickCallback={() => downloadFile(file)}
+              >
+                <IconDownload
+                  size={theme.icons.xs}
+                  stroke={theme.colors.cardForeground}
+                />
+              </Button>
+            </div>
+            <ImageWrapper>
+              <PictureWrapper>
+                <Picture src={file.url} alt="Converted image" fill />
+              </PictureWrapper>
+            </ImageWrapper>
+          </div>
+        ))}
+      </div>
     </Wrapper>
   );
 }

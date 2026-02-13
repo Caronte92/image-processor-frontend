@@ -4,44 +4,18 @@ import Wrapper from '@/components/atoms/Wrapper';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import React, { useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import InputFile, { InputFileHandle } from '@/components/atoms/InputFile';
-import { styled, useTheme } from 'styled-components';
+import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
+import { useTheme, styled } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import InputLabel from '@/components/molecules/InputLabel';
 import Button from '@/components/atoms/Button';
 import { IFileSelected } from '@/lib/types/IFiles';
 import SvgFileSelected from '@/components/molecules/SvgFileSelected';
-import IconUpload from '@/components/atoms/icons/IconUpload';
 
 const FileContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`;
-
-const FakeInput = styled.button`
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 1.5rem 1.5rem;
-  border-radius: 0.625rem;
-  border: 0.125rem dashed ${props => props.theme.colors?.border};
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    border: 0.125rem dashed ${props => props.theme.colors?.primary};
-  }
-`;
-
-const TextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  align-items: center;
-  justify-content: center;
 `;
 
 interface SvgSectionProps {
@@ -52,14 +26,13 @@ interface SvgSectionProps {
   onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps) {
+function _SvgSection({
+  isGenerateComponentAvailable,
+  ...props
+}: SvgSectionProps) {
   const t = useTranslations('SvgToReact');
   const theme = useTheme();
-  const inputFileRef = useRef<InputFileHandle>(null);
-
-  const handleOpenFileDialog = () => {
-    inputFileRef.current?.open();
-  };
+  const inputFileRef = useRef<FakeInputHandle>(null);
 
   const handleClearFile = () => {
     inputFileRef.current?.reset();
@@ -68,20 +41,18 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
 
   return (
     <Wrapper>
-      <TitleSubtitle title={t('file_section_title')} subtitle={t('file_section_subtitle')} />
+      <TitleSubtitle
+        title={t('file_section_title')}
+        subtitle={t('file_section_subtitle')}
+      />
       <FileContainer>
-        <FakeInput tabIndex={0} onClick={handleOpenFileDialog}>
-          <IconUpload size={theme.icons.lg} stroke={theme.colors.mutedForeground} />
-          <TextWrapper>
-            <Texts text={t('file_section_placeholder')} size={theme.fonts.sm} color={theme.colors.foreground} />
-            <Texts
-              text={t('file_section_span_info_extension')}
-              size={theme.fonts.xs}
-              color={theme.colors.mutedForeground}
-            />
-          </TextWrapper>
-          <InputFile ref={inputFileRef} typesAccepted=".svg" onFileSelect={props.onFileSelect} />
-        </FakeInput>
+        <FakeInput
+          ref={inputFileRef}
+          placeholder={t('file_section_placeholder')}
+          helperText={t('file_section_span_info_extension')}
+          typesAccepted=".svg"
+          onFileSelect={props.onFileSelect}
+        />
         {props.file && (
           <SvgFileSelected
             file={{
@@ -102,7 +73,11 @@ function _SvgSection({ isGenerateComponentAvailable, ...props }: SvgSectionProps
           disabled={isGenerateComponentAvailable}
           onClickCallback={props.onClickCallback}
         >
-          <Texts text={t('file_section_btn_generate')} size={theme.fonts.sm} color={theme.colors.foreground} />
+          <Texts
+            text={t('file_section_btn_generate')}
+            size={theme.fonts.sm}
+            color={theme.colors.foreground}
+          />
         </Button>
       </FileContainer>
     </Wrapper>

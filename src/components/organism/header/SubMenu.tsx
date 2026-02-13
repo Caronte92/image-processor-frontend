@@ -6,6 +6,7 @@ import IconPicture from '@/components/atoms/icons/IconPicture';
 import IconAndText from '@/components/molecules/IconAndText';
 import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useTranslations } from 'next-intl';
+import { useRouter, usePathname } from 'next/navigation';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
@@ -31,6 +32,18 @@ interface SubMenuProps {
 function _SubMenu({ ...props }: SubMenuProps) {
   const t = useTranslations('SubMenu');
   const theme = useTheme();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleSvgReactClick = () => {
+    const locale = pathname.split('/')[1];
+    router.push(`/${locale}/svg-component`);
+  };
+
+  const handleImageConverterClick = () => {
+    const locale = pathname.split('/')[1];
+    router.push(`/${locale}/image-converter`);
+  };
 
   return (
     <Container>
@@ -40,7 +53,7 @@ function _SubMenu({ ...props }: SubMenuProps) {
           size={theme.buttonSizes.md}
           selected={props.selected === SubMenuItems.SVG_REACT}
           hideBorder={true}
-          onClickCallback={() => props.onClickCallback(SubMenuItems.SVG_REACT)}
+          onClickCallback={handleSvgReactClick}
           data-item={SubMenuItems.SVG_REACT}
         >
           <IconAndText
@@ -56,7 +69,7 @@ function _SubMenu({ ...props }: SubMenuProps) {
           size={theme.buttonSizes.md}
           selected={props.selected === SubMenuItems.IMAGE_CONVERTER}
           hideBorder={true}
-          onClickCallback={() => props.onClickCallback(SubMenuItems.IMAGE_CONVERTER)}
+          onClickCallback={handleImageConverterClick}
           data-item={SubMenuItems.IMAGE_CONVERTER}
         >
           <IconAndText

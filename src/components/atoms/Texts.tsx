@@ -2,12 +2,12 @@ import { theme, Typography } from '@/theme';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-type TextType = 'h1' | 'p' | 'label';
+type TextType = 'h1' | 'p' | 'label' | 'span';
 
 const Truncate = css<{ $truncate: boolean }>`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const IText = css<{ $size: Typography; $weight: string; $color: string }>`
@@ -15,10 +15,14 @@ const IText = css<{ $size: Typography; $weight: string; $color: string }>`
   line-height: ${props => props.$size.lineHeight};
   font-weight: ${props => props.$weight};
   color: ${props => props.$color};
-
 `;
 
-const Paragraph = styled.p<{ $size: Typography; $weight: string; $color: string, $truncate: boolean}>`
+const Paragraph = styled.p<{
+  $size: Typography;
+  $weight: string;
+  $color: string;
+  $truncate: boolean;
+}>`
   ${IText}
   ${props => props.$truncate && Truncate}
 `;
@@ -27,7 +31,22 @@ const Title = styled.h1<{ $size: Typography; $weight: string; $color: string }>`
   ${IText}
 `;
 
-const Label = styled.label<{ $size: Typography; $weight: string; $color: string, $truncate: boolean }>`
+const Label = styled.label<{
+  $size: Typography;
+  $weight: string;
+  $color: string;
+  $truncate: boolean;
+}>`
+  ${IText}
+  ${props => props.$truncate && Truncate}
+`;
+
+const Span = styled.span<{
+  $size: Typography;
+  $weight: string;
+  $color: string;
+  $truncate: boolean;
+}>`
   ${IText}
   ${props => props.$truncate && Truncate}
 `;
@@ -51,7 +70,12 @@ function _Text({
   switch (type) {
     default:
       return (
-        <Paragraph $size={size} $weight={fontWeight} $color={props.color} $truncate={truncate}>
+        <Paragraph
+          $size={size}
+          $weight={fontWeight}
+          $color={props.color}
+          $truncate={truncate}
+        >
           {' '}
           {props.text}{' '}
         </Paragraph>
@@ -65,10 +89,27 @@ function _Text({
       );
     case 'label':
       return (
-        <Label $size={size} $weight={fontWeight} $color={props.color} $truncate={truncate}>
+        <Label
+          $size={size}
+          $weight={fontWeight}
+          $color={props.color}
+          $truncate={truncate}
+        >
           {' '}
           {props.text}{' '}
         </Label>
+      );
+    case 'span':
+      return (
+        <Span
+          $size={size}
+          $weight={fontWeight}
+          $color={props.color}
+          $truncate={truncate}
+        >
+          {' '}
+          {props.text}{' '}
+        </Span>
       );
   }
 }

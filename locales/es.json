@@ -25,12 +25,19 @@
     "file_section_title": "Conversor y Redimensionador de Imágenes",
     "file_section_subtitle": "Convierte entre formatos y redimensiona tus imágenes",
     "file_section_placeholder": "Subir imágenes",
-    "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
     "configuration_section_title": "Configuración",
     "configuration_section_button": "Convertir imágenes",
     "configuration_section_width": "Ancho",
     "configuration_section_height": "Alto",
     "configuration_section_quality": "Calidad",
-    "download_section_title": "Descargar"
+    "download_section_title": "Descargar",
+
+    "step_1_upload_image": "Subir imágenes",
+    "step_1_select_images": "Selecciona las imágenes que deseas convertir",
+    "step_2_configuration": "Configuración",
+    "step_3_result": "Resultado",
+    "step_step": "Paso {index}:",
+    "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP (Max: 10Mb por archivo)",
+    "file_section_span_button_images": "Seleccionar imágenes"
   }
 }

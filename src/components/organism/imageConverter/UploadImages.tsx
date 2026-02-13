@@ -1,7 +1,4 @@
-'use client';
-
 import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
-import Wrapper from '@/components/atoms/Wrapper';
 import SvgFileSelected from '@/components/molecules/SvgFileSelected';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { IFileSelected } from '@/lib/types/IFiles';
@@ -9,43 +6,45 @@ import { useTranslations } from 'next-intl';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  text-align: center;
+`;
+
 const FileContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  align-items: center;
 `;
 
-interface ImageSectionProps {
-  files: IFileSelected[];
-  onFileSelect?: (files: File[]) => void;
+interface UploadImagesProps {
+  title: string;
+  subtitle: string;
+  file: IFileSelected | null;
+  index: number;
+  onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
   onChangeCallback: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-function _ImageSection(props: ImageSectionProps) {
+function _UploadImages({ ...props }: UploadImagesProps) {
   const t = useTranslations('ImageConverter');
   const inputFileRef = useRef<FakeInputHandle>(null);
-  const filesRef = useRef<File[]>([]);
 
-  const handleClearFile = (index: number) => {
-    filesRef.current.splice(index, 1);
-    props.onFileSelect?.(filesRef.current);
-    if (filesRef.current.length === 0) {
-      inputFileRef.current?.reset();
-    }
-  };
-
-  const handleFileSelect = (file: File | null) => {
-    if (file) {
-      filesRef.current.push(file);
-      props.onFileSelect?.(filesRef.current);
-    }
+  const handleClearFile = () => {
+    inputFileRef.current?.reset();
+    props.onFileSelect?.(null);
   };
 
   return (
-    <Wrapper>
+    <Container>
       <TitleSubtitle
-        title={t('file_section_title')}
-        subtitle={t('file_section_subtitle')}
+        title={`${t('step_step', { index: props.index })} ${props.title}`}
+        subtitle={props.subtitle}
+        gap="0.5rem"
       />
       <FileContainer>
         <FakeInput
@@ -53,29 +52,28 @@ function _ImageSection(props: ImageSectionProps) {
           placeholder={t('file_section_placeholder')}
           helperText={t('file_section_span_info_extension')}
           typesAccepted=".png, .jpg, .gif, .bmp, .webp"
-          onFileSelect={handleFileSelect}
+          onFileSelect={props.onFileSelect}
           variant="solid"
           minWidth="42rem"
           padding="3.125rem"
           spanButtonText={t('file_section_span_button_images')}
         />
-        {props.files.map((file, index) => (
+        {props.file && (
           <SvgFileSelected
-            key={`${file.name}-${index}`}
             file={{
-              name: file.name,
-              size: file.size,
+              name: props.file.name,
+              size: props.file.size,
             }}
-            onClickCallback={() => handleClearFile(index)}
+            onClickCallback={handleClearFile}
           />
-        ))}
+        )}
       </FileContainer>
-    </Wrapper>
+    </Container>
   );
 }
 
-const ImageSectionMemo = React.memo(_ImageSection);
+const UploadImagesMemo = React.memo(_UploadImages);
 
-export default function ImageSection(props: ImageSectionProps) {
-  return <ImageSectionMemo {...props} />;
+export default function UploadImages(props: UploadImagesProps) {
+  return <UploadImagesMemo {...props} />;
 }

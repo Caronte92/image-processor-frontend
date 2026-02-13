@@ -25,12 +25,19 @@
     "file_section_title": "Image Converter and Resizer",
     "file_section_subtitle": "Convert between formats and resize your images",
     "file_section_placeholder": "Upload images",
-    "file_section_span_info_extension": "Formatos: JPG, PNG, GIF, BMP, WebP",
     "configuration_section_title": "Configuration",
     "configuration_section_button": "Convert images",
     "configuration_section_width": "Width",
     "configuration_section_height": "Height",
     "configuration_section_quality": "Quality",
-    "download_section_title": "Descargar"
+    "download_section_title": "Descargar",
+
+    "step_1_upload_image": "Upload images",
+    "step_1_select_images": "Select the images you want to convert",
+    "step_2_configuration": "Configuration",
+    "step_3_result": "Result",
+    "step_step": "Step {index}:",
+    "file_section_span_info_extension": "Formats: JPG, PNG, GIF, BMP, WebP (Max: 10Mb per file)",
+    "file_section_span_button_images": "Select images"
   }
 }
