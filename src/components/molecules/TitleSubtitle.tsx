@@ -8,6 +8,7 @@ const Container = styled.div<{ $gap?: string }>`
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  align-items: center;
   gap: ${(props) => props.$gap || '0'};
 `;
 

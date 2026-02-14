@@ -114,16 +114,21 @@ function _ImageConverter() {
 
       {step === 2 && selectedFiles.length > 0 && (
         <ConfigurationsSection
+          title={t('step_2_configuration')}
+          index={2}
+          subtitle={t('step_2_configuration_options')}
           formats={Object.values(ImageFormats)}
           currentFormat={format}
           isGenerateComponentAvailable={false}
           onclickFormatCallback={setFormat}
           onClickCallback={handleConvert}
+          onGoBackCallback={() => setStep(1)}
           onChangeWidthCallback={e => setWidth(parseInt(e.target.value) || 0)}
           onChangeHeightCallback={e => setHeight(parseInt(e.target.value) || 0)}
           onChangeQualityCallback={e =>
             setQuality(parseInt(e.target.value) || 100)
           }
+          totalFiles={filesSelected.length}
         />
       )}
 

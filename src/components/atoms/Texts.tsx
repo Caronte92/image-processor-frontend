@@ -15,6 +15,7 @@ const IText = css<{ $size: Typography; $weight: string; $color: string }>`
   line-height: ${props => props.$size.lineHeight};
   font-weight: ${props => props.$weight};
   color: ${props => props.$color};
+  width: fit-content;
 `;
 
 const Paragraph = styled.p<{

@@ -29,17 +29,21 @@
     "configuration_section_button": "Convertir imatges",
     "configuration_section_width": "Amplada",
     "configuration_section_height": "Alçada",
+    "configuration_section_format": "Format",
     "configuration_section_quality": "Qualitat",
     "download_section_title": "Descargar",
 
     "step_1_upload_image": "Pujar imatges",
     "step_1_select_images": "Selecciona les imatges que desitges convertir",
     "step_2_configuration": "Configuració",
+    "step_2_configuration_options": "Configura les opcions de conversió",
     "step_3_result": "Resultat",
     "step_step": "Pas {index}:",
     "file_section_span_info_extension": "Formats: JPG, PNG, GIF, BMP, WebP (Max: 10Mb per arxiu)",
     "file_section_span_button_images": "Seleccionar imatges",
-    "continue_button": "Continuar a configuració",
-    "title_files_selected": "Arxius seleccionats ({count})"
+    "continue_button": "Convertir imatges",
+    "go_back_button": "Tornar enrere",
+    "title_files_selected": "Arxius seleccionats ({count})",
+    "files_to_convert": "Arxius a convertir: {count}"
   }
 }
