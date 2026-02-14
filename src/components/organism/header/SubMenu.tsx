@@ -1,12 +1,12 @@
 'use client';
 
-import Button from '@/components/atoms/Button';
+import Anchor from '@/components/atoms/Anchor';
 import IconCode from '@/components/atoms/icons/IconCode';
 import IconPicture from '@/components/atoms/icons/IconPicture';
 import IconAndText from '@/components/molecules/IconAndText';
 import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useTranslations } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
@@ -18,9 +18,9 @@ const Container = styled.div`
 
 const SubMenuWrapper = styled.div`
   display: flex;
-  padding: 0 1rem;
+  padding: 0.75rem 1rem;
   margin: 0 auto;
-  gap: 0.5rem;
+  gap: 1.5rem;
   max-width: 99rem;
 `;
 
@@ -32,58 +32,29 @@ const ROUTE_TO_SUBMENU: Record<string, SubMenuItems> = {
 function _SubMenu() {
   const t = useTranslations('SubMenu');
   const theme = useTheme();
-  const router = useRouter();
   const pathname = usePathname();
 
   const segments = pathname.split('/');
   const routeSegment = segments[2] || '';
   const selected = ROUTE_TO_SUBMENU[routeSegment] ?? SubMenuItems.SVG_REACT;
 
-  const handleSvgReactClick = () => {
-    const locale = segments[1];
-    router.push(`/${locale}/svg-component`);
-  };
-
-  const handleImageConverterClick = () => {
-    const locale = segments[1];
-    router.push(`/${locale}/image-converter`);
-  };
+  const locale = segments[1];
 
   return (
     <Container>
       <SubMenuWrapper>
-        <Button
-          color={theme.buttonColors.ghost}
-          size={theme.buttonSizes.md}
-          selected={selected === SubMenuItems.SVG_REACT}
-          hideBorder={true}
-          onClickCallback={handleSvgReactClick}
-          data-item={SubMenuItems.SVG_REACT}
-        >
-          <IconAndText
-            icon={<IconCode size={theme.icons.xs} />}
-            text={t(`option_${SubMenuItems.SVG_REACT}`)}
-            size={theme.fonts.sm}
-            color={theme.colors.foreground}
-            fontWeight={theme.weights.medium}
-          />
-        </Button>
-        <Button
-          color={theme.buttonColors.ghost}
-          size={theme.buttonSizes.md}
-          selected={selected === SubMenuItems.IMAGE_CONVERTER}
-          hideBorder={true}
-          onClickCallback={handleImageConverterClick}
-          data-item={SubMenuItems.IMAGE_CONVERTER}
-        >
-          <IconAndText
-            icon={<IconPicture size={theme.icons.xs} />}
-            text={t(`option_${SubMenuItems.IMAGE_CONVERTER}`)}
-            size={theme.fonts.sm}
-            color={theme.colors.foreground}
-            fontWeight={theme.weights.medium}
-          />
-        </Button>
+        <Anchor
+          href={`/${locale}/svg-component`}
+          color={theme.linkColors.ghost}
+          text={t(`option_${SubMenuItems.SVG_REACT}`)}
+          active={selected === SubMenuItems.SVG_REACT}
+        />
+        <Anchor
+          href={`/${locale}/image-converter`}
+          color={theme.linkColors.ghost}
+          active={selected === SubMenuItems.IMAGE_CONVERTER}
+          text={t(`option_${SubMenuItems.IMAGE_CONVERTER}`)}
+        />
       </SubMenuWrapper>
     </Container>
   );
