@@ -29,8 +29,6 @@
     "configuration_section_button": "Convert images",
     "configuration_section_width": "Width",
     "configuration_section_height": "Height",
-    "configuration_section_format": "Format",
-    "configuration_section_quality": "Quality",
     "download_section_title": "Descargar",
 
     "step_1_upload_image": "Upload images",
@@ -44,6 +42,9 @@
     "continue_button": "Convert images",
     "go_back_button": "Go back",
     "title_files_selected": "Selected files ({count})",
-    "files_to_convert": "Files to convert: {count}"
+    "files_to_convert": "Files to convert: {count}",
+    "configuration_section_format": "Output format",
+    "configuration_section_quality": "Quality (0-100)"
+
   }
 }

@@ -1,8 +1,10 @@
 'use client';
 
 import Button from '@/components/atoms/Button';
+import IconArrow from '@/components/atoms/icons/IconArrow';
 import Texts from '@/components/atoms/Texts';
 import Wrapper from '@/components/atoms/Wrapper';
+import IconAndText from '@/components/molecules/IconAndText';
 import InputLabel from '@/components/molecules/InputLabel';
 import Select from '@/components/molecules/Select';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
@@ -33,6 +35,8 @@ const ButtonsWrapper = styled.div`
   gap: 0.75rem;
   justify-content: center;
 `;
+
+const AdvancedConfigs = styled.div``;
 
 interface ConfigurationsSectionProps {
   title: string;
@@ -102,6 +106,7 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
             onChangeCallback={e => handleQuality(e)}
           />
         </BasicSettings>
+        <AdvancedConfigs></AdvancedConfigs>
         <ButtonsWrapper>
           <Button
             size={theme.buttonSizes.md}
@@ -109,11 +114,12 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
             width="100%"
             onClickCallback={props.onGoBackCallback}
           >
-            <Texts
+            <IconAndText
               text={t('go_back_button')}
               size={theme.fonts.sm}
               color={theme.colors.foreground}
-            />
+              icon={<IconArrow stroke="none" transform="rotate(180deg)" />}
+            ></IconAndText>
           </Button>
           <Button
             size={theme.buttonSizes.md}

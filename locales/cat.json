@@ -29,8 +29,6 @@
     "configuration_section_button": "Convertir imatges",
     "configuration_section_width": "Amplada",
     "configuration_section_height": "Alçada",
-    "configuration_section_format": "Format",
-    "configuration_section_quality": "Qualitat",
     "download_section_title": "Descargar",
 
     "step_1_upload_image": "Pujar imatges",
@@ -44,6 +42,8 @@
     "continue_button": "Convertir imatges",
     "go_back_button": "Tornar enrere",
     "title_files_selected": "Arxius seleccionats ({count})",
-    "files_to_convert": "Arxius a convertir: {count}"
+    "files_to_convert": "Arxius a convertir: {count}",
+    "configuration_section_format": "Format de sortida",
+    "configuration_section_quality": "Qualitat (0-100)"
   }
 }
