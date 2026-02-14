@@ -13,7 +13,7 @@ const excludedPaths = [
   '/static/',
 ];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   if (excludedPaths.some(path => pathname.startsWith(path))) {
