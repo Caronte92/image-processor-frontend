@@ -29,7 +29,16 @@
     "configuration_section_button": "Convertir imatges",
     "configuration_section_width": "Amplada",
     "configuration_section_height": "Alçada",
-    "download_section_title": "Descargar",
+    "download_section_title": "Descarregar",
+    "download_section_completed_title": "Conversió completada!",
+    "download_section_completed_subtitle": "Les teves imatges estan llestes per descarregar",
+    "download_section_converted_images": "Imatges convertides ({count})",
+    "download_section_format": "Format: {format}",
+    "download_section_download_all": "Descarregar tot",
+    "download_section_convert_more": "Convertir més imatges",
+    "loading_title": "Convertint imatges...",
+    "loading_subtitle": "Processant {count} arxiu",
+    "loading_hint": "Això pot trigar uns segons",
 
     "step_1_upload_image": "Pujar imatges",
     "step_1_select_images": "Selecciona les imatges que desitges convertir",
@@ -44,6 +53,8 @@
     "title_files_selected": "Arxius seleccionats ({count})",
     "files_to_convert": "Arxius a convertir: {count}",
     "configuration_section_format": "Format de sortida",
-    "configuration_section_quality": "Qualitat (0-100)"
+    "configuration_section_quality": "Qualitat (0-100)",
+    "configuration_section_advanced_title": "Configuració avançada (opcional)",
+    "configuration_section_keep_ratio": "Mantenir proporció d'aspecte"
   }
 }

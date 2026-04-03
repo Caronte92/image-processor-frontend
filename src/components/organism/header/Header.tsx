@@ -40,13 +40,6 @@ const TextWrapper = styled.div`
   flex-direction: column;
 `;
 
-const Logo = styled.div`
-  width: 2rem;
-  height: 2rem;
-  background-color: tomato;
-  border-radius: 0.625rem;
-`;
-
 const SettingsWrapper = styled.div`
   display: flex;
   align-items: center;

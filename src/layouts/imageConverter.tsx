@@ -37,9 +37,15 @@ function _ImageConverter() {
   >(null);
 
   const [format, setFormat] = useState<ImageFormats>(ImageFormats.WEBP);
-  const [width, setWidth] = useState<number>(0);
-  const [height, setHeight] = useState<number>(0);
+  const [originalDimensions, setOriginalDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+  const [inputWidth, setInputWidth] = useState<number>(0);
+  const [inputHeight, setInputHeight] = useState<number>(0);
+  const [keepAspectRatio, setKeepAspectRatio] = useState(true);
   const [quality, setQuality] = useState<number>(100);
+  const [isConverting, setIsConverting] = useState(false);
 
   const filesSelected: IFileSelected[] = useMemo(() => {
     return selectedFiles.map(file => ({
@@ -62,8 +68,7 @@ function _ImageConverter() {
     if (selectedFiles.length === 0) return;
     const img = new Image();
     img.onload = () => {
-      setWidth(img.width);
-      setHeight(img.height);
+      setOriginalDimensions({ width: img.width, height: img.height });
     };
     img.src = URL.createObjectURL(selectedFiles[0]);
     setStep(2);
@@ -72,22 +77,44 @@ function _ImageConverter() {
   const handleConvert = async () => {
     if (selectedFiles.length === 0) return;
 
+    setIsConverting(true);
+    setStep(3);
+
+    const finalWidth = keepAspectRatio
+      ? originalDimensions.width
+      : inputWidth || originalDimensions.width;
+    const finalHeight = keepAspectRatio
+      ? originalDimensions.height
+      : inputHeight || originalDimensions.height;
+
     const filesToConvert =
       selectedFiles.length === 1 ? selectedFiles[0] : selectedFiles;
 
     const result = await convertImages(
       filesToConvert,
-      width,
-      height,
-      true,
+      finalWidth,
+      finalHeight,
+      false,
       format,
       [quality]
     );
 
     if (result) {
       setConvertedImage(result);
-      setStep(3);
     }
+    setIsConverting(false);
+  };
+
+  const handleConvertMore = () => {
+    setStep(1);
+    setSelectedFiles([]);
+    setConvertedImage(null);
+    setInputWidth(0);
+    setInputHeight(0);
+    setKeepAspectRatio(true);
+    setIsConverting(false);
+    setFormat(ImageFormats.WEBP);
+    setQuality(100);
   };
 
   const steps = [
@@ -123,17 +150,28 @@ function _ImageConverter() {
           onclickFormatCallback={setFormat}
           onClickCallback={handleConvert}
           onGoBackCallback={() => setStep(1)}
-          onChangeWidthCallback={e => setWidth(parseInt(e.target.value) || 0)}
-          onChangeHeightCallback={e => setHeight(parseInt(e.target.value) || 0)}
+          onChangeWidthCallback={e =>
+            setInputWidth(parseInt(e.target.value) || 0)
+          }
+          onChangeHeightCallback={e =>
+            setInputHeight(parseInt(e.target.value) || 0)
+          }
           onChangeQualityCallback={e =>
             setQuality(parseInt(e.target.value) || 100)
           }
+          keepAspectRatio={keepAspectRatio}
+          onKeepAspectRatioCallback={setKeepAspectRatio}
           totalFiles={filesSelected.length}
         />
       )}
 
-      {step === 3 && convertedImage && (
-        <DownloadSection file={convertedImage} />
+      {step === 3 && (
+        <DownloadSection
+          file={convertedImage}
+          isConverting={isConverting}
+          totalFiles={selectedFiles.length}
+          onConvertMore={handleConvertMore}
+        />
       )}
     </Wrapper>
   );

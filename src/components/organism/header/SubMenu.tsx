@@ -1,9 +1,6 @@
 'use client';
 
 import Anchor from '@/components/atoms/Anchor';
-import IconCode from '@/components/atoms/icons/IconCode';
-import IconPicture from '@/components/atoms/icons/IconPicture';
-import IconAndText from '@/components/molecules/IconAndText';
 import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
@@ -25,7 +22,6 @@ const SubMenuWrapper = styled.div`
 `;
 
 const ROUTE_TO_SUBMENU: Record<string, SubMenuItems> = {
-  'svg-component': SubMenuItems.SVG_REACT,
   'image-converter': SubMenuItems.IMAGE_CONVERTER,
 };
 
@@ -43,12 +39,6 @@ function _SubMenu() {
   return (
     <Container>
       <SubMenuWrapper>
-        <Anchor
-          href={`/${locale}/svg-component`}
-          color={theme.linkColors.ghost}
-          text={t(`option_${SubMenuItems.SVG_REACT}`)}
-          active={selected === SubMenuItems.SVG_REACT}
-        />
         <Anchor
           href={`/${locale}/image-converter`}
           color={theme.linkColors.ghost}

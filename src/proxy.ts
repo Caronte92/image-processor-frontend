@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
       i18n.locales.find(l => pathname.startsWith(`/${l}`)) ??
       i18n.defaultLocale;
     const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/svg-component`;
+    url.pathname = `/${locale}/image-converter`;
     return NextResponse.redirect(url);
   }
 

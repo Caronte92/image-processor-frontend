@@ -29,7 +29,16 @@
     "configuration_section_button": "Convert images",
     "configuration_section_width": "Width",
     "configuration_section_height": "Height",
-    "download_section_title": "Descargar",
+    "download_section_title": "Download",
+    "download_section_completed_title": "Conversion complete!",
+    "download_section_completed_subtitle": "Your images are ready to download",
+    "download_section_converted_images": "Converted images ({count})",
+    "download_section_format": "Format: {format}",
+    "download_section_download_all": "Download all",
+    "download_section_convert_more": "Convert more images",
+    "loading_title": "Converting images...",
+    "loading_subtitle": "Processing {count} file",
+    "loading_hint": "This may take a few seconds",
 
     "step_1_upload_image": "Upload images",
     "step_1_select_images": "Select the images you want to convert",
@@ -44,7 +53,8 @@
     "title_files_selected": "Selected files ({count})",
     "files_to_convert": "Files to convert: {count}",
     "configuration_section_format": "Output format",
-    "configuration_section_quality": "Quality (0-100)"
-
+    "configuration_section_quality": "Quality (0-100)",
+    "configuration_section_advanced_title": "Advanced configuration (optional)",
+    "configuration_section_keep_ratio": "Keep aspect ratio"
   }
 }

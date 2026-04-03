@@ -31,6 +31,15 @@
     "configuration_section_height": "Alto",
 
     "download_section_title": "Descargar",
+    "download_section_completed_title": "¡Conversión completada!",
+    "download_section_completed_subtitle": "Tus imágenes están listas para descargar",
+    "download_section_converted_images": "Imágenes convertidas ({count})",
+    "download_section_format": "Formato: {format}",
+    "download_section_download_all": "Descargar todos",
+    "download_section_convert_more": "Convertir más imágenes",
+    "loading_title": "Convirtiendo imágenes...",
+    "loading_subtitle": "Procesando {count} archivo",
+    "loading_hint": "Esto puede tardar unos segundos",
 
     "step_1_upload_image": "Subir imágenes",
     "step_1_select_images": "Selecciona las imágenes que deseas convertir",
@@ -45,6 +54,8 @@
     "title_files_selected": "Archivos seleccionados ({count})",
     "files_to_convert": "Archivos a convertir: {count}",
     "configuration_section_format": "Formato de salida",
-    "configuration_section_quality": "Calidad (0-100)"
+    "configuration_section_quality": "Calidad (0-100)",
+    "configuration_section_advanced_title": "Configuración avanzada (opcional)",
+    "configuration_section_keep_ratio": "Mantener proporción de aspecto"
   }
 }

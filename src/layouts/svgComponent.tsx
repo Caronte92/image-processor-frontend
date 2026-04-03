@@ -42,6 +42,13 @@ function _SvgComponent() {
     }
   };
 
+  const handleFileSelectDispatch: React.Dispatch<
+    React.SetStateAction<File | null>
+  > = value => {
+    const file = typeof value === 'function' ? value(selectedFile) : value;
+    handleFileSelect(file);
+  };
+
   const computeName = (
     file: File | null,
     input: string
@@ -83,7 +90,7 @@ function _SvgComponent() {
         <SvgSection
           isGenerateComponentAvailable={selectedFile === null}
           file={selectedFile ?? null}
-          onFileSelect={handleFileSelect}
+          onFileSelect={handleFileSelectDispatch}
           onChangeCallback={e => handleSvgName(e.target.value)}
           onClickCallback={handleGenerateComponent}
         />
@@ -93,7 +100,7 @@ function _SvgComponent() {
         <SvgSection
           isGenerateComponentAvailable={selectedFile === null}
           file={selectedFile ?? null}
-          onFileSelect={handleFileSelect}
+          onFileSelect={handleFileSelectDispatch}
           onChangeCallback={e => handleSvgName(e.target.value)}
           onClickCallback={handleGenerateComponent}
         />
