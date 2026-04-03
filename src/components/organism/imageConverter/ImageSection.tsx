@@ -1,15 +1,13 @@
 'use client';
 
-import IconUpload from '@/components/atoms/icons/IconUpload';
-import InputFile, { InputFileHandle } from '@/components/atoms/InputFile';
-import Texts from '@/components/atoms/Texts';
+import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
 import Wrapper from '@/components/atoms/Wrapper';
 import SvgFileSelected from '@/components/molecules/SvgFileSelected';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { IFileSelected } from '@/lib/types/IFiles';
 import { useTranslations } from 'next-intl';
 import React, { useRef } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 const FileContainer = styled.div`
   display: flex;
@@ -17,80 +15,60 @@ const FileContainer = styled.div`
   gap: 1rem;
 `;
 
-const FakeInput = styled.button`
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 1.5rem 1.5rem;
-  border-radius: 0.625rem;
-  border: 0.125rem dashed ${props => props.theme.colors?.border};
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  cursor: pointer;
-
-  &:hover {
-    border: 0.125rem dashed ${props => props.theme.colors?.primary};
-  }
-`;
-
-const TextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  align-items: center;
-  justify-content: center;
-`;
-
 interface ImageSectionProps {
-  file: IFileSelected | null;
-  onFileSelect?: React.Dispatch<React.SetStateAction<File | null>>;
+  files: IFileSelected[];
+  onFileSelect?: (files: File[]) => void;
   onChangeCallback: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 function _ImageSection(props: ImageSectionProps) {
   const t = useTranslations('ImageConverter');
-  const theme = useTheme();
-  const inputFileRef = useRef<InputFileHandle>(null);
+  const inputFileRef = useRef<FakeInputHandle>(null);
+  const filesRef = useRef<File[]>([]);
 
-  const handleOpenFileDialog = () => {
-    inputFileRef.current?.open();
+  const handleClearFile = (index: number) => {
+    filesRef.current.splice(index, 1);
+    props.onFileSelect?.(filesRef.current);
+    if (filesRef.current.length === 0) {
+      inputFileRef.current?.reset();
+    }
   };
 
-  const handleClearFile = () => {
-    inputFileRef.current?.reset();
-    props.onFileSelect?.(null);
+  const handleFileSelect = (file: File | null) => {
+    if (file) {
+      filesRef.current.push(file);
+      props.onFileSelect?.(filesRef.current);
+    }
   };
 
   return (
     <Wrapper>
-      <TitleSubtitle title={t('file_section_title')} subtitle={t('file_section_subtitle')} />
+      <TitleSubtitle
+        title={t('file_section_title')}
+        subtitle={t('file_section_subtitle')}
+      />
       <FileContainer>
-        <FakeInput tabIndex={0} onClick={handleOpenFileDialog}>
-          <IconUpload size={theme.icons.lg} stroke={theme.colors.mutedForeground} />
-          <TextWrapper>
-            <Texts text={t('file_section_placeholder')} size={theme.fonts.sm} color={theme.colors.foreground} />
-            <Texts
-              text={t('file_section_span_info_extension')}
-              size={theme.fonts.xs}
-              color={theme.colors.mutedForeground}
-            />
-          </TextWrapper>
-          <InputFile
-            ref={inputFileRef}
-            typesAccepted=".png, .jpg, .gif, .bmp, .webp"
-            onFileSelect={props.onFileSelect}
-          />
-        </FakeInput>
-        {props.file && (
+        <FakeInput
+          ref={inputFileRef}
+          placeholder={t('file_section_placeholder')}
+          helperText={t('file_section_span_info_extension')}
+          typesAccepted=".png, .jpg, .gif, .bmp, .webp"
+          onFileSelect={handleFileSelect}
+          variant="solid"
+          minWidth="42rem"
+          padding="3.125rem"
+          spanButtonText={t('file_section_span_button_images')}
+        />
+        {props.files.map((file, index) => (
           <SvgFileSelected
+            key={`${file.name}-${index}`}
             file={{
-              name: props.file.name,
-              size: props.file.size,
+              name: file.name,
+              size: file.size,
             }}
-            onClickCallback={handleClearFile}
+            onClickCallback={() => handleClearFile(index)}
           />
-        )}
+        ))}
       </FileContainer>
     </Wrapper>
   );

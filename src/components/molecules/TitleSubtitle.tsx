@@ -3,11 +3,13 @@ import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import { Typography } from '@/theme';
 
-const Container = styled.div`
+const Container = styled.div<{ $gap?: string }>`
   display: flex;
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
+  align-items: center;
+  gap: ${(props) => props.$gap || '0'};
 `;
 
 interface TitleSubtitleProps {
@@ -16,12 +18,13 @@ interface TitleSubtitleProps {
   titleSize?: Typography;
   subtitleSize?: Typography;
   truncate?: boolean;
+  gap?: string;
 }
 
 function _TitleSubtitle(props: TitleSubtitleProps) {
   const theme = useTheme();
   return (
-    <Container>
+    <Container $gap={props.gap}>
       <Texts
         type={'p'}
         text={props.title}

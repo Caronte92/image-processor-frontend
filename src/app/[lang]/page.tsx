@@ -1,5 +1,3 @@
-import HomeMemo from '@/layouts/home';
-
-export default async function HomePage() {
-    return <HomeMemo />;
+export default function HomePage() {
+  return null;
 }

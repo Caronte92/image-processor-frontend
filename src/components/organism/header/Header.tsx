@@ -23,6 +23,7 @@ const HeaderWrapper = styled.header`
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 99rem;
   margin: 0 auto;
@@ -37,13 +38,6 @@ const LogoWrapper = styled.div`
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Logo = styled.div`
-  width: 2rem;
-  height: 2rem;
-  background-color: tomato;
-  border-radius: 0.625rem;
 `;
 
 const SettingsWrapper = styled.div`
@@ -69,7 +63,6 @@ function _Header() {
     <HeaderWrapper>
       <Container>
         <LogoWrapper>
-          <Logo />
           <TextWrapper>
             <Texts
               text={t('title')}

@@ -1,7 +1,7 @@
 import Button from '@/components/atoms/Button';
 import IconClose from '@/components/atoms/icons/IconClose';
 import IconUpload from '@/components/atoms/icons/IconUpload';
-import TitleSubtitle from '@/components/molecules/TitleSubtitle';
+import Texts from '@/components/atoms/Texts';
 import { formatFileSize } from '@/lib/services/utils/svg';
 import { IFileSelected } from '@/lib/types/IFiles';
 import React from 'react';
@@ -15,6 +15,7 @@ const Container = styled.div`
   justify-content: space-between;
   display: flex;
   gap: 1rem;
+  width: 100%;
 `;
 
 const IonWrapper = styled.div`
@@ -38,6 +39,13 @@ const ComponentInfoContainer = styled.div`
   overflow: hidden;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`;
+
 interface SvgFileSelectedProps {
   file: IFileSelected;
   onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
@@ -50,19 +58,32 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
     <Container>
       <ComponentInfoContainer>
         <IonWrapper>
-          <IconUpload size={theme.icons.xs} stroke={theme.colors.cardForeground} />
+          <IconUpload
+            size={theme.icons.xs}
+            stroke={theme.colors.cardForeground}
+          />
         </IonWrapper>
-        <TitleSubtitle
-          title={props.file.name}
-          subtitle={formatFileSize(props.file.size)}
-          titleSize={theme.fonts.sm}
-          subtitleSize={theme.fonts.xs}
+        <Texts
+          text={props.file.name}
+          color={theme.colors.foreground}
+          size={theme.fonts.sm}
           truncate={true}
         />
       </ComponentInfoContainer>
-      <Button size={theme.buttonSizes.md} color={theme.buttonColors.ghost} onClickCallback={props.onClickCallback}>
+      <ButtonWrapper>
+        <Texts
+          text={formatFileSize(props.file.size)}
+          color={theme.colors.foreground}
+          size={theme.fonts.xs}
+        />
+      <Button
+        size={theme.buttonSizes.md}
+        color={theme.buttonColors.ghost}
+        onClickCallback={props.onClickCallback}
+      >
         <IconClose size={theme.icons.xs} stroke={theme.colors.cardForeground} />
       </Button>
+      </ButtonWrapper>
     </Container>
   );
 }
