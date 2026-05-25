@@ -1,8 +1,10 @@
-import { theme, Typography } from '@/theme';
+import { theme } from '@/styles/theme';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
 type TextType = 'h1' | 'p' | 'label' | 'span';
+
+export type Typography = { fontSize: string; lineHeight: string };
 
 const Truncate = css<{ $truncate: boolean }>`
   overflow: hidden;
@@ -10,7 +12,11 @@ const Truncate = css<{ $truncate: boolean }>`
   white-space: nowrap;
 `;
 
-const IText = css<{ $size: Typography; $weight: string; $color: string }>`
+const IText = css<{
+  $size: Typography;
+  $weight: string | number;
+  $color: string;
+}>`
   font-size: ${props => props.$size.fontSize};
   line-height: ${props => props.$size.lineHeight};
   font-weight: ${props => props.$weight};
@@ -20,7 +26,7 @@ const IText = css<{ $size: Typography; $weight: string; $color: string }>`
 
 const Paragraph = styled.p<{
   $size: Typography;
-  $weight: string;
+  $weight: string | number;
   $color: string;
   $truncate: boolean;
 }>`
@@ -28,13 +34,17 @@ const Paragraph = styled.p<{
   ${props => props.$truncate && Truncate}
 `;
 
-const Title = styled.h1<{ $size: Typography; $weight: string; $color: string }>`
+const Title = styled.h1<{
+  $size: Typography;
+  $weight: string | number;
+  $color: string;
+}>`
   ${IText}
 `;
 
 const Label = styled.label<{
   $size: Typography;
-  $weight: string;
+  $weight: string | number;
   $color: string;
   $truncate: boolean;
 }>`
@@ -44,7 +54,7 @@ const Label = styled.label<{
 
 const Span = styled.span<{
   $size: Typography;
-  $weight: string;
+  $weight: string | number;
   $color: string;
   $truncate: boolean;
 }>`
@@ -56,15 +66,18 @@ interface TextProps {
   type?: TextType;
   text: string;
   size?: Typography;
-  fontWeight?: string;
+  fontWeight?: string | number;
   color: string;
   truncate?: boolean;
 }
 
 function _Text({
   type = 'p',
-  size = theme.fonts.base,
-  fontWeight = theme.weights.regular,
+  size = {
+    fontSize: theme.fonts.size.base,
+    lineHeight: theme.fonts.lineHeight.base,
+  },
+  fontWeight = theme.fonts.weight.normal,
   truncate = false,
   ...props
 }: TextProps) {

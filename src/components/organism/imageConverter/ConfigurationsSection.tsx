@@ -159,7 +159,7 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
             />
             <ChevronWrapper $open={advancedOpen}>
               <IconChevronDown
-                size={theme.icons.sm}
+                size={theme.icons.size.sm}
                 stroke={theme.colors.cardForeground}
                 disableFill
               />
@@ -198,7 +198,10 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
           >
             <IconAndText
               text={t('go_back_button')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.foreground}
               icon={<IconArrow stroke="none" transform="rotate(180deg)" />}
             />
@@ -211,7 +214,10 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
           >
             <Texts
               text={t('continue_button')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.primaryForeground}
             />
           </Button>

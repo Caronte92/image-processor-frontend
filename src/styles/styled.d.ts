@@ -1,4 +1,4 @@
-import type { IActiveTheme } from '@/theme';
+import type { IActiveTheme } from '@/styles/theme';
 import 'styled-components';
 
 declare module 'styled-components' {

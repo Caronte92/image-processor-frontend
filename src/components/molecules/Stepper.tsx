@@ -28,11 +28,18 @@ function _Stepper({ ...props }: StepperProps) {
       {props.steps.map((step: IStep, index: number) => {
         return (
           <StepContainer key={`${index}-${step.title}`}>
-              <Texts
-                text={`${index + 1}. ${step.title}`}
-                color={step.isActive ? theme.colors.primary : 'oklch(0.551 0.0267 264.33)'}
-                size={theme.fonts.sm}
-              />
+            <Texts
+              text={`${index + 1}. ${step.title}`}
+              color={
+                step.isActive
+                  ? theme.colors.primary
+                  : 'oklch(0.551 0.0267 264.33)'
+              }
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
+            />
             {index < props.steps.length - 1 && <IconArrow stroke="none" />}
           </StepContainer>
         );
