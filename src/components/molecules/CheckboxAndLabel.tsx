@@ -1,6 +1,6 @@
 import Checkbox from '@/components/atoms/Checkbox';
 import Texts from '@/components/atoms/Texts';
-import { Typography } from '@/theme';
+import { Typography } from '@/styles/theme';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 

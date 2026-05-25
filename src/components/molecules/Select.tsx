@@ -5,7 +5,7 @@ import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
 import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import { IOptionsSelect } from '@/lib/types/IOptions';
-import { ButtonColorState, ButtonSize } from '@/theme';
+import { ButtonColorState, ButtonSize } from '@/styles/theme';
 
 const getBorder = (
   enabled: boolean,

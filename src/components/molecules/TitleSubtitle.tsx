@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
-import { Typography } from '@/theme';
+import { Typography } from '@/styles/theme';
 
 const Container = styled.div<{ $gap?: string }>`
   display: flex;
@@ -9,7 +9,7 @@ const Container = styled.div<{ $gap?: string }>`
   min-width: 0;
   overflow: hidden;
   align-items: center;
-  gap: ${(props) => props.$gap || '0'};
+  gap: ${props => props.$gap || '0'};
 `;
 
 interface TitleSubtitleProps {

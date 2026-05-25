@@ -1,4 +1,4 @@
-import { ButtonColorState, ButtonSize } from '@/theme';
+import { ButtonColorState, ButtonSize } from '@/styles/theme';
 import React from 'react';
 import styled from 'styled-components';
 

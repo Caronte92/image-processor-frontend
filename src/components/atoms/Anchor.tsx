@@ -1,4 +1,4 @@
-import { LinkColorState, Typography } from '@/theme';
+import { LinkColorState, Typography } from '@/styles/theme';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
