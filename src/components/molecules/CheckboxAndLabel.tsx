@@ -1,6 +1,6 @@
 import Checkbox from '@/components/atoms/Checkbox';
 import Texts from '@/components/atoms/Texts';
-import { Typography } from '@/styles/theme';
+import { Typography } from '@/components/atoms/Texts';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
@@ -26,7 +26,12 @@ function _CheckboxAndLabel(props: CheckboxAndLabelProps) {
       <Checkbox checked={props.checked} onChange={props.onChange} />
       <Texts
         text={props.label}
-        size={props.size ?? theme.fonts.sm}
+        size={
+          props.size ?? {
+            fontSize: theme.fonts.size.sm,
+            lineHeight: theme.fonts.lineHeight.sm,
+          }
+        }
         color={theme.colors.cardForeground}
       />
     </Container>

@@ -27,10 +27,10 @@ const WrapperFiles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: ${props => props.theme.colors?.card};
+  background: ${props => props.theme.colors.card};
   padding: 1.5625rem;
   border-radius: 0.625rem;
-  border: 0.0625rem solid ${props => props.theme.colors?.border};
+  border: 0.0625rem solid ${props => props.theme.colors.border};
   align-items: baseline;
 `;
 
@@ -103,7 +103,10 @@ function _UploadImages({ ...props }: UploadImagesProps) {
           >
             <Texts
               text={t('continue_button')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.primaryForeground}
             />
           </Button>

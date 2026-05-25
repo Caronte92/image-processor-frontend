@@ -80,7 +80,10 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
             />
             <Texts
               text={t('loading_hint')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.mutedForeground}
             />
           </LoadingWrapper>
@@ -122,8 +125,11 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
       <Wrapper>
         <Texts
           text={t('download_section_converted_images', { count: files.length })}
-          size={theme.fonts.base}
-          fontWeight={theme.weights.semibold}
+          size={{
+            fontSize: theme.fonts.size.base,
+            lineHeight: theme.fonts.lineHeight.base,
+          }}
+          fontWeight={theme.fonts.weight.semibold}
           color={theme.colors.cardForeground}
         />
         <FilesList>
@@ -145,13 +151,16 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
                   <IconAndText
                     icon={
                       <IconDownload
-                        size={theme.icons.sm}
+                        size={theme.icons.size.sm}
                         stroke={theme.colors.cardForeground}
                         disableFill
                       />
                     }
                     text={t('download_section_title')}
-                    size={theme.fonts.sm}
+                    size={{
+                      fontSize: theme.fonts.size.sm,
+                      lineHeight: theme.fonts.lineHeight.sm,
+                    }}
                     color={theme.colors.cardForeground}
                   />
                 </Button>
@@ -170,13 +179,16 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
             <IconAndText
               icon={
                 <IconDownload
-                  size={theme.icons.sm}
+                  size={theme.icons.size.sm}
                   stroke={theme.colors.primaryForeground}
                   disableFill
                 />
               }
               text={t('download_section_download_all')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.primaryForeground}
             />
           </Button>
@@ -188,7 +200,10 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
           >
             <Texts
               text={t('download_section_convert_more')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.foreground}
             />
           </Button>

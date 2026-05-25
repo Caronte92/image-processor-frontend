@@ -1,5 +1,5 @@
 import Texts from '@/components/atoms/Texts';
-import { Typography } from '@/styles/theme';
+import { Typography } from '@/components/atoms/Texts';
 import React from 'react';
 import styled from 'styled-components';
 

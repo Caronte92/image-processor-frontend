@@ -9,8 +9,8 @@ import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.colors?.muted};
-  border-block: 1px solid ${props => props.theme.colors?.border};
+  background-color: ${props => props.theme.colors.muted};
+  border-block: 1px solid ${props => props.theme.colors.border};
 `;
 
 const SubMenuWrapper = styled.div`

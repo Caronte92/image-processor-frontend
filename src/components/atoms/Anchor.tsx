@@ -1,10 +1,11 @@
-import { LinkColorState, Typography } from '@/styles/theme';
+import { ILinkVariantConfig } from '@/styles/links';
+import { Typography } from '@/components/atoms/Texts';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
 
 const Anch = styled(Link)<{
-  $color: LinkColorState;
+  $color: ILinkVariantConfig;
   $disabled: boolean;
   $active: boolean;
   $size?: Typography;
@@ -14,17 +15,17 @@ const Anch = styled(Link)<{
   text-decoration: none;
   color: ${({ $color, $disabled, $active }) =>
     $disabled
-      ? $color.disabled.content
+      ? $color.disabled.color
       : $active
-        ? $color.active.content
-        : $color.default.content};
+        ? $color.active.color
+        : $color.neutral.color};
   border-bottom: 2px solid
     ${({ $color, $disabled, $active }) =>
       $disabled
         ? $color.disabled.underline
         : $active
           ? $color.active.underline
-          : $color.default.underline};
+          : $color.neutral.underline};
   font-size: ${({ $size }) => $size?.fontSize ?? 'inherit'};
   line-height: ${({ $size }) => $size?.lineHeight ?? 'inherit'};
   opacity: ${({ $disabled }) => ($disabled ? 0.4 : 1)};
@@ -34,7 +35,7 @@ const Anch = styled(Link)<{
 
   &:hover {
     color: ${({ $color, $disabled }) =>
-      $disabled ? $color.disabled.content : $color.hover.content};
+      $disabled ? $color.disabled.color : $color.hover.color};
     border-bottom-color: ${({ $color, $disabled }) =>
       $disabled ? $color.disabled.underline : $color.hover.underline};
   }
@@ -45,7 +46,7 @@ interface AnchorProps {
   target?: '_self' | '_blank';
   rel?: string;
   text: string;
-  color: LinkColorState;
+  color: ILinkVariantConfig;
   size?: Typography;
   active?: boolean;
   disabled?: boolean;

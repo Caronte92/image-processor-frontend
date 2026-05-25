@@ -1,4 +1,4 @@
-import { ButtonColorState, ButtonSize } from '@/styles/theme';
+import { IButtonVariantConfig, IButtonSizeConfig } from '@/styles/buttons';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -18,8 +18,8 @@ const getBorder = (
 };
 
 const Container = styled.button<{
-  $color: ButtonColorState;
-  $size: ButtonSize;
+  $color: IButtonVariantConfig;
+  $size: IButtonSizeConfig;
   $enabled: boolean;
   $selected?: boolean;
   $hideBorder: boolean;
@@ -30,20 +30,20 @@ const Container = styled.button<{
   color: ${props =>
     props.$enabled
       ? props.$selected
-        ? props.$color.selected
-        : props.$color.default.content
-      : props.$color.disabled.content};
+        ? props.$color.active.color
+        : props.$color.neutral.color
+      : props.$color.disabled.color};
   background-color: ${props =>
     props.$enabled
       ? props.$selected
-        ? props.$color.selected
-        : props.$color.default.background
+        ? props.$color.active.background
+        : props.$color.neutral.background
       : props.$color.disabled.background};
   cursor: ${props => (props.$enabled ? 'pointer' : 'not-allowed')};
   border: ${({ $enabled, $color, $hideBorder }) =>
     $hideBorder
       ? 'transparent'
-      : getBorder($enabled, $color.default.border, $color.disabled.border)};
+      : getBorder($enabled, $color.neutral.border, $color.disabled.border)};
   border-radius: 0.25em;
   opacity: ${props => (props.$enabled ? 'unset' : '0.4')};
   gap: 0.5em;
@@ -53,9 +53,7 @@ const Container = styled.button<{
 
   &:hover {
     color: ${props =>
-      props.$enabled
-        ? props.$color.hover.content
-        : props.$color.disabled.content};
+      props.$enabled ? props.$color.hover.color : props.$color.disabled.color};
     background-color: ${props =>
       props.$enabled
         ? props.$color.hover.background
@@ -63,14 +61,14 @@ const Container = styled.button<{
     border: ${({ $enabled, $color, $hideBorder }) =>
       $hideBorder
         ? 'transparent'
-        : getBorder($enabled, $color.default.border, $color.disabled.border)};
+        : getBorder($enabled, $color.neutral.border, $color.disabled.border)};
   }
 `;
 
 interface ButtonProps {
   children: React.ReactNode;
-  size: ButtonSize;
-  color: ButtonColorState;
+  size: IButtonSizeConfig;
+  color: IButtonVariantConfig;
   disabled?: boolean;
   selected?: boolean;
   hideBorder?: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
-import { Typography } from '@/styles/theme';
+import { Typography } from '@/components/atoms/Texts';
 
 const Container = styled.div<{ $gap?: string }>`
   display: flex;
@@ -29,7 +29,7 @@ function _TitleSubtitle(props: TitleSubtitleProps) {
         type={'p'}
         text={props.title}
         size={props.titleSize}
-        fontWeight={theme.weights.medium}
+        fontWeight={theme.fonts.weight.medium}
         color={theme.colors.foreground}
         truncate={props.truncate}
       />
@@ -37,7 +37,7 @@ function _TitleSubtitle(props: TitleSubtitleProps) {
         type={'p'}
         text={props.subtitle}
         size={props.subtitleSize}
-        fontWeight={theme.weights.regular}
+        fontWeight={theme.fonts.weight.normal}
         color={theme.colors.mutedForeground}
       />
     </Container>

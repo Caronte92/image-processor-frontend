@@ -16,7 +16,7 @@ import styled, { useTheme } from 'styled-components';
 const HeaderWrapper = styled.header`
   display: flex;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.colors?.card};
+  background-color: ${({ theme }) => theme.colors.card};
   color: ${({ theme }) => theme.colors.foreground};
 `;
 
@@ -67,15 +67,21 @@ function _Header() {
             <Texts
               text={t('title')}
               type="h1"
-              size={theme.fonts?.base}
-              fontWeight={theme.weights?.bold}
+              size={{
+                fontSize: theme.fonts.size.base,
+                lineHeight: theme.fonts.lineHeight.base,
+              }}
+              fontWeight={theme.fonts.weight.bold}
               color={theme.colors.foreground}
             />
             <Texts
               text={t('subtitle')}
               type="p"
-              size={theme.fonts?.sm}
-              fontWeight={theme.weights?.regular}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
+              fontWeight={theme.fonts.weight.normal}
               color={theme.colors.mutedForeground}
             />
           </TextWrapper>
@@ -83,7 +89,12 @@ function _Header() {
         <SettingsWrapper>
           <Select
             text={currentLanguage.toUpperCase()}
-            icon={<IconWorld size={theme.icons.xs} stroke={theme.colors.mutedForeground} />}
+            icon={
+              <IconWorld
+                size={theme.icons.size.xs}
+                stroke={theme.colors.mutedForeground}
+              />
+            }
             options={locales.map(locale => ({
               text: locale.toUpperCase(),
               value: locale,
@@ -95,14 +106,25 @@ function _Header() {
             }}
             hideBorder
             children={undefined}
-            size={theme.buttonSizes?.md}
+            size={theme.buttonSizes.md}
             color={theme.buttonColors.ghost}
           />
-          <Toggle onToggle={toggleTheme} icon={theme.mode == 'light' ? (
-                <IconMoon size={theme.icons.xs} stroke={theme.colors.foreground} />
+          <Toggle
+            onToggle={toggleTheme}
+            icon={
+              theme.mode == 'light' ? (
+                <IconMoon
+                  size={theme.icons.size.xs}
+                  stroke={theme.colors.foreground}
+                />
               ) : (
-                <IconSun size={theme.icons.xs} stroke={theme.colors.primary} />
-              )} />
+                <IconSun
+                  size={theme.icons.size.xs}
+                  stroke={theme.colors.primary}
+                />
+              )
+            }
+          />
         </SettingsWrapper>
       </Container>
     </HeaderWrapper>

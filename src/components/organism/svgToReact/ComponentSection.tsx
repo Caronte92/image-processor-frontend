@@ -26,7 +26,8 @@ const ButtonsWrapper = styled.div`
 
 const CodeContainer = styled.pre`
   overflow: scroll;
-  background: ${({ theme }) => `color-mix(in oklch, ${theme.colors.input} 30%)`};
+  background: ${({ theme }) =>
+    `color-mix(in oklch, ${theme.colors.input} 30%)`};
   border: 0.0625rem solid ${props => props.theme.colors.input};
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
@@ -69,21 +70,42 @@ function _ComponentName(props: ComponentNameProps) {
   return (
     <Wrapper>
       <Header>
-        <Texts text={t('component_section_title')} size={theme.fonts.base} color={theme.colors.cardForeground} />
+        <Texts
+          text={t('component_section_title')}
+          size={{
+            fontSize: theme.fonts.size.base,
+            lineHeight: theme.fonts.lineHeight.base,
+          }}
+          color={theme.colors.cardForeground}
+        />
         <ButtonsWrapper>
-          <Button size={theme.buttonSizes.md} color={theme.buttonColors.primary} onClickCallback={copyToClipboard}>
+          <Button
+            size={theme.buttonSizes.md}
+            color={theme.buttonColors.primary}
+            onClickCallback={copyToClipboard}
+          >
             <IconAndText
-              icon={<IconCopy size={theme.icons.xs} />}
+              icon={<IconCopy size={theme.icons.size.xs} />}
               text={t('component_section_button_copy')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.cardForeground}
             />
           </Button>
-          <Button size={theme.buttonSizes.md} color={theme.buttonColors.primary} onClickCallback={downloadAsTSX}>
+          <Button
+            size={theme.buttonSizes.md}
+            color={theme.buttonColors.primary}
+            onClickCallback={downloadAsTSX}
+          >
             <IconAndText
-              icon={<IconDownload size={theme.icons.xs} />}
+              icon={<IconDownload size={theme.icons.size.xs} />}
               text={t('component_section_button_download')}
-              size={theme.fonts.sm}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
               color={theme.colors.cardForeground}
             />
           </Button>

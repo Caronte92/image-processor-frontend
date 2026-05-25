@@ -5,7 +5,7 @@ import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
 import styled, { useTheme } from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import { IOptionsSelect } from '@/lib/types/IOptions';
-import { ButtonColorState, ButtonSize } from '@/styles/theme';
+import { IButtonVariantConfig, IButtonSizeConfig } from '@/styles/buttons';
 
 const getBorder = (
   enabled: boolean,
@@ -34,8 +34,8 @@ const SelectContainer = styled.div`
 `;
 
 const ButtonSelect = styled.button<{
-  $color: ButtonColorState;
-  $size: ButtonSize;
+  $color: IButtonVariantConfig;
+  $size: IButtonSizeConfig;
   $enabled: boolean;
   $selected?: boolean;
   $hideBorder: boolean;
@@ -45,20 +45,20 @@ const ButtonSelect = styled.button<{
   color: ${props =>
     props.$enabled
       ? props.$selected
-        ? props.$color.selected
-        : props.$color.default.content
-      : props.$color.disabled.content};
+        ? props.$color.active.color
+        : props.$color.neutral.color
+      : props.$color.disabled.color};
   background-color: ${props =>
     props.$enabled
       ? props.$selected
-        ? props.$color.selected
-        : props.$color.default.background
+        ? props.$color.active.background
+        : props.$color.neutral.background
       : props.$color.disabled.background};
   cursor: ${props => (props.$enabled ? 'pointer' : 'not-allowed')};
   border: ${({ $enabled, $color, $hideBorder }) =>
     $hideBorder
       ? 'transparent'
-      : getBorder($enabled, $color.default.border, $color.disabled.border)};
+      : getBorder($enabled, $color.neutral.border, $color.disabled.border)};
   border-radius: 0.25em;
   opacity: ${props => (props.$enabled ? 'unset' : '0.4')};
   gap: 0.5em;
@@ -67,9 +67,7 @@ const ButtonSelect = styled.button<{
 
   &:hover {
     color: ${props =>
-      props.$enabled
-        ? props.$color.hover.content
-        : props.$color.disabled.content};
+      props.$enabled ? props.$color.hover.color : props.$color.disabled.color};
     background-color: ${props =>
       props.$enabled
         ? props.$color.hover.background
@@ -77,7 +75,7 @@ const ButtonSelect = styled.button<{
     border: ${({ $enabled, $color, $hideBorder }) =>
       $hideBorder
         ? 'transparent'
-        : getBorder($enabled, $color.default.border, $color.disabled.border)};
+        : getBorder($enabled, $color.neutral.border, $color.disabled.border)};
   }
 `;
 
@@ -90,8 +88,8 @@ const Container = styled.div`
 
 const DropdownContainer = styled.div`
   background-color: ${props =>
-    props.theme.colors?.background || props.theme.background};
-  border: 1px solid ${props => props.theme.colors?.border};
+    props.theme.colors.background || props.theme.background};
+  border: 1px solid ${props => props.theme.colors.border};
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -131,8 +129,8 @@ interface SelectProps {
   options: IOptionsSelect[];
   onclickCallback: React.MouseEventHandler<HTMLElement>;
   children?: React.ReactNode;
-  size: ButtonSize;
-  color: ButtonColorState;
+  size: IButtonSizeConfig;
+  color: IButtonVariantConfig;
   disabled?: boolean;
   selected?: boolean;
   hideBorder?: boolean;
@@ -279,11 +277,14 @@ function _Select({ hideBorder = false, ...props }: SelectProps) {
             <Texts
               type={'p'}
               text={props.text}
-              size={theme.fonts?.sm}
-              fontWeight={theme.weights?.bold}
-              color={theme.colors?.foreground}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
+              fontWeight={theme.fonts.weight.bold}
+              color={theme.colors.foreground}
             />
-            <IconChevronDown size={theme.icons.xs} />
+            <IconChevronDown size={theme.icons.size.xs} />
           </Container>
         </ButtonSelect>
         {isDropdownVisible && (
@@ -312,9 +313,12 @@ function _Select({ hideBorder = false, ...props }: SelectProps) {
                   <Texts
                     type={'p'}
                     text={option.text}
-                    size={theme.fonts.sm}
-                    fontWeight={theme.weights.regular}
-                    color={theme.colors?.foreground}
+                    size={{
+                      fontSize: theme.fonts.size.sm,
+                      lineHeight: theme.fonts.lineHeight.sm,
+                    }}
+                    fontWeight={theme.fonts.weight.normal}
+                    color={theme.colors.foreground}
                   />
                 </OptionWrapper>
               </OptionContainer>

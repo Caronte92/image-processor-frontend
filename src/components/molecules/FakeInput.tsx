@@ -28,9 +28,9 @@ const StyledFakeInput = styled.button<
 >`
   background: ${props =>
     props.$isDragging
-      ? props.theme.colors?.primary + '10'
+      ? props.theme.colors.primary + '10'
       : props.$variant === 'solid'
-        ? props.theme.colors?.card
+        ? props.theme.colors.card
         : 'transparent'};
   display: flex;
   flex-direction: column;
@@ -39,9 +39,7 @@ const StyledFakeInput = styled.button<
   border-width: 0.125rem;
   border-style: ${props => (props.$variant === 'dashed' ? 'dashed' : 'solid')};
   border-color: ${props =>
-    props.$isDragging
-      ? props.theme.colors?.primary
-      : props.theme.colors?.border};
+    props.$isDragging ? props.theme.colors.primary : props.theme.colors.border};
   align-items: center;
   justify-content: center;
   gap: 1rem;
@@ -51,7 +49,7 @@ const StyledFakeInput = styled.button<
   ${props => props.$minWidth && `min-width: ${props.$minWidth};`}
 
   &:hover {
-    border-color: ${props => props.theme.colors?.primary};
+    border-color: ${props => props.theme.colors.primary};
   }
 `;
 
@@ -68,14 +66,14 @@ const StyledButtonLike = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1rem;
-  background-color: ${props => props.theme.colors?.primary};
-  color: ${props => props.theme.colors?.primaryForeground};
+  background-color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.primaryForeground};
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  font-size: ${props => props.theme.fonts.xs.fontSize};
-  line-height: ${props => props.theme.fonts.xs.lineHeight};
-  font-weight: ${props => props.theme.weights.medium};
+  font-size: ${props => props.theme.fonts.size.xs};
+  line-height: ${props => props.theme.fonts.lineHeight.xs};
+  font-weight: ${props => props.theme.fonts.weight.medium};
   border: none;
   user-select: none;
 
@@ -160,19 +158,25 @@ function _FakeInput(
     >
       <IconWrapper>
         <IconUpload
-          size={theme.icons.lg}
+          size={theme.icons.size.lg}
           stroke={theme.colors.mutedForeground}
         />
       </IconWrapper>
       <TextWrapper>
         <Texts
           text={props.placeholder}
-          size={theme.fonts.sm}
+          size={{
+            fontSize: theme.fonts.size.sm,
+            lineHeight: theme.fonts.lineHeight.sm,
+          }}
           color={theme.colors.foreground}
         />
         <Texts
           text={props.helperText}
-          size={theme.fonts.xs}
+          size={{
+            fontSize: theme.fonts.size.xs,
+            lineHeight: theme.fonts.lineHeight.xs,
+          }}
           color={theme.colors.mutedForeground}
         />
       </TextWrapper>
@@ -180,7 +184,10 @@ function _FakeInput(
         <Texts
           type="span"
           text={props.spanButtonText}
-          size={theme.fonts.xs}
+          size={{
+            fontSize: theme.fonts.size.xs,
+            lineHeight: theme.fonts.lineHeight.xs,
+          }}
           color={theme.colors.primaryForeground}
         />
       </StyledButtonLike>

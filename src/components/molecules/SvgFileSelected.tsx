@@ -8,7 +8,7 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
-  background: ${props => props.theme.colors?.muted};
+  background: ${props => props.theme.colors.muted};
   padding: 0.75rem;
   border-radius: 0.625rem;
   align-items: center;
@@ -24,7 +24,7 @@ const IonWrapper = styled.div`
   height: 2rem;
   align-items: center;
   justify-content: center;
-  background: ${props => props.theme.colors?.primary};
+  background: ${props => props.theme.colors.primary};
   opacity: 0.4;
   border-radius: 0.5rem;
 `;
@@ -59,14 +59,17 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
       <ComponentInfoContainer>
         <IonWrapper>
           <IconUpload
-            size={theme.icons.xs}
+            size={theme.icons.size.xs}
             stroke={theme.colors.cardForeground}
           />
         </IonWrapper>
         <Texts
           text={props.file.name}
           color={theme.colors.foreground}
-          size={theme.fonts.sm}
+          size={{
+            fontSize: theme.fonts.size.sm,
+            lineHeight: theme.fonts.lineHeight.sm,
+          }}
           truncate={true}
         />
       </ComponentInfoContainer>
@@ -74,15 +77,21 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
         <Texts
           text={formatFileSize(props.file.size)}
           color={theme.colors.foreground}
-          size={theme.fonts.xs}
+          size={{
+            fontSize: theme.fonts.size.xs,
+            lineHeight: theme.fonts.lineHeight.xs,
+          }}
         />
-      <Button
-        size={theme.buttonSizes.md}
-        color={theme.buttonColors.ghost}
-        onClickCallback={props.onClickCallback}
-      >
-        <IconClose size={theme.icons.xs} stroke={theme.colors.cardForeground} />
-      </Button>
+        <Button
+          size={theme.buttonSizes.md}
+          color={theme.buttonColors.ghost}
+          onClickCallback={props.onClickCallback}
+        >
+          <IconClose
+            size={theme.icons.size.xs}
+            stroke={theme.colors.cardForeground}
+          />
+        </Button>
       </ButtonWrapper>
     </Container>
   );
