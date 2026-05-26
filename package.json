@@ -16,6 +16,7 @@
     "extract:strings": "cp extractedTranslations/config.json babel.config.json && ./node_modules/.bin/babel -f babel.config.json 'src/**/*.{js,jsx,ts,tsx}' 'pages/**/*.{js,jsx,ts,tsx}' && rm babel.config.json"
   },
   "dependencies": {
+    "heic-to": "^1.5.2",
     "next": "^16.1.1",
     "next-intl": "^4.4.0",
     "react": "^19.2.3",

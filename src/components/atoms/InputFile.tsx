@@ -52,6 +52,10 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
       'image/webp',
       'image/jpeg',
       'image/jpg',
+      'image/heic',
+      'image/heif',
+      'image/gif',
+      'image/bmp',
     ];
     const validExtensions = props.typesAccepted
       .split(',')
@@ -62,7 +66,7 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
 
     if (!isValidType && !isValidExtension) {
       setError(
-        'Por favor selecciona un archivo de imagen válido (.svg, .png, .webp, .jpg).'
+        'Por favor selecciona un archivo de imagen válido (.svg, .png, .webp, .jpg, .heic, .gif, .bmp).'
       );
       if (inputRef.current) inputRef.current.value = '';
       props.onFileSelect?.(null);
@@ -83,14 +87,19 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
   }));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
-    processFile(file);
+    const files = Array.from(event.target.files ?? []);
+    if (files.length === 0) {
+      processFile(null);
+    } else {
+      files.forEach(file => processFile(file));
+    }
   };
 
   return (
     <Input
       type="file"
       accept={props.typesAccepted}
+      multiple
       ref={inputRef}
       onChange={handleChange}
     />

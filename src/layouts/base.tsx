@@ -13,11 +13,12 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  background: ${props => props.theme.colors?.background};
+  background: ${props => props.theme.colors.background};
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  padding-bottom: 5rem;
 `;
 
 interface IBaseProps {
@@ -26,18 +27,14 @@ interface IBaseProps {
   hideSubmenu?: boolean;
 }
 
-export default function BaseLayout({
-  children,
-  hideHeader,
-  hideSubmenu,
-}: IBaseProps) {
+export default function BaseLayout({ ...props }: IBaseProps) {
   return (
     <>
       <GlobalStyle />
       <Container>
-        {!hideHeader && <Header />}
-        {!hideSubmenu && <SubMenu />}
-        <Body>{children}</Body>
+        {!props.hideHeader && <Header />}
+        {!props.hideSubmenu && <SubMenu />}
+        <Body>{props.children}</Body>
       </Container>
     </>
   );

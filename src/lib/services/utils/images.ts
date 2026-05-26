@@ -1,3 +1,29 @@
+function isHeic(file: File): boolean {
+  return (
+    file.type === 'image/heic' ||
+    file.type === 'image/heif' ||
+    /\.hei[cf]$/i.test(file.name)
+  );
+}
+
+export async function normalizeFile(file: File): Promise<File> {
+  if (!isHeic(file)) return file;
+
+  try {
+    const { heicTo } = await import('heic-to');
+    const blob = await heicTo({
+      blob: file,
+      type: 'image/jpeg',
+      quality: 0.92,
+    });
+    const baseName = file.name.replace(/\.hei[cf]$/i, '');
+    return new File([blob], `${baseName}.jpg`, { type: 'image/jpeg' });
+  } catch (e) {
+    console.error('[normalizeFile] heic-to failed, using original file:', e);
+    return file;
+  }
+}
+
 export interface ConvertedImage {
   file: File;
   originalFile: File;
@@ -20,7 +46,7 @@ async function convertSingleImage(
 
   try {
     const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     const img = new Image();
 
     await new Promise((resolve, reject) => {
@@ -29,8 +55,8 @@ async function convertSingleImage(
       img.src = URL.createObjectURL(file);
     });
 
-    let newWidth = width;
-    let newHeight = height;
+    let newWidth = width || img.width;
+    let newHeight = height || img.height;
 
     if (maintainAspect) {
       const aspectRatio = img.width / img.height;

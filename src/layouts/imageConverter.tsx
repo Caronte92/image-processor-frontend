@@ -5,32 +5,38 @@ import {
   ConvertedImage,
   ConvertedImages,
   convertImages,
+  normalizeFile,
 } from '@/lib/services/utils/images';
 import { IFileSelected } from '@/lib/types/IFiles';
-import Stepper from '@/components/molecules/Stepper';
 import BaseLayout from '@/layouts/base';
 import UploadImages from '@/components/organism/imageConverter/UploadImages';
 import ConfigurationsSection from '@/components/organism/imageConverter/ConfigurationsSection';
 import DownloadSection from '@/components/organism/imageConverter/DownloadSection';
 import { useTranslations } from 'next-intl';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Page } from '@/styles/common.styles';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  padding: 3rem 1.5rem;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 72rem;
-  align-items: center;
+const ImagesWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  justify-content: flex-start;
+  width: 70%;
+  height: stretch;
+`;
+
+const ConfigurationsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 30%;
+  height: stretch;
 `;
 
 function _ImageConverter() {
   const t = useTranslations('ImageConverter');
 
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [converted, setConverted] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [convertedImage, setConvertedImage] = useState<
     ConvertedImage | ConvertedImages | null
@@ -44,19 +50,49 @@ function _ImageConverter() {
   const [inputWidth, setInputWidth] = useState<number>(0);
   const [inputHeight, setInputHeight] = useState<number>(0);
   const [keepAspectRatio, setKeepAspectRatio] = useState(true);
-  const [quality, setQuality] = useState<number>(100);
+  const [quality, setQuality] = useState<number>(90);
   const [isConverting, setIsConverting] = useState(false);
+  const [isProcessingFile, setIsProcessingFile] = useState(false);
 
   const filesSelected: IFileSelected[] = useMemo(() => {
     return selectedFiles.map(file => ({
       name: file.name,
       size: file.size,
+      url: URL.createObjectURL(file),
     }));
   }, [selectedFiles]);
 
-  const handleFileAdd = (file: File | null) => {
-    if (file) {
-      setSelectedFiles(prev => [...prev, file]);
+  useEffect(() => {
+    return () => {
+      filesSelected.forEach(f => f.url && URL.revokeObjectURL(f.url));
+    };
+  }, [filesSelected]);
+
+  const handleFileAdd = async (file: File | null) => {
+    if (!file) return;
+    setIsProcessingFile(true);
+    const normalized = await normalizeFile(file);
+    setIsProcessingFile(false);
+
+    let isFirst = false;
+    setSelectedFiles(prev => {
+      isFirst = prev.length === 0;
+      return [...prev, normalized];
+    });
+
+    if (isFirst) {
+      const url = URL.createObjectURL(normalized);
+      const img = new window.Image();
+      img.onload = () => {
+        setOriginalDimensions({
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+        });
+        setInputWidth(img.naturalWidth);
+        setInputHeight(img.naturalHeight);
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
     }
   };
 
@@ -64,27 +100,17 @@ function _ImageConverter() {
     setSelectedFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const handleContinue = () => {
-    if (selectedFiles.length === 0) return;
-    const img = new Image();
-    img.onload = () => {
-      setOriginalDimensions({ width: img.width, height: img.height });
-    };
-    img.src = URL.createObjectURL(selectedFiles[0]);
-    setStep(2);
-  };
-
   const handleConvert = async () => {
     if (selectedFiles.length === 0) return;
 
     setIsConverting(true);
-    setStep(3);
+    setConverted(true);
 
     const finalWidth = keepAspectRatio
-      ? originalDimensions.width
+      ? 0
       : inputWidth || originalDimensions.width;
     const finalHeight = keepAspectRatio
-      ? originalDimensions.height
+      ? 0
       : inputHeight || originalDimensions.height;
 
     const filesToConvert =
@@ -106,40 +132,42 @@ function _ImageConverter() {
   };
 
   const handleConvertMore = () => {
-    setStep(1);
+    setConverted(false);
     setSelectedFiles([]);
     setConvertedImage(null);
+    setOriginalDimensions({ width: 0, height: 0 });
     setInputWidth(0);
     setInputHeight(0);
     setKeepAspectRatio(true);
     setIsConverting(false);
     setFormat(ImageFormats.WEBP);
-    setQuality(100);
+    setQuality(90);
   };
 
-  const steps = [
-    { isActive: step === 1, title: t('step_1_upload_image') },
-    { isActive: step === 2, title: t('step_2_configuration') },
-    { isActive: step === 3, title: t('step_3_result') },
-  ];
-
   return (
-    <Wrapper>
-      <Stepper steps={steps} />
-
-      {step === 1 && (
-        <UploadImages
-          title={t('step_1_upload_image')}
-          index={1}
-          subtitle={t('step_1_select_images')}
-          files={filesSelected}
-          onFileAdd={handleFileAdd}
-          onFileRemove={handleFileRemove}
-          onContinue={handleContinue}
-        />
-      )}
-
-      {step === 2 && selectedFiles.length > 0 && (
+    <Page $orientation="row">
+      <ImagesWrapper>
+        {!converted ? (
+          <UploadImages
+            title={t('step_1_upload_image')}
+            index={1}
+            subtitle={t('step_1_select_images')}
+            files={filesSelected}
+            onFileAdd={handleFileAdd}
+            onFileRemove={handleFileRemove}
+            onContinue={handleConvert}
+            isProcessingFile={isProcessingFile}
+          />
+        ) : (
+          <DownloadSection
+            file={convertedImage}
+            isConverting={isConverting}
+            totalFiles={selectedFiles.length}
+            onConvertMore={handleConvertMore}
+          />
+        )}
+      </ImagesWrapper>
+      <ConfigurationsWrapper>
         <ConfigurationsSection
           title={t('step_2_configuration')}
           index={2}
@@ -149,7 +177,7 @@ function _ImageConverter() {
           isGenerateComponentAvailable={false}
           onclickFormatCallback={setFormat}
           onClickCallback={handleConvert}
-          onGoBackCallback={() => setStep(1)}
+          onGoBackCallback={() => setConverted(false)}
           onChangeWidthCallback={e =>
             setInputWidth(parseInt(e.target.value) || 0)
           }
@@ -157,23 +185,14 @@ function _ImageConverter() {
             setInputHeight(parseInt(e.target.value) || 0)
           }
           onChangeQualityCallback={e =>
-            setQuality(parseInt(e.target.value) || 100)
+            setQuality(parseInt(e.target.value) || 90)
           }
           keepAspectRatio={keepAspectRatio}
           onKeepAspectRatioCallback={setKeepAspectRatio}
           totalFiles={filesSelected.length}
         />
-      )}
-
-      {step === 3 && (
-        <DownloadSection
-          file={convertedImage}
-          isConverting={isConverting}
-          totalFiles={selectedFiles.length}
-          onConvertMore={handleConvertMore}
-        />
-      )}
-    </Wrapper>
+      </ConfigurationsWrapper>
+    </Page>
   );
 }
 

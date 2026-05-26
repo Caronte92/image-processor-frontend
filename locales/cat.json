@@ -51,6 +51,7 @@
     "continue_button": "Convertir imatges",
     "go_back_button": "Tornar enrere",
     "title_files_selected": "Arxius seleccionats ({count})",
+    "file_processing": "Processant imatge...",
     "files_to_convert": "Arxius a convertir: {count}",
     "configuration_section_format": "Format de sortida",
     "configuration_section_quality": "Qualitat (0-100)",

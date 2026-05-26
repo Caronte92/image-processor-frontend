@@ -4,7 +4,7 @@ import IconUpload from '@/components/atoms/icons/IconUpload';
 import Texts from '@/components/atoms/Texts';
 import { formatFileSize } from '@/lib/services/utils/svg';
 import { IFileSelected } from '@/lib/types/IFiles';
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { useTheme } from 'styled-components';
 
 const Container = styled.div`
@@ -18,14 +18,23 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const IonWrapper = styled.div`
+const IonWrapper = styled.div<{ $hasThumbnail?: boolean }>`
   display: flex;
   width: 2rem;
   height: 2rem;
   align-items: center;
   justify-content: center;
-  background: ${props => props.theme.colors.primary};
-  opacity: 0.4;
+  background: ${props => props.$hasThumbnail ? 'transparent' : props.theme.colors.primary};
+  opacity: ${props => props.$hasThumbnail ? 1 : 0.4};
+  border-radius: 0.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+`;
+
+const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 0.5rem;
 `;
 
@@ -53,15 +62,25 @@ interface SvgFileSelectedProps {
 
 function _SvgFileSelected(props: SvgFileSelectedProps) {
   const theme = useTheme();
+  const [imgError, setImgError] = useState(false);
+  const showThumbnail = !!props.file.url && !imgError;
 
   return (
     <Container>
       <ComponentInfoContainer>
-        <IonWrapper>
-          <IconUpload
-            size={theme.icons.size.xs}
-            stroke={theme.colors.cardForeground}
-          />
+        <IonWrapper $hasThumbnail={showThumbnail}>
+          {showThumbnail ? (
+            <Thumbnail
+              src={props.file.url}
+              alt={props.file.name}
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <IconUpload
+              size={theme.icons.size.xs}
+              stroke={theme.colors.cardForeground}
+            />
+          )}
         </IonWrapper>
         <Texts
           text={props.file.name}

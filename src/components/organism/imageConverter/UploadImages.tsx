@@ -1,4 +1,5 @@
 import Button from '@/components/atoms/Button';
+import Spinner from '@/components/atoms/Spinner';
 import Texts from '@/components/atoms/Texts';
 import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
 import SvgFileSelected from '@/components/molecules/SvgFileSelected';
@@ -23,6 +24,12 @@ const FileContainer = styled.div`
   align-items: center;
 `;
 
+const ProcessingRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+`;
+
 const WrapperFiles = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,6 +46,7 @@ interface UploadImagesProps {
   subtitle: string;
   files: IFileSelected[];
   index: number;
+  isProcessingFile?: boolean;
   onFileAdd?: (file: File | null) => void;
   onFileRemove?: (index: number) => void;
   onContinue?: () => void;
@@ -66,11 +74,20 @@ function _UploadImages({ ...props }: UploadImagesProps) {
         gap="0.5rem"
       />
       <FileContainer>
+        {props.isProcessingFile && (
+          <ProcessingRow>
+            <Spinner size="1.25rem" thickness="2px" />
+            <Texts
+              text={t('file_processing')}
+              color={theme.colors.foreground}
+            />
+          </ProcessingRow>
+        )}
         <FakeInput
           ref={inputFileRef}
           placeholder={t('file_section_placeholder')}
           helperText={t('file_section_span_info_extension')}
-          typesAccepted=".png, .jpg, .gif, .bmp, .webp"
+          typesAccepted=".png, .jpg, .gif, .bmp, .webp, .heic, .heif, image/heic, image/heif"
           onFileSelect={handleFileAdd}
           variant="solid"
           minWidth="42rem"

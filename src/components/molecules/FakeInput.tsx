@@ -137,10 +137,10 @@ function _FakeInput(
     e.stopPropagation();
     setIsDragging(false);
 
-    const files = e.dataTransfer.files;
-    if (files && files.length > 0) {
-      inputFileRef.current?.handleManualFileSelect(files[0]);
-    }
+    const files = Array.from(e.dataTransfer.files);
+    files.forEach(file => {
+      inputFileRef.current?.handleManualFileSelect(file);
+    });
   };
 
   return (
