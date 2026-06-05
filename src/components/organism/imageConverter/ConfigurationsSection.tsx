@@ -10,6 +10,7 @@ import { ImageFormats } from '@/lib/enums/imgFormats';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
+import Button from '@/components/atoms/Button';
 
 const Container = styled.div`
   display: flex;
@@ -153,6 +154,22 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
             onChange={handleKeepRatio}
           />
         </AdvancedContent>
+        <Button
+          size={theme.buttonSizes.md}
+          color={theme.buttonColors.primary}
+          width="100%"
+          disabled={props.totalFiles === 0}
+          onClickCallback={props.onClickCallback}
+        >
+          <Texts
+            text={t('continue_button')}
+            size={{
+              fontSize: theme.fonts.size.sm,
+              lineHeight: theme.fonts.lineHeight.sm,
+            }}
+            color={theme.colors.primaryForeground}
+          />
+        </Button>
       </Wrapper>
     </Container>
   );

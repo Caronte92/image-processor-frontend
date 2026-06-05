@@ -155,7 +155,6 @@ function _ImageConverter() {
             files={filesSelected}
             onFileAdd={handleFileAdd}
             onFileRemove={handleFileRemove}
-            onContinue={handleConvert}
             isProcessingFile={isProcessingFile}
           />
         ) : (

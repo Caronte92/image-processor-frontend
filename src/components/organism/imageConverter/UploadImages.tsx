@@ -1,4 +1,3 @@
-import Button from '@/components/atoms/Button';
 import Spinner from '@/components/atoms/Spinner';
 import Texts from '@/components/atoms/Texts';
 import FakeInput, { FakeInputHandle } from '@/components/molecules/FakeInput';
@@ -49,7 +48,6 @@ interface UploadImagesProps {
   isProcessingFile?: boolean;
   onFileAdd?: (file: File | null) => void;
   onFileRemove?: (index: number) => void;
-  onContinue?: () => void;
 }
 
 function _UploadImages({ ...props }: UploadImagesProps) {
@@ -111,22 +109,6 @@ function _UploadImages({ ...props }: UploadImagesProps) {
               onClickCallback={() => handleClearFile(index)}
             />
           ))}
-
-          <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.primary}
-            width="100%"
-            onClickCallback={() => props.onContinue?.()}
-          >
-            <Texts
-              text={t('continue_button')}
-              size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
-              }}
-              color={theme.colors.primaryForeground}
-            />
-          </Button>
         </WrapperFiles>
       )}
     </Container>
