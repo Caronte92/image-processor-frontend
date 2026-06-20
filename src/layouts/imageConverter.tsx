@@ -138,8 +138,12 @@ function _ImageConverter() {
     setOriginalDimensions({ width: 0, height: 0 });
     setInputWidth(0);
     setInputHeight(0);
-    setKeepAspectRatio(true);
     setIsConverting(false);
+  };
+
+  const handleReset = () => {
+    handleConvertMore();
+    setKeepAspectRatio(true);
     setFormat(ImageFormats.WEBP);
     setQuality(90);
   };
@@ -163,6 +167,7 @@ function _ImageConverter() {
             isConverting={isConverting}
             totalFiles={selectedFiles.length}
             onConvertMore={handleConvertMore}
+            onReset={handleReset}
           />
         )}
       </ImagesWrapper>

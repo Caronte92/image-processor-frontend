@@ -37,6 +37,7 @@
     "download_section_format": "Formato: {format}",
     "download_section_download_all": "Descargar todos",
     "download_section_convert_more": "Convertir más imágenes",
+    "download_section_start_over": "Empezar de nuevo",
     "loading_title": "Convirtiendo imágenes...",
     "loading_subtitle": "Procesando {count} archivo",
     "loading_hint": "Esto puede tardar unos segundos",

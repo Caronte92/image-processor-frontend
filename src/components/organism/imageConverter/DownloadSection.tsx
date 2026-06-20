@@ -61,6 +61,7 @@ interface DownloadSectionProps {
   isConverting: boolean;
   totalFiles: number;
   onConvertMore: () => void;
+  onReset: () => void;
 }
 
 function _DownloadSection({ ...props }: DownloadSectionProps) {
@@ -205,6 +206,21 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
                 lineHeight: theme.fonts.lineHeight.sm,
               }}
               color={theme.colors.foreground}
+            />
+          </Button>
+          <Button
+            size={theme.buttonSizes.md}
+            color={theme.buttonColors.ghost}
+            width="100%"
+            onClickCallback={props.onReset}
+          >
+            <Texts
+              text={t('download_section_start_over')}
+              size={{
+                fontSize: theme.fonts.size.sm,
+                lineHeight: theme.fonts.lineHeight.sm,
+              }}
+              color={theme.colors.mutedForeground}
             />
           </Button>
         </ButtonsWrapper>

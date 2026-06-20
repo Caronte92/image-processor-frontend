@@ -36,6 +36,7 @@
     "download_section_format": "Format: {format}",
     "download_section_download_all": "Descarregar tot",
     "download_section_convert_more": "Convertir més imatges",
+    "download_section_start_over": "Començar de nou",
     "loading_title": "Convertint imatges...",
     "loading_subtitle": "Processant {count} arxiu",
     "loading_hint": "Això pot trigar uns segons",
