@@ -46,7 +46,7 @@ async function convertSingleImage(
 
   try {
     const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d', { alpha: false });
+    const ctx = canvas.getContext('2d');
     const img = new Image();
 
     await new Promise((resolve, reject) => {
@@ -71,6 +71,12 @@ async function convertSingleImage(
     canvas.height = newHeight;
 
     if (ctx) {
+      const opaqueFormats = ['jpg', 'jpeg', 'bmp'];
+      if (opaqueFormats.includes(outputFormat.toLowerCase())) {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, newWidth, newHeight);
+      }
+
       ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
       const blob = await new Promise<Blob | null>(resolve => {

@@ -57,5 +57,9 @@
     "configuration_section_quality": "Quality (0-100)",
     "configuration_section_advanced_title": "Advanced configuration (optional)",
     "configuration_section_keep_ratio": "Keep aspect ratio"
+  },
+  "Common": {
+    "error_file_too_large": "The file is too large. The maximum allowed size is 10 MB.",
+    "error_file_invalid_type": "Please select a valid image file (.svg, .png, .webp, .jpg, .heic, .gif, .bmp)."
   }
 }

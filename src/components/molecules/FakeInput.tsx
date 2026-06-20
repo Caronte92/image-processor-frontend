@@ -12,6 +12,20 @@ interface StyledFakeInputProps {
   $padding?: string;
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const ErrorText = styled.p`
+  color: ${props => props.theme.colors.destructive};
+  font-size: ${props => props.theme.fonts.size.xs};
+  line-height: ${props => props.theme.fonts.lineHeight.xs};
+  text-align: center;
+  margin-top: 0.5rem;
+`;
+
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -105,6 +119,7 @@ function _FakeInput(
   ref: React.Ref<FakeInputHandle>
 ) {
   const [isDragging, setIsDragging] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
   const theme = useTheme();
   const inputFileRef = useRef<InputFileHandle>(null);
 
@@ -144,59 +159,63 @@ function _FakeInput(
   };
 
   return (
-    <StyledFakeInput
-      tabIndex={0}
-      onClick={handleOpenFileDialog}
-      $variant={variant}
-      $minWidth={props.minWidth}
-      $padding={props.padding}
-      $isDragging={isDragging}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      type="button"
-    >
-      <IconWrapper>
-        <IconUpload
-          size={theme.icons.size.lg}
-          stroke={theme.colors.mutedForeground}
+    <Wrapper>
+      <StyledFakeInput
+        tabIndex={0}
+        onClick={handleOpenFileDialog}
+        $variant={variant}
+        $minWidth={props.minWidth}
+        $padding={props.padding}
+        $isDragging={isDragging}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        type="button"
+      >
+        <IconWrapper>
+          <IconUpload
+            size={theme.icons.size.lg}
+            stroke={theme.colors.mutedForeground}
+          />
+        </IconWrapper>
+        <TextWrapper>
+          <Texts
+            text={props.placeholder}
+            size={{
+              fontSize: theme.fonts.size.sm,
+              lineHeight: theme.fonts.lineHeight.sm,
+            }}
+            color={theme.colors.foreground}
+          />
+          <Texts
+            text={props.helperText}
+            size={{
+              fontSize: theme.fonts.size.xs,
+              lineHeight: theme.fonts.lineHeight.xs,
+            }}
+            color={theme.colors.mutedForeground}
+          />
+        </TextWrapper>
+        <StyledButtonLike>
+          <Texts
+            type="span"
+            text={props.spanButtonText}
+            size={{
+              fontSize: theme.fonts.size.xs,
+              lineHeight: theme.fonts.lineHeight.xs,
+            }}
+            color={theme.colors.primaryForeground}
+          />
+        </StyledButtonLike>
+        <InputFile
+          ref={inputFileRef}
+          typesAccepted={props.typesAccepted}
+          onFileSelect={props.onFileSelect}
+          onError={setError}
         />
-      </IconWrapper>
-      <TextWrapper>
-        <Texts
-          text={props.placeholder}
-          size={{
-            fontSize: theme.fonts.size.sm,
-            lineHeight: theme.fonts.lineHeight.sm,
-          }}
-          color={theme.colors.foreground}
-        />
-        <Texts
-          text={props.helperText}
-          size={{
-            fontSize: theme.fonts.size.xs,
-            lineHeight: theme.fonts.lineHeight.xs,
-          }}
-          color={theme.colors.mutedForeground}
-        />
-      </TextWrapper>
-      <StyledButtonLike>
-        <Texts
-          type="span"
-          text={props.spanButtonText}
-          size={{
-            fontSize: theme.fonts.size.xs,
-            lineHeight: theme.fonts.lineHeight.xs,
-          }}
-          color={theme.colors.primaryForeground}
-        />
-      </StyledButtonLike>
-      <InputFile
-        ref={inputFileRef}
-        typesAccepted={props.typesAccepted}
-        onFileSelect={props.onFileSelect}
-      />
-    </StyledFakeInput>
+      </StyledFakeInput>
+      {error && <ErrorText>{error}</ErrorText>}
+    </Wrapper>
   );
 }
 

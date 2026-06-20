@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
+import { useTranslations } from 'next-intl';
 
 const Input = styled.input`
   display: none;
@@ -23,14 +24,17 @@ export interface InputFileHandle {
 interface InputFileProps {
   typesAccepted: string;
   onFileSelect?: (file: File | null) => void;
+  onError?: (error: string | null) => void;
 }
 
 function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [, setError] = useState<string | null>(null);
+  const t = useTranslations('Common');
 
   const processFile = (file: File | null) => {
     setError(null);
+    props.onError?.(null);
     if (!file) {
       props.onFileSelect?.(null);
       return;
@@ -38,9 +42,9 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
 
     const MAX_FILE_SIZE = 10 * 1024 * 1024;
     if (file.size > MAX_FILE_SIZE) {
-      setError(
-        'El archivo es demasiado grande. El peso máximo permitido es de 10 MB.'
-      );
+      const msg = t('error_file_too_large');
+      setError(msg);
+      props.onError?.(msg);
       if (inputRef.current) inputRef.current.value = '';
       props.onFileSelect?.(null);
       return;
@@ -65,9 +69,9 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
     const isValidExtension = validExtensions.includes(fileExtension);
 
     if (!isValidType && !isValidExtension) {
-      setError(
-        'Por favor selecciona un archivo de imagen válido (.svg, .png, .webp, .jpg, .heic, .gif, .bmp).'
-      );
+      const msg = t('error_file_invalid_type');
+      setError(msg);
+      props.onError?.(msg);
       if (inputRef.current) inputRef.current.value = '';
       props.onFileSelect?.(null);
       return;
@@ -81,6 +85,7 @@ function _InputFile(props: InputFileProps, ref: React.Ref<InputFileHandle>) {
     reset: () => {
       if (inputRef.current) inputRef.current.value = '';
       setError(null);
+      props.onError?.(null);
     },
     getFile: () => inputRef.current?.files?.[0] ?? null,
     handleManualFileSelect: (file: File | null) => processFile(file),

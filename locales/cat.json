@@ -57,5 +57,9 @@
     "configuration_section_quality": "Qualitat (0-100)",
     "configuration_section_advanced_title": "Configuració avançada (opcional)",
     "configuration_section_keep_ratio": "Mantenir proporció d'aspecte"
+  },
+  "Common": {
+    "error_file_too_large": "L'arxiu és massa gran. El pes màxim permès és de 10 MB.",
+    "error_file_invalid_type": "Si us plau selecciona un arxiu d'imatge vàlid (.svg, .png, .webp, .jpg, .heic, .gif, .bmp)."
   }
 }

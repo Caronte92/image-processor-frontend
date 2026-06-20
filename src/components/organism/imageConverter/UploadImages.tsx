@@ -57,7 +57,9 @@ function _UploadImages({ ...props }: UploadImagesProps) {
 
   const handleFileAdd = (file: File | null) => {
     props.onFileAdd?.(file);
-    inputFileRef.current?.reset();
+    if (file !== null) {
+      inputFileRef.current?.reset();
+    }
   };
 
   const handleClearFile = (index: number) => {
