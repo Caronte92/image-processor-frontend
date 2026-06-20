@@ -52,7 +52,7 @@ function _ImageSection(props: ImageSectionProps) {
           ref={inputFileRef}
           placeholder={t('file_section_placeholder')}
           helperText={t('file_section_span_info_extension')}
-          typesAccepted=".png, .jpg, .gif, .bmp, .webp"
+          typesAccepted=".png, .jpg, .gif, .bmp, .webp, .jpeg, .heic, .heif, image/heic, image/heif"
           onFileSelect={handleFileSelect}
           variant="solid"
           minWidth="42rem"
