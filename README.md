@@ -6,9 +6,9 @@ First, run the development server:
 
 ```bash
 #Mac / Linux
-npm run start:local
+pnpm run start:local
 #Windows
-npm run start:local:windows
+pnpm run start:local:windows
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

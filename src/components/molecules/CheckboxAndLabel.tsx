@@ -2,7 +2,9 @@ import Checkbox from '@/components/atoms/Checkbox';
 import Texts from '@/components/atoms/Texts';
 import { Typography } from '@/components/atoms/Texts';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
 
 const Container = styled.label`
   display: inline-flex;
@@ -20,7 +22,6 @@ interface CheckboxAndLabelProps {
 }
 
 function _CheckboxAndLabel(props: CheckboxAndLabelProps) {
-  const theme = useTheme();
   return (
     <Container>
       <Checkbox checked={props.checked} onChange={props.onChange} />
@@ -28,11 +29,11 @@ function _CheckboxAndLabel(props: CheckboxAndLabelProps) {
         text={props.label}
         size={
           props.size ?? {
-            fontSize: theme.fonts.size.sm,
-            lineHeight: theme.fonts.lineHeight.sm,
+            fontSize: fonts.size.sm,
+            lineHeight: fonts.lineHeight.sm,
           }
         }
-        color={theme.colors.cardForeground}
+        color={colorVar.cardForeground}
       />
     </Container>
   );

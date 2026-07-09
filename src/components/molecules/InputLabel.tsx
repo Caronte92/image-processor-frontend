@@ -1,7 +1,8 @@
 import Input from '@/components/atoms/Input';
 import Texts from '@/components/atoms/Texts';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
 
 const Container = styled.div`
   display: flex;
@@ -18,10 +19,9 @@ interface ComponentNameProps {
 }
 
 function _ComponentName(props: ComponentNameProps) {
-  const theme = useTheme();
   return (
     <Container>
-      <Texts text={props.label} color={theme.colors.foreground} />
+      <Texts text={props.label} color={colorVar.foreground} />
       <Input
         placeholder={props.placeholder}
         onChangeCallback={props.onChangeCallback}

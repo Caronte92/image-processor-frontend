@@ -63,6 +63,7 @@ export default function StyledThemeProvider({
   }, []);
 
   useEffect(() => {
+    document.documentElement.dataset.theme = themeMode;
     try {
       localStorage.setItem('theme', themeMode);
     } catch {

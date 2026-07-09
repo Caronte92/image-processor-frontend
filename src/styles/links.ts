@@ -1,4 +1,4 @@
-import { lightTheme, darkTheme } from './colors';
+import { colorVar } from './colorVars';
 
 export type ILinkVariant = 'ghost' | 'primary';
 
@@ -14,49 +14,43 @@ export interface ILinkVariantConfig {
   disabled: ILinkState;
 }
 
-export const getLinkStyles = (
-  mode: 'light' | 'dark'
-): Record<ILinkVariant, ILinkVariantConfig> => {
-  const p = mode === 'light' ? lightTheme : darkTheme;
-
-  return {
-    primary: {
-      neutral: {
-        color: p.primary,
-        underline: p.primary,
-      },
-      hover: {
-        color: p.accent,
-        underline: p.accent,
-      },
-      active: {
-        color: p.accentForeground,
-        underline: p.accent,
-      },
-      disabled: {
-        color: p.mutedForeground,
-        underline: 'transparent',
-      },
+export const linkStyles: Record<ILinkVariant, ILinkVariantConfig> = {
+  primary: {
+    neutral: {
+      color: colorVar.primary,
+      underline: colorVar.primary,
     },
-    ghost: {
-      neutral: {
-        color: p.foreground,
-        underline: 'transparent',
-      },
-      hover: {
-        color: p.primary,
-        underline: p.primary,
-      },
-      active: {
-        color: p.primary,
-        underline: p.primary,
-      },
-      disabled: {
-        color: p.mutedForeground,
-        underline: 'transparent',
-      },
+    hover: {
+      color: colorVar.accent,
+      underline: colorVar.accent,
     },
-  };
+    active: {
+      color: colorVar.accentForeground,
+      underline: colorVar.accent,
+    },
+    disabled: {
+      color: colorVar.mutedForeground,
+      underline: 'transparent',
+    },
+  },
+  ghost: {
+    neutral: {
+      color: colorVar.foreground,
+      underline: 'transparent',
+    },
+    hover: {
+      color: colorVar.primary,
+      underline: colorVar.primary,
+    },
+    active: {
+      color: colorVar.primary,
+      underline: colorVar.primary,
+    },
+    disabled: {
+      color: colorVar.mutedForeground,
+      underline: 'transparent',
+    },
+  },
 };
 
-export type LinkStylesType = ReturnType<typeof getLinkStyles>;
+export type LinkStylesType = typeof linkStyles;

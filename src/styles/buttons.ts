@@ -1,4 +1,4 @@
-import { lightTheme, darkTheme } from './colors';
+import { colorVar } from './colorVars';
 import { fonts } from './fonts';
 
 export type IButtonVariant = 'ghost' | 'primary';
@@ -53,69 +53,63 @@ export const buttonSizes: Record<IButtonSize, IButtonSizeConfig> = {
 
 export type ButtonSizesType = typeof buttonSizes;
 
-export const getButtonStyles = (
-  mode: 'light' | 'dark'
-): Record<IButtonVariant, IButtonVariantConfig> => {
-  const p = mode === 'light' ? lightTheme : darkTheme;
-
-  return {
-    primary: {
-      neutral: {
-        background: p.primary,
-        color: p.primaryForeground,
-        border: p.primary,
-      },
-      hover: {
-        background: p.secondary,
-        color: p.secondaryForeground,
-        border: p.primary,
-        transform: 'translateY(-1px)',
-        boxShadow: '0 4px 16px oklch(0 0 0 / 0.15)',
-      },
-      focus: {
-        background: p.primary,
-        color: p.primaryForeground,
-        border: p.ring,
-      },
-      active: {
-        background: p.accent,
-        color: p.accentForeground,
-        border: p.primary,
-      },
-      disabled: {
-        background: p.muted,
-        color: p.mutedForeground,
-        border: p.border,
-      },
+export const buttonStyles: Record<IButtonVariant, IButtonVariantConfig> = {
+  primary: {
+    neutral: {
+      background: colorVar.primary,
+      color: colorVar.primaryForeground,
+      border: colorVar.primary,
     },
-    ghost: {
-      neutral: {
-        background: p.inputBackground,
-        color: p.foreground,
-        border: 'transparent',
-      },
-      hover: {
-        background: p.accent,
-        color: p.foreground,
-        border: p.primary,
-      },
-      focus: {
-        background: p.inputBackground,
-        color: p.foreground,
-        border: p.ring,
-      },
-      active: {
-        background: p.primary,
-        color: p.foreground,
-        border: p.ring,
-      },
-      disabled: {
-        background: p.muted,
-        color: p.mutedForeground,
-        border: p.border,
-      },
+    hover: {
+      background: colorVar.secondary,
+      color: colorVar.secondaryForeground,
+      border: colorVar.primary,
+      transform: 'translateY(-1px)',
+      boxShadow: '0 4px 16px oklch(0 0 0 / 0.15)',
     },
-  };
+    focus: {
+      background: colorVar.primary,
+      color: colorVar.primaryForeground,
+      border: colorVar.ring,
+    },
+    active: {
+      background: colorVar.accent,
+      color: colorVar.accentForeground,
+      border: colorVar.primary,
+    },
+    disabled: {
+      background: colorVar.muted,
+      color: colorVar.mutedForeground,
+      border: colorVar.border,
+    },
+  },
+  ghost: {
+    neutral: {
+      background: colorVar.inputBackground,
+      color: colorVar.foreground,
+      border: 'transparent',
+    },
+    hover: {
+      background: colorVar.accent,
+      color: colorVar.foreground,
+      border: colorVar.primary,
+    },
+    focus: {
+      background: colorVar.inputBackground,
+      color: colorVar.foreground,
+      border: colorVar.ring,
+    },
+    active: {
+      background: colorVar.primary,
+      color: colorVar.foreground,
+      border: colorVar.ring,
+    },
+    disabled: {
+      background: colorVar.muted,
+      color: colorVar.mutedForeground,
+      border: colorVar.border,
+    },
+  },
 };
 
-export type ButtonStylesType = ReturnType<typeof getButtonStyles>;
+export type ButtonStylesType = typeof buttonStyles;

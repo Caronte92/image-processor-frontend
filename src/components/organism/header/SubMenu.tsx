@@ -5,12 +5,14 @@ import { SubMenuItems } from '@/lib/enums/subMenu';
 import { useTranslations } from 'next-intl';
 import { usePathname } from 'next/navigation';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { linkStyles } from '@/styles/links';
 
 const Container = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.colors.muted};
-  border-block: 1px solid ${props => props.theme.colors.border};
+  background-color: ${colorVar.muted};
+  border-block: 1px solid ${colorVar.border};
 `;
 
 const SubMenuWrapper = styled.div`
@@ -27,7 +29,6 @@ const ROUTE_TO_SUBMENU: Record<string, SubMenuItems> = {
 
 function _SubMenu() {
   const t = useTranslations('SubMenu');
-  const theme = useTheme();
   const pathname = usePathname();
 
   const segments = pathname.split('/');
@@ -41,7 +42,7 @@ function _SubMenu() {
       <SubMenuWrapper>
         <Anchor
           href={`/${locale}/image-converter`}
-          color={theme.linkColors.ghost}
+          color={linkStyles.ghost}
           active={selected === SubMenuItems.IMAGE_CONVERTER}
           text={t(`option_${SubMenuItems.IMAGE_CONVERTER}`)}
         />

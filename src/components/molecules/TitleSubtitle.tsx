@@ -1,7 +1,9 @@
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import { Typography } from '@/components/atoms/Texts';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
 
 const Container = styled.div<{ $gap?: string }>`
   display: flex;
@@ -22,23 +24,22 @@ interface TitleSubtitleProps {
 }
 
 function _TitleSubtitle(props: TitleSubtitleProps) {
-  const theme = useTheme();
   return (
     <Container $gap={props.gap}>
       <Texts
         type={'p'}
         text={props.title}
         size={props.titleSize}
-        fontWeight={theme.fonts.weight.medium}
-        color={theme.colors.foreground}
+        fontWeight={fonts.weight.medium}
+        color={colorVar.foreground}
         truncate={props.truncate}
       />
       <Texts
         type={'p'}
         text={props.subtitle}
         size={props.subtitleSize}
-        fontWeight={theme.fonts.weight.normal}
-        color={theme.colors.mutedForeground}
+        fontWeight={fonts.weight.normal}
+        color={colorVar.mutedForeground}
       />
     </Container>
   );

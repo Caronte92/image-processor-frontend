@@ -1,19 +1,24 @@
 'use client';
 
 import { createGlobalStyle } from 'styled-components';
+import { colors, MainColors } from './colors';
+import { cssVarName } from './colorVars';
+
+const buildColorVarsBlock = (palette: MainColors) =>
+  Object.entries(palette)
+    .map(([key, value]) => `    ${cssVarName(key as keyof MainColors)}: ${value};`)
+    .join('\n');
 
 export const GlobalStyle = createGlobalStyle`
-  /* Variables CSS */
-  :root {
-    --background: #ffffff;
-    --foreground: #171717;
+  /* Variables CSS de color, por tema */
+  :root[data-theme='light'] {
+    color-scheme: light;
+${buildColorVarsBlock(colors.light)}
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #0a0a0a;
-      --foreground: #ededed;
-    }
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+${buildColorVarsBlock(colors.dark)}
   }
 
   /* Reset y box-sizing */
@@ -35,8 +40,8 @@ export const GlobalStyle = createGlobalStyle`
 
   /* Body específico */
   body {
-    color: var(--foreground);
-    background: var(--background);
+    color: var(--color-foreground);
+    background: var(--color-background);
     font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -57,17 +62,5 @@ export const GlobalStyle = createGlobalStyle`
   img, picture, video, canvas, svg {
     display: block;
     max-width: 100%;
-  }
-
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    html {
-      color-scheme: dark;
-    }
-    
-    body {
-      background: var(--background);
-      color: var(--foreground);
-    }
   }
 `;

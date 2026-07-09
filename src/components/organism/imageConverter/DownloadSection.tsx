@@ -11,7 +11,11 @@ import { formatFileSize } from '@/lib/services/utils/svg';
 import { ConvertedImage, ConvertedImages } from '@/lib/services/utils/images';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { icons } from '@/styles/icons';
+import { buttonSizes, buttonStyles } from '@/styles/buttons';
 
 const Container = styled.div`
   display: flex;
@@ -33,13 +37,13 @@ const FileRow = styled.div`
   padding: 0.75rem 0;
 
   & + & {
-    border-top: 0.0625rem solid ${({ theme }) => theme.colors.border};
+    border-top: 0.0625rem solid ${colorVar.border};
   }
 `;
 
 const Divider = styled.div`
   height: 0.0625rem;
-  background-color: ${({ theme }) => theme.colors.border};
+  background-color: ${colorVar.border};
 `;
 
 const LoadingWrapper = styled.div`
@@ -66,14 +70,13 @@ interface DownloadSectionProps {
 
 function _DownloadSection({ ...props }: DownloadSectionProps) {
   const t = useTranslations('ImageConverter');
-  const theme = useTheme();
 
   if (props.isConverting || !props.file) {
     return (
       <Container>
         <Wrapper>
           <LoadingWrapper>
-            <Spinner size="3rem" thickness="3px" color={theme.colors.primary} />
+            <Spinner size="3rem" thickness="3px" color={colorVar.primary} />
             <TitleSubtitle
               title={t('loading_title')}
               subtitle={t('loading_subtitle', { count: props.totalFiles })}
@@ -82,10 +85,10 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
             <Texts
               text={t('loading_hint')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.mutedForeground}
+              color={colorVar.mutedForeground}
             />
           </LoadingWrapper>
         </Wrapper>
@@ -127,11 +130,11 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
         <Texts
           text={t('download_section_converted_images', { count: files.length })}
           size={{
-            fontSize: theme.fonts.size.base,
-            lineHeight: theme.fonts.lineHeight.base,
+            fontSize: fonts.size.base,
+            lineHeight: fonts.lineHeight.base,
           }}
-          fontWeight={theme.fonts.weight.semibold}
-          color={theme.colors.cardForeground}
+          fontWeight={fonts.weight.semibold}
+          color={colorVar.cardForeground}
         />
         <FilesList>
           {files.map((file, index) => {
@@ -145,24 +148,24 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
                   truncate
                 />
                 <Button
-                  size={theme.buttonSizes.md}
-                  color={theme.buttonColors.ghost}
+                  size={buttonSizes.md}
+                  color={buttonStyles.ghost}
                   onClickCallback={() => downloadFile(file)}
                 >
                   <IconAndText
                     icon={
                       <IconDownload
-                        size={theme.icons.size.sm}
-                        stroke={theme.colors.cardForeground}
+                        size={icons.size.sm}
+                        stroke={colorVar.cardForeground}
                         disableFill
                       />
                     }
                     text={t('download_section_title')}
                     size={{
-                      fontSize: theme.fonts.size.sm,
-                      lineHeight: theme.fonts.lineHeight.sm,
+                      fontSize: fonts.size.sm,
+                      lineHeight: fonts.lineHeight.sm,
                     }}
-                    color={theme.colors.cardForeground}
+                    color={colorVar.cardForeground}
                   />
                 </Button>
               </FileRow>
@@ -172,55 +175,55 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
         <Divider />
         <ButtonsWrapper>
           <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.primary}
+            size={buttonSizes.md}
+            color={buttonStyles.primary}
             width="100%"
             onClickCallback={downloadAll}
           >
             <IconAndText
               icon={
                 <IconDownload
-                  size={theme.icons.size.sm}
-                  stroke={theme.colors.primaryForeground}
+                  size={icons.size.sm}
+                  stroke={colorVar.primaryForeground}
                   disableFill
                 />
               }
               text={t('download_section_download_all')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.primaryForeground}
+              color={colorVar.primaryForeground}
             />
           </Button>
           <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.ghost}
+            size={buttonSizes.md}
+            color={buttonStyles.ghost}
             width="100%"
             onClickCallback={props.onConvertMore}
           >
             <Texts
               text={t('download_section_convert_more')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.foreground}
+              color={colorVar.foreground}
             />
           </Button>
           <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.ghost}
+            size={buttonSizes.md}
+            color={buttonStyles.ghost}
             width="100%"
             onClickCallback={props.onReset}
           >
             <Texts
               text={t('download_section_start_over')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.mutedForeground}
+              color={colorVar.mutedForeground}
             />
           </Button>
         </ButtonsWrapper>

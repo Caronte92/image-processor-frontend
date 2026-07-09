@@ -5,9 +5,9 @@ import { fonts } from './fonts';
 import type { FontsType } from './fonts';
 import { icons } from './icons';
 import type { IconsType } from './icons';
-import { getButtonStyles, buttonSizes } from './buttons';
+import { buttonStyles, buttonSizes } from './buttons';
 import type { ButtonStylesType, ButtonSizesType } from './buttons';
-import { getLinkStyles } from './links';
+import { linkStyles } from './links';
 import type { LinkStylesType } from './links';
 import { breakpoints } from './breakpoints';
 import type { BreakpointsType } from './breakpoints';
@@ -42,8 +42,8 @@ export const createDynamicTheme = (mode: 'light' | 'dark'): IActiveTheme => {
     fonts,
     breakpoints,
     buttonSizes,
-    buttonColors: getButtonStyles(mode),
-    linkColors: getLinkStyles(mode),
+    buttonColors: buttonStyles,
+    linkColors: linkStyles,
     icons,
   };
 };

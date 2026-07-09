@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:local": "export REACT_APP_VERSION=local-local && npm run lint && next dev",
+    "start:local": "export REACT_APP_VERSION=local-local && pnpm run lint && next dev",
     "build:start": "export REACT_APP_VERSION=local-local && next build && next start",
     "build": "export REACT_APP_VERSION=pro-$REACT_APP_COMMIT_ID && next build",
-    "start:local:windows": "set REACT_APP_VERSION=local-local && npm run lint && next dev",
+    "start:local:windows": "set REACT_APP_VERSION=local-local && pnpm run lint && next dev",
     "build:start:windows": "set REACT_APP_VERSION=local-local && next build && next start",
     "build:windows": "set REACT_APP_VERSION=pro-$REACT_APP_COMMIT_ID && next build",
     "analyze": "ANALYZE=true next build",
@@ -36,6 +36,7 @@
     "eslint-config-next": "^16.1.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "prettier": "^3.6.2",
     "typescript": "^5"

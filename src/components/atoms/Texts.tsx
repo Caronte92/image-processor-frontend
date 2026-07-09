@@ -1,4 +1,4 @@
-import { theme } from '@/styles/theme';
+import { fonts } from '@/styles/fonts';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -74,10 +74,10 @@ interface TextProps {
 function _Text({
   type = 'p',
   size = {
-    fontSize: theme.fonts.size.base,
-    lineHeight: theme.fonts.lineHeight.base,
+    fontSize: fonts.size.base,
+    lineHeight: fonts.lineHeight.base,
   },
-  fontWeight = theme.fonts.weight.normal,
+  fontWeight = fonts.weight.normal,
   truncate = false,
   ...props
 }: TextProps) {

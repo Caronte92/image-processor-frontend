@@ -5,10 +5,14 @@ import Texts from '@/components/atoms/Texts';
 import { formatFileSize } from '@/lib/services/utils/svg';
 import { IFileSelected } from '@/lib/types/IFiles';
 import React, { useState } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { icons } from '@/styles/icons';
+import { buttonSizes, buttonStyles } from '@/styles/buttons';
 
 const Container = styled.div`
-  background: ${props => props.theme.colors.muted};
+  background: ${colorVar.muted};
   padding: 0.75rem;
   border-radius: 0.625rem;
   align-items: center;
@@ -24,7 +28,7 @@ const IonWrapper = styled.div<{ $hasThumbnail?: boolean }>`
   height: 2rem;
   align-items: center;
   justify-content: center;
-  background: ${props => props.$hasThumbnail ? 'transparent' : props.theme.colors.primary};
+  background: ${props => (props.$hasThumbnail ? 'transparent' : colorVar.primary)};
   opacity: ${props => props.$hasThumbnail ? 1 : 0.4};
   border-radius: 0.5rem;
   overflow: hidden;
@@ -61,7 +65,6 @@ interface SvgFileSelectedProps {
 }
 
 function _SvgFileSelected(props: SvgFileSelectedProps) {
-  const theme = useTheme();
   const [imgError, setImgError] = useState(false);
   const showThumbnail = !!props.file.url && !imgError;
 
@@ -76,18 +79,15 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
               onError={() => setImgError(true)}
             />
           ) : (
-            <IconUpload
-              size={theme.icons.size.xs}
-              stroke={theme.colors.cardForeground}
-            />
+            <IconUpload size={icons.size.xs} stroke={colorVar.cardForeground} />
           )}
         </IonWrapper>
         <Texts
           text={props.file.name}
-          color={theme.colors.foreground}
+          color={colorVar.foreground}
           size={{
-            fontSize: theme.fonts.size.sm,
-            lineHeight: theme.fonts.lineHeight.sm,
+            fontSize: fonts.size.sm,
+            lineHeight: fonts.lineHeight.sm,
           }}
           truncate={true}
         />
@@ -95,21 +95,18 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
       <ButtonWrapper>
         <Texts
           text={formatFileSize(props.file.size)}
-          color={theme.colors.foreground}
+          color={colorVar.foreground}
           size={{
-            fontSize: theme.fonts.size.xs,
-            lineHeight: theme.fonts.lineHeight.xs,
+            fontSize: fonts.size.xs,
+            lineHeight: fonts.lineHeight.xs,
           }}
         />
         <Button
-          size={theme.buttonSizes.md}
-          color={theme.buttonColors.ghost}
+          size={buttonSizes.md}
+          color={buttonStyles.ghost}
           onClickCallback={props.onClickCallback}
         >
-          <IconClose
-            size={theme.icons.size.xs}
-            stroke={theme.colors.cardForeground}
-          />
+          <IconClose size={icons.size.xs} stroke={colorVar.cardForeground} />
         </Button>
       </ButtonWrapper>
     </Container>

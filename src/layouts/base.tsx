@@ -3,6 +3,7 @@
 import Header from '@/components/organism/header/Header';
 import SubMenu from '@/components/organism/header/SubMenu';
 import { GlobalStyle } from '@/styles/global';
+import { colorVar } from '@/styles/colorVars';
 import React from 'react';
 import { styled } from 'styled-components';
 
@@ -13,7 +14,7 @@ const Container = styled.div`
 `;
 
 const Body = styled.div`
-  background: ${props => props.theme.colors.background};
+  background: ${colorVar.background};
   display: flex;
   flex-direction: column;
   flex: 1;

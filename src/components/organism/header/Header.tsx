@@ -11,13 +11,17 @@ import { useLanguage } from '@/lib/hooks/useLocales';
 import { useThemeToggle } from '@/lib/providers/StyledThemeProvider';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { icons } from '@/styles/icons';
+import { buttonSizes, buttonStyles } from '@/styles/buttons';
 
 const HeaderWrapper = styled.header`
   display: flex;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.card};
-  color: ${({ theme }) => theme.colors.foreground};
+  background-color: ${colorVar.card};
+  color: ${colorVar.foreground};
 `;
 
 const Container = styled.div`
@@ -49,8 +53,7 @@ const SettingsWrapper = styled.div`
 
 function _Header() {
   const t = useTranslations('Navbar');
-  const { toggleTheme } = useThemeToggle();
-  const theme = useTheme();
+  const { themeMode, toggleTheme } = useThemeToggle();
   const { currentLocale, changeLanguage } = useLanguage();
   const locales = i18n.locales;
   const currentLanguage = locales.find(lang => lang === currentLocale) || 'en';
@@ -68,21 +71,21 @@ function _Header() {
               text={t('title')}
               type="h1"
               size={{
-                fontSize: theme.fonts.size.base,
-                lineHeight: theme.fonts.lineHeight.base,
+                fontSize: fonts.size.base,
+                lineHeight: fonts.lineHeight.base,
               }}
-              fontWeight={theme.fonts.weight.bold}
-              color={theme.colors.foreground}
+              fontWeight={fonts.weight.bold}
+              color={colorVar.foreground}
             />
             <Texts
               text={t('subtitle')}
               type="p"
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              fontWeight={theme.fonts.weight.normal}
-              color={theme.colors.mutedForeground}
+              fontWeight={fonts.weight.normal}
+              color={colorVar.mutedForeground}
             />
           </TextWrapper>
         </LogoWrapper>
@@ -91,8 +94,8 @@ function _Header() {
             text={currentLanguage.toUpperCase()}
             icon={
               <IconWorld
-                size={theme.icons.size.xs}
-                stroke={theme.colors.mutedForeground}
+                size={icons.size.xs}
+                stroke={colorVar.mutedForeground}
               />
             }
             options={locales.map(locale => ({
@@ -106,22 +109,16 @@ function _Header() {
             }}
             hideBorder
             children={undefined}
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.ghost}
+            size={buttonSizes.md}
+            color={buttonStyles.ghost}
           />
           <Toggle
             onToggle={toggleTheme}
             icon={
-              theme.mode == 'light' ? (
-                <IconMoon
-                  size={theme.icons.size.xs}
-                  stroke={theme.colors.foreground}
-                />
+              themeMode === 'light' ? (
+                <IconMoon size={icons.size.xs} stroke={colorVar.foreground} />
               ) : (
-                <IconSun
-                  size={theme.icons.size.xs}
-                  stroke={theme.colors.primary}
-                />
+                <IconSun size={icons.size.xs} stroke={colorVar.primary} />
               )
             }
           />

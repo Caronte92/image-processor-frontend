@@ -8,7 +8,11 @@ import Wrapper from '@/components/atoms/Wrapper';
 import IconAndText from '@/components/molecules/IconAndText';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
-import { styled, useTheme } from 'styled-components';
+import { styled } from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { icons } from '@/styles/icons';
+import { buttonSizes, buttonStyles } from '@/styles/buttons';
 
 const Header = styled.div`
   display: flex;
@@ -26,9 +30,8 @@ const ButtonsWrapper = styled.div`
 
 const CodeContainer = styled.pre`
   overflow: scroll;
-  background: ${({ theme }) =>
-    `color-mix(in oklch, ${theme.colors.input} 30%)`};
-  border: 0.0625rem solid ${props => props.theme.colors.input};
+  background: color-mix(in oklch, ${colorVar.input} 30%);
+  border: 0.0625rem solid ${colorVar.input};
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
 `;
@@ -40,7 +43,6 @@ interface ComponentNameProps {
 
 function _ComponentName(props: ComponentNameProps) {
   const t = useTranslations('SvgToReact');
-  const theme = useTheme();
   const [, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -73,40 +75,40 @@ function _ComponentName(props: ComponentNameProps) {
         <Texts
           text={t('component_section_title')}
           size={{
-            fontSize: theme.fonts.size.base,
-            lineHeight: theme.fonts.lineHeight.base,
+            fontSize: fonts.size.base,
+            lineHeight: fonts.lineHeight.base,
           }}
-          color={theme.colors.cardForeground}
+          color={colorVar.cardForeground}
         />
         <ButtonsWrapper>
           <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.primary}
+            size={buttonSizes.md}
+            color={buttonStyles.primary}
             onClickCallback={copyToClipboard}
           >
             <IconAndText
-              icon={<IconCopy size={theme.icons.size.xs} />}
+              icon={<IconCopy size={icons.size.xs} />}
               text={t('component_section_button_copy')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.cardForeground}
+              color={colorVar.cardForeground}
             />
           </Button>
           <Button
-            size={theme.buttonSizes.md}
-            color={theme.buttonColors.primary}
+            size={buttonSizes.md}
+            color={buttonStyles.primary}
             onClickCallback={downloadAsTSX}
           >
             <IconAndText
-              icon={<IconDownload size={theme.icons.size.xs} />}
+              icon={<IconDownload size={icons.size.xs} />}
               text={t('component_section_button_download')}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              color={theme.colors.cardForeground}
+              color={colorVar.cardForeground}
             />
           </Button>
         </ButtonsWrapper>

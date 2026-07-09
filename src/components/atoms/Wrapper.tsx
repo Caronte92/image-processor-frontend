@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.colors.card};
+  background: ${colorVar.card};
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
   border-radius: 0.5rem;
-  border: 0.0625rem solid ${({ theme }) => theme.colors.border};
+  border: 0.0625rem solid ${colorVar.border};
   gap: 1.5rem;
 `;
 

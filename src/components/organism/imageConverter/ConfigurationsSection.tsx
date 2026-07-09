@@ -9,8 +9,11 @@ import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { ImageFormats } from '@/lib/enums/imgFormats';
 import { useTranslations } from 'next-intl';
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import Button from '@/components/atoms/Button';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { buttonSizes, buttonStyles } from '@/styles/buttons';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +40,7 @@ const AdvancedConfigs = styled.div`
   gap: 1rem;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  border-top: 1px solid ${colorVar.border};
 `;
 
 const AdvancedContent = styled.div`
@@ -78,7 +81,6 @@ interface ConfigurationsSectionProps {
 
 function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
   const t = useTranslations('ImageConverter');
-  const theme = useTheme();
 
   const handleKeepRatio = () => {
     props.onKeepAspectRatioCallback(!props.keepAspectRatio);
@@ -118,8 +120,8 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
               selected: format === props.currentFormat,
             }))}
             onclickCallback={handleFormatClick}
-            size={theme.buttonSizes?.md}
-            color={theme.buttonColors.ghost}
+            size={buttonSizes.md}
+            color={buttonStyles.ghost}
           />
           <InputLabel
             label={t('configuration_section_quality')}
@@ -130,7 +132,7 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
         <AdvancedConfigs>
           <Texts
             text={t('configuration_section_advanced_title')}
-            color={theme.colors.cardForeground}
+            color={colorVar.cardForeground}
           />
         </AdvancedConfigs>
         <AdvancedContent>
@@ -155,8 +157,8 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
           />
         </AdvancedContent>
         <Button
-          size={theme.buttonSizes.md}
-          color={theme.buttonColors.primary}
+          size={buttonSizes.md}
+          color={buttonStyles.primary}
           width="100%"
           disabled={props.totalFiles === 0}
           onClickCallback={props.onClickCallback}
@@ -164,10 +166,10 @@ function _ConfigurationsSection({ ...props }: ConfigurationsSectionProps) {
           <Texts
             text={t('continue_button')}
             size={{
-              fontSize: theme.fonts.size.sm,
-              lineHeight: theme.fonts.lineHeight.sm,
+              fontSize: fonts.size.sm,
+              lineHeight: fonts.lineHeight.sm,
             }}
-            color={theme.colors.primaryForeground}
+            color={colorVar.primaryForeground}
           />
         </Button>
       </Wrapper>

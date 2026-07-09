@@ -2,10 +2,13 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import IconChevronDown from '@/components/atoms/icons/IconChevronDown';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import Texts from '@/components/atoms/Texts';
 import { IOptionsSelect } from '@/lib/types/IOptions';
 import { IButtonVariantConfig, IButtonSizeConfig } from '@/styles/buttons';
+import { colorVar } from '@/styles/colorVars';
+import { fonts } from '@/styles/fonts';
+import { icons } from '@/styles/icons';
 
 const getBorder = (
   enabled: boolean,
@@ -87,9 +90,8 @@ const Container = styled.div`
 `;
 
 const DropdownContainer = styled.div`
-  background-color: ${props =>
-    props.theme.colors.background || props.theme.background};
-  border: 1px solid ${props => props.theme.colors.border};
+  background-color: ${colorVar.background};
+  border: 1px solid ${colorVar.border};
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -105,14 +107,14 @@ const DropdownContainer = styled.div`
 `;
 
 const OptionContainer = styled.div<{ $highlighted?: boolean }>`
-  color: ${({ theme }) => theme.colors.foreground};
-  background: ${({ $highlighted, theme }) =>
-    $highlighted ? theme.colors.accent : 'transparent'};
+  color: ${colorVar.foreground};
+  background: ${({ $highlighted }) =>
+    $highlighted ? colorVar.accent : 'transparent'};
   border: transparent;
   padding: 0.5rem 0.75rem;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.accent};
+    background: ${colorVar.accent};
   }
 `;
 
@@ -137,7 +139,6 @@ interface SelectProps {
 }
 
 function _Select({ hideBorder = false, ...props }: SelectProps) {
-  const theme = useTheme();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -251,7 +252,7 @@ function _Select({ hideBorder = false, ...props }: SelectProps) {
   return (
     <SelectWrapper>
       {props.label && (
-        <Texts text={props.label} color={theme.colors.foreground} />
+        <Texts text={props.label} color={colorVar.foreground} />
       )}
       <SelectContainer ref={containerRef}>
         <ButtonSelect
@@ -278,13 +279,13 @@ function _Select({ hideBorder = false, ...props }: SelectProps) {
               type={'p'}
               text={props.text}
               size={{
-                fontSize: theme.fonts.size.sm,
-                lineHeight: theme.fonts.lineHeight.sm,
+                fontSize: fonts.size.sm,
+                lineHeight: fonts.lineHeight.sm,
               }}
-              fontWeight={theme.fonts.weight.bold}
-              color={theme.colors.foreground}
+              fontWeight={fonts.weight.bold}
+              color={colorVar.foreground}
             />
-            <IconChevronDown size={theme.icons.size.xs} />
+            <IconChevronDown size={icons.size.xs} />
           </Container>
         </ButtonSelect>
         {isDropdownVisible && (
@@ -314,11 +315,11 @@ function _Select({ hideBorder = false, ...props }: SelectProps) {
                     type={'p'}
                     text={option.text}
                     size={{
-                      fontSize: theme.fonts.size.sm,
-                      lineHeight: theme.fonts.lineHeight.sm,
+                      fontSize: fonts.size.sm,
+                      lineHeight: fonts.lineHeight.sm,
                     }}
-                    fontWeight={theme.fonts.weight.normal}
-                    color={theme.colors.foreground}
+                    fontWeight={fonts.weight.normal}
+                    color={colorVar.foreground}
                   />
                 </OptionWrapper>
               </OptionContainer>

@@ -6,7 +6,8 @@ import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { IFileSelected } from '@/lib/types/IFiles';
 import { useTranslations } from 'next-intl';
 import React, { useRef } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
 
 const Container = styled.div`
   display: flex;
@@ -33,10 +34,10 @@ const WrapperFiles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background: ${props => props.theme.colors.card};
+  background: ${colorVar.card};
   padding: 1.5625rem;
   border-radius: 0.625rem;
-  border: 0.0625rem solid ${props => props.theme.colors.border};
+  border: 0.0625rem solid ${colorVar.border};
   align-items: baseline;
 `;
 
@@ -52,7 +53,6 @@ interface UploadImagesProps {
 
 function _UploadImages({ ...props }: UploadImagesProps) {
   const t = useTranslations('ImageConverter');
-  const theme = useTheme();
   const inputFileRef = useRef<FakeInputHandle>(null);
 
   const handleFileAdd = (file: File | null) => {
@@ -79,7 +79,7 @@ function _UploadImages({ ...props }: UploadImagesProps) {
             <Spinner size="1.25rem" thickness="2px" />
             <Texts
               text={t('file_processing')}
-              color={theme.colors.foreground}
+              color={colorVar.foreground}
             />
           </ProcessingRow>
         )}
@@ -99,7 +99,7 @@ function _UploadImages({ ...props }: UploadImagesProps) {
         <WrapperFiles>
           <Texts
             text={t('title_files_selected', { count: props.files.length })}
-            color={theme.colors.foreground}
+            color={colorVar.foreground}
           />
           {props.files.map((file, index) => (
             <SvgFileSelected

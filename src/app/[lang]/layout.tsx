@@ -15,7 +15,7 @@ export default async function RootLayout({ children, params }: ILayoutProps) {
     const initialThemeMode = themeCookie === 'dark' || themeCookie === 'light' ? themeCookie : 'light';
 
     return (
-        <html lang={lang} suppressHydrationWarning>
+        <html lang={lang} data-theme={initialThemeMode} suppressHydrationWarning>
             <body>
                 <ClientLayout messages={messages} locale={lang} initialThemeMode={initialThemeMode}>
                     {children}

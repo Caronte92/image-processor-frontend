@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { colorVar } from '@/styles/colorVars';
 
 const InputStyled = styled.input`
-  background: ${props => props.theme.colors.input};
+  background: ${colorVar.input};
   display: flex;
   padding: 0.25rem 0.75rem;
   border-radius: 0.625rem;
-  border: 0.0625rem solid ${props => props.theme.colors.border};
-  color: ${props => props.theme.colors.cardForeground};
+  border: 0.0625rem solid ${colorVar.border};
+  color: ${colorVar.cardForeground};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   cursor: ${props => (props.disabled ? 'not-allowed' : 'text')};
 `;
