@@ -1,3 +1,4 @@
+import { breakpoints } from './breakpoints';
 import styled from 'styled-components';
 
 export const Page = styled.div <{$orientation: 'column' | 'row'}>`
@@ -9,4 +10,8 @@ export const Page = styled.div <{$orientation: 'column' | 'row'}>`
   display: flex;
   flex-direction: ${props => props.$orientation};
   gap: 2rem;
+
+  @media (max-width: ${breakpoints.md}) {
+    flex-direction: column;
+  }
 `;

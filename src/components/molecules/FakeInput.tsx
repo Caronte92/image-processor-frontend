@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { colorVar } from '@/styles/colorVars';
 import { fonts } from '@/styles/fonts';
 import { icons } from '@/styles/icons';
+import { breakpoints } from '@/styles/breakpoints';
 
 interface StyledFakeInputProps {
   $variant?: 'solid' | 'dashed';
@@ -66,6 +67,10 @@ const StyledFakeInput = styled.button<
 
   &:hover {
     border-color: ${colorVar.primary};
+  }
+
+  @media (max-width: ${breakpoints.md}) {
+    min-width: auto;
   }
 `;
 

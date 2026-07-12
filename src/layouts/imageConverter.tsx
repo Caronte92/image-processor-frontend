@@ -16,6 +16,7 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Page } from '@/styles/common.styles';
 import styled from 'styled-components';
+import { breakpoints } from '@/styles/breakpoints';
 
 const ImagesWrapper = styled.div`
   display: flex;
@@ -23,6 +24,10 @@ const ImagesWrapper = styled.div`
   justify-content: flex-start;
   width: 70%;
   height: stretch;
+
+  @media (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 const ConfigurationsWrapper = styled.div`
@@ -31,6 +36,10 @@ const ConfigurationsWrapper = styled.div`
   justify-content: flex-start;
   width: 30%;
   height: stretch;
+
+  @media (max-width: ${breakpoints.md}) {
+    width: 100%;
+  }
 `;
 
 function _ImageConverter() {
