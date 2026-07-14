@@ -61,6 +61,7 @@ const ButtonWrapper = styled.div`
 
 interface SvgFileSelectedProps {
   file: IFileSelected;
+  estimated: number;
   onClickCallback: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -96,6 +97,15 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
         <Texts
           text={formatFileSize(props.file.size)}
           color={colorVar.foreground}
+          size={{
+            fontSize: fonts.size.xs,
+            lineHeight: fonts.lineHeight.xs,
+          }}
+        />
+        <Texts
+          type='label'
+          text={formatFileSize(props.estimated)}
+          color={colorVar.mutedForeground}
           size={{
             fontSize: fonts.size.xs,
             lineHeight: fonts.lineHeight.xs,

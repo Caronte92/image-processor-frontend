@@ -47,6 +47,7 @@ interface UploadImagesProps {
   files: IFileSelected[];
   index: number;
   isProcessingFile?: boolean;
+  estimatedSizes?: (number | null)[];
   onFileAdd?: (file: File | null) => void;
   onFileRemove?: (index: number) => void;
 }
@@ -107,7 +108,9 @@ function _UploadImages({ ...props }: UploadImagesProps) {
               file={{
                 name: file.name,
                 size: file.size,
+                url: file.url,
               }}
+              estimated={props.estimatedSizes?.[index] ?? file.size}
               onClickCallback={() => handleClearFile(index)}
             />
           ))}

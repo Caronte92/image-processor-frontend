@@ -5,12 +5,13 @@ import Spinner from '@/components/atoms/Spinner';
 import Texts from '@/components/atoms/Texts';
 import Wrapper from '@/components/atoms/Wrapper';
 import IconDownload from '@/components/atoms/icons/IconDownload';
+import IconPicture from '@/components/atoms/icons/IconPicture';
 import IconAndText from '@/components/molecules/IconAndText';
 import TitleSubtitle from '@/components/molecules/TitleSubtitle';
 import { formatFileSize } from '@/lib/services/utils/svg';
 import { ConvertedImage, ConvertedImages } from '@/lib/services/utils/images';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colorVar } from '@/styles/colorVars';
 import { fonts } from '@/styles/fonts';
@@ -41,6 +42,34 @@ const FileRow = styled.div`
   }
 `;
 
+const FileInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  overflow: hidden;
+`;
+
+const ThumbnailWrapper = styled.div<{ $hasThumbnail?: boolean }>`
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  background: ${props => (props.$hasThumbnail ? 'transparent' : colorVar.primary)};
+  opacity: ${props => (props.$hasThumbnail ? 1 : 0.4)};
+  border-radius: 0.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+`;
+
+const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+`;
+
 const Divider = styled.div`
   height: 0.0625rem;
   background-color: ${colorVar.border};
@@ -66,6 +95,21 @@ interface DownloadSectionProps {
   totalFiles: number;
   onConvertMore: () => void;
   onReset: () => void;
+}
+
+function FileThumbnail({ url, name }: { url: string; name: string }) {
+  const [imgError, setImgError] = useState(false);
+  const showThumbnail = !imgError;
+
+  return (
+    <ThumbnailWrapper $hasThumbnail={showThumbnail}>
+      {showThumbnail ? (
+        <Thumbnail src={url} alt={name} onError={() => setImgError(true)} />
+      ) : (
+        <IconPicture size={icons.size.xs} stroke={colorVar.cardForeground} />
+      )}
+    </ThumbnailWrapper>
+  );
 }
 
 function _DownloadSection({ ...props }: DownloadSectionProps) {
@@ -142,11 +186,14 @@ function _DownloadSection({ ...props }: DownloadSectionProps) {
             const subtitle = `${format} · ${formatFileSize(file.file.size)}`;
             return (
               <FileRow key={`${file.file.name}-${index}`}>
-                <TitleSubtitle
-                  title={file.originalFile.name}
-                  subtitle={subtitle}
-                  truncate
-                />
+                <FileInfo>
+                  <FileThumbnail url={file.url} name={file.originalFile.name} />
+                  <TitleSubtitle
+                    title={file.originalFile.name}
+                    subtitle={subtitle}
+                    truncate
+                  />
+                </FileInfo>
                 <Button
                   size={buttonSizes.md}
                   color={buttonStyles.ghost}

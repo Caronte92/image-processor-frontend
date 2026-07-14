@@ -34,6 +34,28 @@ export interface ConvertedImages {
   files: ConvertedImage[];
 }
 
+function computeTargetDimensions(
+  imgWidth: number,
+  imgHeight: number,
+  width: number,
+  height: number,
+  maintainAspect: boolean
+): { width: number; height: number } {
+  let newWidth = width || imgWidth;
+  let newHeight = height || imgHeight;
+
+  if (maintainAspect) {
+    const aspectRatio = imgWidth / imgHeight;
+    if (width / height > aspectRatio) {
+      newWidth = height * aspectRatio;
+    } else {
+      newHeight = width / aspectRatio;
+    }
+  }
+
+  return { width: newWidth, height: newHeight };
+}
+
 async function convertSingleImage(
   file: File | Blob,
   width: number,
@@ -55,17 +77,13 @@ async function convertSingleImage(
       img.src = URL.createObjectURL(file);
     });
 
-    let newWidth = width || img.width;
-    let newHeight = height || img.height;
-
-    if (maintainAspect) {
-      const aspectRatio = img.width / img.height;
-      if (width / height > aspectRatio) {
-        newWidth = height * aspectRatio;
-      } else {
-        newHeight = width / aspectRatio;
-      }
-    }
+    const { width: newWidth, height: newHeight } = computeTargetDimensions(
+      img.width,
+      img.height,
+      width,
+      height,
+      maintainAspect
+    );
 
     canvas.width = newWidth;
     canvas.height = newHeight;
@@ -109,6 +127,66 @@ async function convertSingleImage(
   }
 
   return null;
+}
+
+export async function estimateConvertedSize(
+  file: File | Blob,
+  width: number,
+  height: number,
+  maintainAspect: boolean,
+  outputFormat: string,
+  quality: number[]
+): Promise<number | null> {
+  if (!file) return null;
+
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = url;
+    });
+
+    const { width: newWidth, height: newHeight } = computeTargetDimensions(
+      img.width,
+      img.height,
+      width,
+      height,
+      maintainAspect
+    );
+
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    if (!ctx) {
+      URL.revokeObjectURL(url);
+      return null;
+    }
+
+    const opaqueFormats = ['jpg', 'jpeg', 'bmp'];
+    if (opaqueFormats.includes(outputFormat.toLowerCase())) {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, newWidth, newHeight);
+    }
+
+    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+    URL.revokeObjectURL(url);
+
+    const blob = await new Promise<Blob | null>(resolve => {
+      const qualityValue =
+        outputFormat === 'png' ? undefined : quality[0] / 100;
+      canvas.toBlob(resolve, `image/${outputFormat}`, qualityValue);
+    });
+
+    return blob?.size ?? null;
+  } catch (error) {
+    console.error('Error estimating converted size:', error);
+    return null;
+  }
 }
 
 export async function convertImages(

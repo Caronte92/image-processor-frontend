@@ -5,6 +5,7 @@ import {
   ConvertedImage,
   ConvertedImages,
   convertImages,
+  estimateConvertedSize,
   normalizeFile,
 } from '@/lib/services/utils/images';
 import { IFileSelected } from '@/lib/types/IFiles';
@@ -62,6 +63,7 @@ function _ImageConverter() {
   const [quality, setQuality] = useState<number>(90);
   const [isConverting, setIsConverting] = useState(false);
   const [isProcessingFile, setIsProcessingFile] = useState(false);
+  const [estimatedSizes, setEstimatedSizes] = useState<(number | null)[]>([]);
 
   const filesSelected: IFileSelected[] = useMemo(() => {
     return selectedFiles.map(file => ({
@@ -76,6 +78,55 @@ function _ImageConverter() {
       filesSelected.forEach(f => f.url && URL.revokeObjectURL(f.url));
     };
   }, [filesSelected]);
+
+  useEffect(() => {
+    if (converted || selectedFiles.length === 0) {
+      setEstimatedSizes([]);
+      return;
+    }
+
+    let cancelled = false;
+
+    const timeoutId = setTimeout(async () => {
+      const finalWidth = keepAspectRatio
+        ? 0
+        : inputWidth || originalDimensions.width;
+      const finalHeight = keepAspectRatio
+        ? 0
+        : inputHeight || originalDimensions.height;
+
+      const sizes = await Promise.all(
+        selectedFiles.map(file =>
+          estimateConvertedSize(
+            file,
+            finalWidth,
+            finalHeight,
+            false,
+            format,
+            [quality]
+          )
+        )
+      );
+
+      if (!cancelled) {
+        setEstimatedSizes(sizes);
+      }
+    }, 300);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
+  }, [
+    converted,
+    selectedFiles,
+    format,
+    quality,
+    inputWidth,
+    inputHeight,
+    keepAspectRatio,
+    originalDimensions,
+  ]);
 
   const handleFileAdd = async (file: File | null) => {
     if (!file) return;
@@ -169,6 +220,7 @@ function _ImageConverter() {
             onFileAdd={handleFileAdd}
             onFileRemove={handleFileRemove}
             isProcessingFile={isProcessingFile}
+            estimatedSizes={estimatedSizes}
           />
         ) : (
           <DownloadSection

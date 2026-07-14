@@ -65,7 +65,9 @@ function _ImageSection(props: ImageSectionProps) {
             file={{
               name: file.name,
               size: file.size,
+              url: file.url,
             }}
+            estimated={file.size}
             onClickCallback={() => handleClearFile(index)}
           />
         ))}
