@@ -7,6 +7,8 @@ type TextType = 'h1' | 'p' | 'label' | 'span';
 export type Typography = { fontSize: string; lineHeight: string };
 
 const Truncate = css<{ $truncate: boolean }>`
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

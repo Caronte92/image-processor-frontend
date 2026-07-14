@@ -52,6 +52,8 @@
     "continue_button": "Convertir imatges",
     "go_back_button": "Tornar enrere",
     "title_files_selected": "Arxius seleccionats ({count})",
+    "file_selected_estimated_size": "Estimat: {size}",
+    "file_selected_size": "Mida: {size}",
     "file_processing": "Processant imatge...",
     "files_to_convert": "Arxius a convertir: {count}",
     "configuration_section_format": "Format de sortida",

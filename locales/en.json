@@ -52,6 +52,8 @@
     "continue_button": "Convert images",
     "go_back_button": "Go back",
     "title_files_selected": "Selected files ({count})",
+    "file_selected_estimated_size": "Estimated: {size}",
+    "file_selected_size": "Size: {size}",
     "file_processing": "Processing image...",
     "files_to_convert": "Files to convert: {count}",
     "configuration_section_format": "Output format",

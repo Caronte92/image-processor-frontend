@@ -4,12 +4,14 @@ import IconUpload from '@/components/atoms/icons/IconUpload';
 import Texts from '@/components/atoms/Texts';
 import { formatFileSize } from '@/lib/services/utils/svg';
 import { IFileSelected } from '@/lib/types/IFiles';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colorVar } from '@/styles/colorVars';
 import { fonts } from '@/styles/fonts';
 import { icons } from '@/styles/icons';
 import { buttonSizes, buttonStyles } from '@/styles/buttons';
+import { theme } from '@/styles/theme';
 
 const Container = styled.div`
   background: ${colorVar.muted};
@@ -29,9 +31,8 @@ const IonWrapper = styled.div<{ $hasThumbnail?: boolean }>`
   align-items: center;
   justify-content: center;
   background: ${props => (props.$hasThumbnail ? 'transparent' : colorVar.primary)};
-  opacity: ${props => props.$hasThumbnail ? 1 : 0.4};
+  opacity: ${props => (props.$hasThumbnail ? 1 : 0.4)};
   border-radius: 0.5rem;
-  overflow: hidden;
   flex-shrink: 0;
 `;
 
@@ -59,6 +60,16 @@ const ButtonWrapper = styled.div`
   gap: 0.5rem;
 `;
 
+const SizeWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+    overflow: hidden;
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
+`;
+
 interface SvgFileSelectedProps {
   file: IFileSelected;
   estimated: number;
@@ -66,6 +77,7 @@ interface SvgFileSelectedProps {
 }
 
 function _SvgFileSelected(props: SvgFileSelectedProps) {
+  const t = useTranslations('ImageConverter');
   const [imgError, setImgError] = useState(false);
   const showThumbnail = !!props.file.url && !imgError;
 
@@ -83,28 +95,34 @@ function _SvgFileSelected(props: SvgFileSelectedProps) {
             <IconUpload size={icons.size.xs} stroke={colorVar.cardForeground} />
           )}
         </IonWrapper>
-        <Texts
-          text={props.file.name}
-          color={colorVar.foreground}
-          size={{
-            fontSize: fonts.size.sm,
-            lineHeight: fonts.lineHeight.sm,
-          }}
-          truncate={true}
-        />
+        <SizeWrapper>
+          <Texts
+            text={props.file.name}
+            color={colorVar.foreground}
+            size={{
+              fontSize: fonts.size.sm,
+              lineHeight: fonts.lineHeight.sm,
+            }}
+            truncate={true}
+          />
+          <Texts
+            text={t('file_selected_size', {
+              size: formatFileSize(props.file.size),
+            })}
+            color={colorVar.foreground}
+            size={{
+              fontSize: fonts.size.xs,
+              lineHeight: fonts.lineHeight.xs,
+            }}
+          />
+        </SizeWrapper>
       </ComponentInfoContainer>
       <ButtonWrapper>
         <Texts
-          text={formatFileSize(props.file.size)}
-          color={colorVar.foreground}
-          size={{
-            fontSize: fonts.size.xs,
-            lineHeight: fonts.lineHeight.xs,
-          }}
-        />
-        <Texts
-          type='label'
-          text={formatFileSize(props.estimated)}
+          type="label"
+          text={t('file_selected_estimated_size', {
+            size: formatFileSize(props.estimated),
+          })}
           color={colorVar.mutedForeground}
           size={{
             fontSize: fonts.size.xs,
