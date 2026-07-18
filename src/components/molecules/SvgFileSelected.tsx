@@ -12,6 +12,7 @@ import { fonts } from '@/styles/fonts';
 import { icons } from '@/styles/icons';
 import { buttonSizes, buttonStyles } from '@/styles/buttons';
 import { theme } from '@/styles/theme';
+import { breakpoints } from '@/styles/breakpoints';
 
 const Container = styled.div`
   background: ${colorVar.muted};
@@ -51,6 +52,10 @@ const ComponentInfoContainer = styled.div`
   flex: 1;
   min-width: 0;
   overflow: hidden;
+
+  @media (max-width: ${breakpoints.xs}){
+    flex-direction: column;
+  }
 `;
 
 const ButtonWrapper = styled.div`
