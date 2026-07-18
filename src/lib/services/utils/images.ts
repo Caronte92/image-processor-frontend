@@ -34,6 +34,37 @@ export interface ConvertedImages {
   files: ConvertedImage[];
 }
 
+let webpSupportPromise: Promise<boolean> | null = null;
+
+function supportsWebpEncoding(): Promise<boolean> {
+  if (!webpSupportPromise) {
+    webpSupportPromise = new Promise(resolve => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      canvas.toBlob(blob => resolve(blob?.type === 'image/webp'), 'image/webp');
+    });
+  }
+  return webpSupportPromise;
+}
+
+// Algunos navegadores (p.ej. Safari/WebViews en iOS) no saben codificar
+// WebP desde canvas: toBlob cae en silencio a PNG (sin pérdida), lo que
+// puede producir un archivo mucho más pesado que el original aunque se
+// etiquete como .webp. Si detectamos que no hay soporte, usamos JPEG.
+async function resolveOutputFormat(outputFormat: string): Promise<string> {
+  if (
+    outputFormat.toLowerCase() === 'webp' &&
+    !(await supportsWebpEncoding())
+  ) {
+    console.warn(
+      '[images] Este navegador no puede codificar WebP vía canvas; se usará JPEG en su lugar.'
+    );
+    return 'jpeg';
+  }
+  return outputFormat;
+}
+
 function computeTargetDimensions(
   imgWidth: number,
   imgHeight: number,
@@ -88,9 +119,11 @@ async function convertSingleImage(
     canvas.width = newWidth;
     canvas.height = newHeight;
 
+    const effectiveFormat = await resolveOutputFormat(outputFormat);
+
     if (ctx) {
       const opaqueFormats = ['jpg', 'jpeg', 'bmp'];
-      if (opaqueFormats.includes(outputFormat.toLowerCase())) {
+      if (opaqueFormats.includes(effectiveFormat.toLowerCase())) {
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, newWidth, newHeight);
       }
@@ -99,17 +132,21 @@ async function convertSingleImage(
 
       const blob = await new Promise<Blob | null>(resolve => {
         const qualityValue =
-          outputFormat === 'png' ? undefined : quality[0] / 100;
-        canvas.toBlob(resolve, `image/${outputFormat}`, qualityValue);
+          effectiveFormat === 'png' ? undefined : quality[0] / 100;
+        canvas.toBlob(resolve, `image/${effectiveFormat}`, qualityValue);
       });
 
       if (blob) {
         const fileName = file instanceof File ? file.name : 'converted-image';
         const baseName = fileName.split('.')[0];
 
-        const convertedFile = new File([blob], `${baseName}.${outputFormat}`, {
-          type: `image/${outputFormat}`,
-        });
+        const convertedFile = new File(
+          [blob],
+          `${baseName}.${effectiveFormat}`,
+          {
+            type: `image/${effectiveFormat}`,
+          }
+        );
 
         URL.revokeObjectURL(img.src);
 
@@ -167,8 +204,10 @@ export async function estimateConvertedSize(
       return null;
     }
 
+    const effectiveFormat = await resolveOutputFormat(outputFormat);
+
     const opaqueFormats = ['jpg', 'jpeg', 'bmp'];
-    if (opaqueFormats.includes(outputFormat.toLowerCase())) {
+    if (opaqueFormats.includes(effectiveFormat.toLowerCase())) {
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, newWidth, newHeight);
     }
@@ -178,8 +217,8 @@ export async function estimateConvertedSize(
 
     const blob = await new Promise<Blob | null>(resolve => {
       const qualityValue =
-        outputFormat === 'png' ? undefined : quality[0] / 100;
-      canvas.toBlob(resolve, `image/${outputFormat}`, qualityValue);
+        effectiveFormat === 'png' ? undefined : quality[0] / 100;
+      canvas.toBlob(resolve, `image/${effectiveFormat}`, qualityValue);
     });
 
     return blob?.size ?? null;
